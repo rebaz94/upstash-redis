@@ -4,6 +4,11 @@ import 'package:upstash_redis/src/converters.dart';
 
 TResult parseResponse<TResult>(dynamic result) {
   try {
+    // return as soon as you know its the correct format
+    // node: if we remove this line below,
+    // it will try to parse -> may throw exception -> force casted
+    if (result is TResult) return result;
+
     final resultType = TResult.toString().replaceAll('?', '');
     final value = parseRecursive(result);
 
