@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
-import 'package:upstash_redis/src/commands/mod.dart';
+import 'package:upstash_redis/src/commands/get.dart';
+import 'package:upstash_redis/src/commands/set.dart';
 import 'package:upstash_redis/src/test_utils.dart';
 
 void main() async {
