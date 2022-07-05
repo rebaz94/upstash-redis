@@ -18,4 +18,5 @@ export 'evalsha.dart';
 export 'exists.dart';
 export 'expire.dart';
 export 'expireat.dart';
+export 'flushall.dart';
 export 'script_load.dart';
