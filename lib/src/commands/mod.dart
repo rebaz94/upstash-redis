@@ -15,4 +15,5 @@ export 'decrby.dart';
 export 'echo.dart';
 export 'eval.dart';
 export 'evalsha.dart';
+export 'exists.dart';
 export 'script_load.dart';

@@ -142,6 +142,11 @@ class Redis {
     return EvalshaCommand<TArgs, TData>(sha, keys, args, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/exists
+  Future<int> exists<TData>(List<String> keys, [CommandOption<int, int>? opts]) {
+    return ExistsCommand(keys).exec(_client);
+  }
+
   /// @see https://redis.io/commands/get
   Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
     return GetCommand<TData>([key], opts).exec(_client);
