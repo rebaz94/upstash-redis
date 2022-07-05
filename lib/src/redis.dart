@@ -172,6 +172,11 @@ class Redis {
     return GetCommand<TData>([key], opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/getbit
+  Future<int> getbit(String key, int offset, [CommandOption<int, int>? opts]) {
+    return GetBitCommand(key, offset, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
@@ -196,6 +201,11 @@ class Redis {
       xx: xx,
       opts: opts,
     ).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/setbit
+  Future<int> setbit(String key, int offset, int bit, [CommandOption<int, int>? opts]) {
+    return SetBitCommand(key, offset, bit, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/zadd
