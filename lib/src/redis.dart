@@ -102,6 +102,11 @@ class Redis {
     return DbSizeCommand(opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/decr
+  Future<int> decr(String key, [CommandOption<int, int>? opts]) {
+    return DecrCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/del
   Future<int> del(List<String> keys, [CommandOption<int, int>? opts]) {
     return DelCommand(keys, opts).exec(_client);
