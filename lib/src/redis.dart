@@ -68,6 +68,10 @@ class Redis {
   final Requester _client;
   final CommandOption<dynamic, dynamic>? opts;
 
+  Future<TData> run<TResult, TData>(Command<TResult, TData> command) {
+    return command.exec(_client);
+  }
+
   /// @see https://redis.io/commands/append
   Future<int> append(String key, String value, [CommandOption<int, int>? opts]) {
     return AppendCommand(key, value).exec(_client);
@@ -94,8 +98,8 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/dbsize
-  Future<int> dbsize() {
-    return DbSizeCommand().exec(_client);
+  Future<int> dbsize([CommandOption<int, int>? opts]) {
+    return DbSizeCommand(opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/del
@@ -104,8 +108,8 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/get
-  Future<TData?> get<TData>(String key) {
-    return GetCommand<TData>([key]).exec(_client);
+  Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
+    return GetCommand<TData>([key], opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/set
@@ -116,8 +120,17 @@ class Redis {
     int? px,
     bool? nx,
     bool? xx,
+    CommandOption<String, String>? opts,
   }) {
-    return SetCommand<TData, String>(key, value, ex: ex, px: px, nx: nx, xx: xx).exec(_client);
+    return SetCommand<TData, String>(
+      key,
+      value,
+      ex: ex,
+      px: px,
+      nx: nx,
+      xx: xx,
+      opts: opts,
+    ).exec(_client);
   }
 
   /// @see https://redis.io/commands/zadd
@@ -142,12 +155,12 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/zrem
-  Future<int> zrem<TData>(String key, List<TData> members) {
-    return ZRemCommand<TData>(key, members).exec(_client);
+  Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
+    return ZRemCommand<TData>(key, members, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/zscore
-  Future<num?> zscore<TData>(String key, TData member) {
-    return ZScoreCommand(key, member).exec(_client);
+  Future<num?> zscore<TData>(String key, TData member, [CommandOption<String, num>? opts]) {
+    return ZScoreCommand(key, member, opts).exec(_client);
   }
 }
