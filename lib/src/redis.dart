@@ -122,6 +122,16 @@ class Redis {
     return EchoCommand(message, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/eval
+  Future<TData> eval<TArgs, TData>(
+    String script,
+    List<String> keys,
+    List<TArgs> args, [
+    CommandOption<dynamic, TData>? opts,
+  ]) {
+    return EvalCommand<TArgs, TData>(script, keys, args, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/get
   Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
     return GetCommand<TData>([key], opts).exec(_client);

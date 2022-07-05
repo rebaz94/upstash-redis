@@ -13,3 +13,4 @@ export 'dbsize.dart';
 export 'decr.dart';
 export 'decrby.dart';
 export 'echo.dart';
+export 'eval.dart';
