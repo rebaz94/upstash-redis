@@ -88,6 +88,11 @@ class Redis {
     return BitOpCommand(op, destinationKey, sourceKeys, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/bitpos
+  Future<int> bitpos(String key, int start, [int? end, CommandOption<int, int>? opts]) {
+    return BitPosCommand(key, start, end, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/del
   Future<int> del(List<String> keys, [CommandOption<int, int>? opts]) {
     return DelCommand(keys, opts).exec(_client);
