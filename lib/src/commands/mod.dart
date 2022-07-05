@@ -16,4 +16,5 @@ export 'echo.dart';
 export 'eval.dart';
 export 'evalsha.dart';
 export 'exists.dart';
+export 'expire.dart';
 export 'script_load.dart';
