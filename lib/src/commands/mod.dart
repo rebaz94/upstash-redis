@@ -5,3 +5,5 @@ export 'zrem.dart';
 export 'del.dart';
 export 'zadd.dart';
 export 'zscore.dart';
+export 'append.dart';
+export 'bitcount.dart';

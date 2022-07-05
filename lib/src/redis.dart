@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:upstash_redis/src/commands/append.dart';
 import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/http.dart';
 
@@ -72,6 +71,11 @@ class Redis {
   /// @see https://redis.io/commands/append
   Future<int> append(String key, String value, [CommandOption<int, int>? opts]) {
     return AppendCommand(key, value).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/bitcount
+  Future<int> bitcount(String key, {int? start, int? end, CommandOption<int, int>? opts}) {
+    return BitCountCommand(key, start: start, end: end, opts: opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/del
