@@ -9,3 +9,4 @@ export 'append.dart';
 export 'bitcount.dart';
 export 'bitop.dart';
 export 'bitpos.dart';
+export 'dbsize.dart';

@@ -93,6 +93,11 @@ class Redis {
     return BitPosCommand(key, start, end, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/dbsize
+  Future<int> dbsize() {
+    return DbSizeCommand().exec(_client);
+  }
+
   /// @see https://redis.io/commands/del
   Future<int> del(List<String> keys, [CommandOption<int, int>? opts]) {
     return DelCommand(keys, opts).exec(_client);
