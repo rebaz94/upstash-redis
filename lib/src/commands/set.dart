@@ -11,7 +11,7 @@ class SetCommand<TData, TResult extends String> extends Command<TResult?, String
     int? px,
     bool? nx,
     bool? xx,
-    CommandOption<TResult, String>? cmdOpts,
+    CommandOption<TResult, String>? opts,
   }) {
     final command = ["set", key, value];
 
@@ -35,6 +35,6 @@ class SetCommand<TData, TResult extends String> extends Command<TResult?, String
       command.add('xx');
     }
 
-    return SetCommand._(command, cmdOpts);
+    return SetCommand._(command, opts);
   }
 }
