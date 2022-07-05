@@ -187,6 +187,21 @@ class Redis {
     return GetSetCommand<TData>(key, value, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hget
+  Future<TData?> hget<TData>(String key, String field, [CommandOption<Object?, TData?>? opts]) {
+    return HGetCommand(key, field, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/hdel
+  Future<int> hdel(String key, String field, [CommandOption<int, int>? opts]) {
+    return HDelCommand(key, field, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/hset
+  Future<int> hset<TData>(String key, Map<String, TData> kv, [CommandOption<int, int>? opts]) {
+    return HSetCommand<TData>(key, kv, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
