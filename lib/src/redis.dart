@@ -107,6 +107,11 @@ class Redis {
     return DecrCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/decrby
+  Future<int> decrby(String key, int decrement, [CommandOption<int, int>? opts]) {
+    return DecrByCommand(key, decrement, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/del
   Future<int> del(List<String> keys, [CommandOption<int, int>? opts]) {
     return DelCommand(keys, opts).exec(_client);

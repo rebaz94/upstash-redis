@@ -11,3 +11,4 @@ export 'bitop.dart';
 export 'bitpos.dart';
 export 'dbsize.dart';
 export 'decr.dart';
+export 'decrby.dart';
