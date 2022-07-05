@@ -17,4 +17,5 @@ export 'eval.dart';
 export 'evalsha.dart';
 export 'exists.dart';
 export 'expire.dart';
+export 'expireat.dart';
 export 'script_load.dart';

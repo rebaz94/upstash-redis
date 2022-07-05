@@ -152,6 +152,11 @@ class Redis {
     return ExpireCommand(key, seconds, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/expireat
+  Future<int> expireat(String key, int unix, [CommandOption<int, int>? opts]) {
+    return ExpireCommand(key, unix, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/get
   Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
     return GetCommand<TData>([key], opts).exec(_client);
