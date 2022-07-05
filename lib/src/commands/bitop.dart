@@ -21,7 +21,7 @@ class BitOpCommand extends Command<int, int> {
         '`not` operation is only takes an input only, but it takes ${sourceKeys.length}',
       );
     }
-    return BitOpCommand._(['bitop', 'and', destinationKey, ...sourceKeys], opts);
+    return BitOpCommand._(['bitop', op.name, destinationKey, ...sourceKeys], opts);
   }
 
   factory BitOpCommand.and(
