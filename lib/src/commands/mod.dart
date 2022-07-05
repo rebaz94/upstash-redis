@@ -19,4 +19,5 @@ export 'exists.dart';
 export 'expire.dart';
 export 'expireat.dart';
 export 'flushall.dart';
+export 'flushdb.dart';
 export 'script_load.dart';

@@ -162,6 +162,11 @@ class Redis {
     return FlushAllCommand(async: async, opts: opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/flushdb
+  Future<String> flushdb({bool? async, CommandOption<String, String>? opts}) {
+    return FlushDbCommand(async: async, opts: opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/get
   Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
     return GetCommand<TData>([key], opts).exec(_client);
