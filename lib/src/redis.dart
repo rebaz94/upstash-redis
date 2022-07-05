@@ -117,6 +117,11 @@ class Redis {
     return DelCommand(keys, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/echo
+  Future<String> echo(String message, [CommandOption<String, String>? opts]) {
+    return EchoCommand(message, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/get
   Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
     return GetCommand<TData>([key], opts).exec(_client);
