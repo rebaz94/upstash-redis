@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:upstash_redis/src/commands/append.dart';
 import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/http.dart';
 
@@ -67,6 +68,11 @@ class Redis {
 
   final Requester _client;
   final CommandOption<dynamic, dynamic>? opts;
+
+  /// @see https://redis.io/commands/append
+  Future<int> append(String key, String value, [CommandOption<int, int>? opts]) {
+    return AppendCommand(key, value).exec(_client);
+  }
 
   /// @see https://redis.io/commands/del
   Future<int> del(List<String> keys, [CommandOption<int, int>? opts]) {
