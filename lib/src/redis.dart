@@ -177,6 +177,11 @@ class Redis {
     return GetBitCommand(key, offset, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/getrange
+  Future<String> getrange(String key, int start, int end, [CommandOption<String, String>? opts]) {
+    return GetRangeCommand(key, start, end, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
