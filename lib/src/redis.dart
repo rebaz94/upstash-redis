@@ -182,6 +182,11 @@ class Redis {
     return GetRangeCommand(key, start, end, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/getset
+  Future<TData?> getset<TData>(String key, TData value, [CommandOption<dynamic, TData>? opts]) {
+    return GetSetCommand<TData>(key, value, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
