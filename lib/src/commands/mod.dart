@@ -7,3 +7,4 @@ export 'zadd.dart';
 export 'zscore.dart';
 export 'append.dart';
 export 'bitcount.dart';
+export 'bitop.dart';
