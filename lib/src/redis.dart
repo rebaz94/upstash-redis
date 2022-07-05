@@ -132,9 +132,24 @@ class Redis {
     return EvalCommand<TArgs, TData>(script, keys, args, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/evalsha
+  Future<TData> evalsha<TArgs, TData>(
+    String sha,
+    List<String> keys,
+    List<TArgs> args, [
+    CommandOption<dynamic, TData>? opts,
+  ]) {
+    return EvalshaCommand<TArgs, TData>(sha, keys, args, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/get
   Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
     return GetCommand<TData>([key], opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/script-load
+  Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
+    return ScripLoadCommand(script, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/set
