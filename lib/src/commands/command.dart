@@ -4,6 +4,8 @@ import 'package:upstash_redis/src/http.dart';
 import 'package:upstash_redis/src/upstash_error.dart';
 import 'package:upstash_redis/src/utils.dart';
 
+export 'package:upstash_redis/src/http.dart' show Requester;
+
 typedef Serialize = String Function(dynamic data);
 typedef Deserialize<TResult, TData> = TData Function(TResult result);
 
