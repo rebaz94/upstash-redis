@@ -10,39 +10,41 @@ void main() async {
 
   tearDownAll(() => keygen.cleanup());
 
-  test('gets an exiting value', () async {
-    final key = newKey();
-    final field = randomID();
-    final value = randomID();
-    await HSetCommand(key, {field: value}).exec(client);
+  group('hget command', () {
+    test('gets an exiting value', () async {
+      final key = newKey();
+      final field = randomID();
+      final value = randomID();
+      await HSetCommand(key, {field: value}).exec(client);
 
-    final res = await HGetCommand<String>(key, field).exec(client);
-    expect(res, value);
-  });
+      final res = await HGetCommand<String>(key, field).exec(client);
+      expect(res, value);
+    });
 
-  test('gets a non-existing hash', () async {
-    final key = newKey();
-    final field = randomID();
-    final res = await HGetCommand(key, field).exec(client);
-    expect(res, null);
-  });
+    test('gets a non-existing hash', () async {
+      final key = newKey();
+      final field = randomID();
+      final res = await HGetCommand(key, field).exec(client);
+      expect(res, null);
+    });
 
-  test('gets a non-existing field', () async {
-    final key = newKey();
-    final field = randomID();
-    await HSetCommand(key, {randomID(): randomID()}).exec(client);
+    test('gets a non-existing field', () async {
+      final key = newKey();
+      final field = randomID();
+      await HSetCommand(key, {randomID(): randomID()}).exec(client);
 
-    final res = await HGetCommand(key, field).exec(client);
-    expect(res, null);
-  });
+      final res = await HGetCommand(key, field).exec(client);
+      expect(res, null);
+    });
 
-  test('gets an object', () async {
-    final key = newKey();
-    final field = randomID();
-    final value = {'v': randomID()};
-    await HSetCommand(key, {field: value}).exec(client);
+    test('gets an object', () async {
+      final key = newKey();
+      final field = randomID();
+      final value = {'v': randomID()};
+      await HSetCommand(key, {field: value}).exec(client);
 
-    final res = await HGetCommand<Map<String, String>>(key, field).exec(client);
-    expect(res, value);
+      final res = await HGetCommand<Map<String, String>>(key, field).exec(client);
+      expect(res, value);
+    });
   });
 }

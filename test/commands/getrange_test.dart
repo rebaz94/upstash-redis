@@ -10,11 +10,13 @@ void main() async {
 
   tearDownAll(() => keygen.cleanup());
 
-  test('gets an exiting value', () async {
-    final key = newKey();
-    final value = 'Hello World';
-    await SetCommand(key, value).exec(client);
-    final res = await GetRangeCommand(key, 2, 4).exec(client);
-    expect(res, value.substring(2, 5));
+  group('getrange command', () {
+    test('gets an exiting value', () async {
+      final key = newKey();
+      final value = 'Hello World';
+      await SetCommand(key, value).exec(client);
+      final res = await GetRangeCommand(key, 2, 4).exec(client);
+      expect(res, value.substring(2, 5));
+    });
   });
 }
