@@ -37,9 +37,10 @@ abstract class Command<TResult, TData> {
     /*String|unknown*/
     List<dynamic> command, [
     CommandOption<TResult, TData>? opts,
+    Deserialize<TResult, TData>? deserialize,
     this.serialize = defaultSerializer,
-  ])  : deserialize = (opts == null || opts.automaticDeserialization == true)
-            ? opts?.deserialize ?? parseResponse
+  ])  : deserialize = (opts == null || opts.automaticDeserialization)
+            ? opts?.deserialize ?? deserialize ?? parseResponse
             : _castedDeserializer,
         command = command.map(serialize).toList();
 
