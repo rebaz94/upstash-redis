@@ -5,6 +5,7 @@ import 'package:upstash_redis/src/commands/command.dart';
 import 'package:upstash_redis/src/commands/hgetall.dart';
 import 'package:upstash_redis/src/commands/hset.dart';
 import 'package:upstash_redis/src/test_utils.dart';
+import 'package:upstash_redis/src/utils.dart';
 
 void main() async {
   final client = newHttpClient();
@@ -25,8 +26,12 @@ void main() async {
     final value2 = '12345';
     final value3 = 'rebaz';
     final value4 = {'v': 'me'};
-    final value5 = {'v': ['me2', 1]};
-    final value6 = {'v': ['1', '2']};
+    final value5 = {
+      'v': ['me2', 1]
+    };
+    final value6 = {
+      'v': ['1', '2']
+    };
     await HSetCommand(key, {
       field1: value1,
       field2: value2,
@@ -37,28 +42,44 @@ void main() async {
     }).exec(client);
 
     final res = await HGetAllCommand<Object>(key).exec(client);
-    final obj = <String, dynamic>{
-      field1: false,
-      field2: 12345,
-      field3: 'rebaz',
-      field4: {'v': 'me'},
-      field5: {'v': ['me2', 1]},
-      field6: {'v': ['1','2']},
-    };
-    expect(res, obj);
-
-    // this custom deserialize used to prevent converting string number to string and
-    // convert true|false to bool, number to string,
-    final res2 = await HGetAllCommand<Object>(key, _getCustomDeserialize()).exec(client);
-    final obj2 = <String, dynamic>{
+    expect(res, <String, dynamic>{
       field1: false,
       field2: '12345',
       field3: 'rebaz',
       field4: {'v': 'me'},
-      field5: {'v': ['me2', 1]},
-      field6: {'v': ['1', '2']},
-    };
-    expect(res2, obj2);
+      field5: {
+        'v': ['me2', 1]
+      },
+      field6: {
+        'v': ['1', '2']
+      },
+    });
+
+    final res2 = await HGetAllCommand<String>(key).exec(client);
+    expect(res2?.sorted(), <String, dynamic>{
+      field1: 'false',
+      field2: '12345',
+      field3: 'rebaz',
+      field4: '{"v":"me"}',
+      field5: '{"v":["me2",1]}',
+      field6: '{"v":["1","2"]}',
+    });
+
+    // this custom deserialize used to prevent converting string number to string and
+    // convert true|false to bool, number to string,
+    final res3 = await HGetAllCommand<Object>(key, _getCustomDeserialize()).exec(client);
+    expect(res3, <String, dynamic>{
+      field1: false,
+      field2: 12345,
+      field3: 'rebaz',
+      field4: {'v': 'me'},
+      field5: {
+        'v': ['me2', 1]
+      },
+      field6: {
+        'v': ['1', '2']
+      },
+    });
   });
 }
 
@@ -86,13 +107,9 @@ CommandOption<Object?, Map<String, Object?>> _getCustomDeserialize() {
 }
 
 Object? _parseValue(dynamic value) {
-  Object? parsed;
-  final isString = value is String;
-  if (isString && (parsed = num.tryParse(value)) != null) {
-    return parsed.toString();
-  } else if (parsed == 'false' || parsed == 'true') {
-    return parsed == 'false' ? false : true;
-  } else if (value is List) {
+  if (value is num || value is bool) return value;
+
+  if (value is List) {
     return value.map((o) {
       try {
         return _parseValue(o);

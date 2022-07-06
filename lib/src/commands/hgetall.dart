@@ -30,13 +30,10 @@ class HGetAllCommand<TData> extends Command<Object?, Map<String, TData?>?> {
   ///
   /// The [TData] parameter work well if the values of the fields has same type.
   /// for example if you set value like this -> {'f1': 'a', 'f2': '123', 'f3': false} then it best to
-  /// set [TData] as [Object] this way default deserializer will try to decode to
-  /// {'f1': 'a', 'f2': 123, 'f3': false}.
+  /// set [TData] as [Object] or [dynamic] this way default deserializer will try to decode to
+  /// {'f1': 'a', 'f2': '123', 'f3': false}.
   ///
   /// Note:
-  /// * you can see that the field of `f2` converted to number but the original value is string,
-  /// if you want to be a string, you can create a custom deserializer to convert back to string.
-  ///
   /// * if set [TData] as [String] the original string will be returned from redis, so you can later
   /// deserializer your complex object.
   ///
@@ -50,15 +47,14 @@ class HGetAllCommand<TData> extends Command<Object?, Map<String, TData?>?> {
   ///
   ///  final res = await HGetAllCommand<Object>(key).exec(client);
   ///  expect(res, <String, dynamic>{
-  ///    'f1': false, 'f2': 12345, 'f3': 'rebaz',
+  ///    'f1': false, 'f2': '12345', 'f3': 'rebaz',
   ///    'f4': {'v': 'me'}, 'f5': {'v': ['me2', 1]}
   ///  });
   ///
-  ///  // this custom deserialize used to prevent converting string number to string and
-  ///  // convert true|false to bool, number to string,
+  ///  // this custom deserialize used to convert string number to number
   ///  final res2 = await HGetAllCommand<Object>(key, _getCustomDeserialize()).exec(client);
   ///  expect(res2, <String, dynamic>{
-  ///    'f1': false, 'f2': '12345', 'f3': 'rebaz',
+  ///    'f1': false, 'f2': 12345, 'f3': 'rebaz',
   ///    'f4': {'v': 'me'}, 'f5': {'v': ['me2', 1]}
   ///  });
   /// ```
@@ -88,13 +84,9 @@ class HGetAllCommand<TData> extends Command<Object?, Map<String, TData?>?> {
   /// }
   ///
   /// Object? _parseValue(dynamic value) {
-  ///   Object? parsed;
-  ///   final isString = value is String;
-  ///   if (isString && (parsed = num.tryParse(value)) != null) {
-  ///     return parsed.toString();
-  ///   } else if (parsed == 'false' || parsed == 'true') {
-  ///     return parsed == 'false' ? false : true;
-  ///   } else if (value is List) {
+  ///   if (value is num || value is bool) return value;
+  ///
+  ///   if (value is List) {
   ///     return value.map((o) {
   ///       try {
   ///         return _parseValue(o);
