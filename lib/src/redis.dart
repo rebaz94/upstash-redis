@@ -197,6 +197,11 @@ class Redis {
     return HDelCommand(key, field, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hexists
+  Future<int> hexists(String key, String field, [CommandOption<int, int>? opts]) {
+    return HExistsCommand(key, field, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/hset
   Future<int> hset<TData>(String key, Map<String, TData> kv, [CommandOption<int, int>? opts]) {
     return HSetCommand<TData>(key, kv, opts).exec(_client);
