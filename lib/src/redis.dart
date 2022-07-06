@@ -211,6 +211,16 @@ class Redis {
     return HIncrByCommand(key, field, increment, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hincrbyfloat
+  Future<num> hincrbyfloat(
+    String key,
+    String field,
+    num increment, [
+    CommandOption<num, num>? opts,
+  ]) {
+    return HIncrByFloatCommand(key, field, increment, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/hdel
   Future<int> hdel(String key, String field, [CommandOption<int, int>? opts]) {
     return HDelCommand(key, field, opts).exec(_client);

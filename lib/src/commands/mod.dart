@@ -22,6 +22,7 @@ export 'getset.dart';
 export 'hget.dart';
 export 'hgetall.dart';
 export 'hincrby.dart';
+export 'hincrbyfloat.dart';
 export 'hdel.dart';
 export 'hexists.dart';
 export 'hset.dart';
