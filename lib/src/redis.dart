@@ -226,6 +226,11 @@ class Redis {
     return HKeysCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hlen
+  Future<List<String>> hlen(String key, [CommandOption<List<String>, List<String>>? opts]) {
+    return HKeysCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/hmget
   Future<Map<String, TData?>?> hmget<TData>(
     String key,
