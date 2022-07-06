@@ -21,6 +21,7 @@ export 'getrange.dart';
 export 'getset.dart';
 export 'hget.dart';
 export 'hgetall.dart';
+export 'hincrby.dart';
 export 'hdel.dart';
 export 'hexists.dart';
 export 'hset.dart';

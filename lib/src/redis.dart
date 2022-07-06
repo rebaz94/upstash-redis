@@ -201,6 +201,16 @@ class Redis {
     return HGetAllCommand<TData>(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hincrby
+  Future<int> hincrby(
+    String key,
+    String field,
+    int increment, [
+    CommandOption<int, int>? opts,
+  ]) {
+    return HIncrByCommand(key, field, increment, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/hdel
   Future<int> hdel(String key, String field, [CommandOption<int, int>? opts]) {
     return HDelCommand(key, field, opts).exec(_client);
