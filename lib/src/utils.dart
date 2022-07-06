@@ -67,3 +67,18 @@ dynamic parseRecursive(dynamic obj) {
   //
   // return parsed;
 }
+
+
+extension MapX<K,V> on Map<K, V> {
+
+  Map<K, V> sorted() {
+    final keys = this.keys.toList()..sort();
+    final sorted = <K, V>{};
+    for (final e in keys) {
+      // ignore: null_check_on_nullable_type_parameter
+      sorted[e] = this[e]!;
+    }
+    return sorted;
+  }
+
+}

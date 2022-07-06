@@ -221,6 +221,26 @@ class Redis {
     return HIncrByFloatCommand(key, field, increment, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hkeys
+  Future<List<String>> hkeys(String key, [CommandOption<List<String>, List<String>>? opts]) {
+    return HKeysCommand(key, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/hmget
+  Future<Map<String, TData?>?> hmget<TData>(
+    String key,
+    List<String> fields, [
+    CommandOption<List<String>, Map<String, TData?>>? opts,
+  ]) {
+    return HMGetCommand(key, fields, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/hmset
+  Future<String> hmset<TData>(String key, Map<String, TData> kv,
+      [CommandOption<String, String>? opts]) {
+    return HMSetCommand(key, kv, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/hdel
   Future<int> hdel(String key, String field, [CommandOption<int, int>? opts]) {
     return HDelCommand(key, field, opts).exec(_client);
