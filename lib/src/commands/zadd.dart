@@ -1,6 +1,5 @@
 import 'package:upstash_redis/src/commands/command.dart';
 import 'package:collection/collection.dart';
-import 'package:upstash_redis/src/http.dart';
 
 class ScoreMember<TData> {
   const ScoreMember({

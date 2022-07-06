@@ -1,5 +1,4 @@
 import 'package:upstash_redis/src/commands/command.dart';
-import 'package:upstash_redis/src/http.dart';
 
 class HIncrByFloatCommand extends Command<num, num> {
   HIncrByFloatCommand._(super.command, super.opts);
