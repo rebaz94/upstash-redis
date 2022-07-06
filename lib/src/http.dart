@@ -6,18 +6,21 @@ import 'package:upstash_redis/src/upstash_error.dart';
 class UpstashResponse<TResult> {
   const UpstashResponse({
     this.result,
+    this.undefined = false,
     this.error,
   });
 
   factory UpstashResponse.fromJson(Map<String, dynamic> json) {
     final result = json['result'];
     return UpstashResponse(
-      result: json.containsKey('result') ? result : undefined,
+      result: result is TResult ? result : null,
+      undefined: !json.containsKey('result'),
       error: json['error'] as String?,
     );
   }
 
   final TResult? result;
+  final bool undefined;
   final String? error;
 }
 

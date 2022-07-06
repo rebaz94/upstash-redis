@@ -8,5 +8,3 @@ class UpstashError implements Exception {
     return 'UpstashError($message)';
   }
 }
-
-const undefined = Object();

@@ -57,8 +57,6 @@ abstract class Command<TResult, TData> {
   }
 }
 
-@pragma('vm:prefer-inline')
-@pragma('dart2js:tryInline')
 TResult? checkUpstashResponse<TResult>(UpstashResponse<TResult> response) {
   final error = response.error;
   final result = response.result;
@@ -67,7 +65,7 @@ TResult? checkUpstashResponse<TResult>(UpstashResponse<TResult> response) {
     throw UpstashError(error);
   }
 
-  if (result == undefined) {
+  if (response.undefined) {
     throw Exception('Request did not return a result');
   }
 
