@@ -10,20 +10,22 @@ void main() async {
 
   tearDownAll(() => keygen.cleanup());
 
-  test('gets an exiting value', () async {
-    final key = newKey();
-    final member1 = randomID();
-    final member2 = randomID();
+  group('zrem', () {
+    test('gets an exiting value', () async {
+      final key = newKey();
+      final member1 = randomID();
+      final member2 = randomID();
 
-    await ZAddCommand(
-      key,
-      [
-        ScoreMember(score: 1, member: member1),
-        ScoreMember(score: 2, member: member2),
-      ],
-    ).exec(client);
+      await ZAddCommand(
+        key,
+        [
+          ScoreMember(score: 1, member: member1),
+          ScoreMember(score: 2, member: member2),
+        ],
+      ).exec(client);
 
-    final res = await ZRemCommand(key, [member1, member2]).exec(client);
-    expect(res, 2);
+      final res = await ZRemCommand(key, [member1, member2]).exec(client);
+      expect(res, 2);
+    });
   });
 }
