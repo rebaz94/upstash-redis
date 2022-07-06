@@ -10,4 +10,17 @@ class ZScoreCommand<TData> extends Command<String?, num?> {
   ]) {
     return ZScoreCommand._(['zscore', key, member], opts);
   }
+
+  @override
+  Future<num?> exec(Requester client) async {
+    final response = await client.request<dynamic>(body: command);
+    final result = checkUpstashResponse<dynamic>(response);
+
+    if (result is String) {
+      return num?.tryParse(result);
+    } else if (result is num) {
+      return result;
+    }
+    return deserialize(result);
+  }
 }
