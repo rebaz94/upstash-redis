@@ -33,21 +33,37 @@ TResult parseResponse<TResult>(dynamic result) {
 }
 
 dynamic parseRecursive(dynamic obj) {
-  final parsed = obj is List
-      ? obj.map((o) {
-          try {
-            return parseRecursive(o);
-          } catch (_) {
-            return o;
-          }
-        }).toList()
-      : json.decode(obj as String);
-
-  // Parsing very large numbers can result in MAX_SAFE_INTEGER
-  // overflow. In that case we return the number as string instead.
-  if (parsed is num && parsed.toString() != obj) {
+  if (obj is String && num.tryParse(obj) != null) {
     return obj;
+  } else if (obj is bool) {
+    return obj;
+  } else if (obj is List) {
+    return obj.map((o) {
+      try {
+        return parseRecursive(o);
+      } catch (_) {
+        return o;
+      }
+    });
+  } else {
+    return json.decode(obj as String);
   }
 
-  return parsed;
+  // final parsed = obj is List
+  //     ? obj.map((o) {
+  //         try {
+  //           return parseRecursive(o);
+  //         } catch (_) {
+  //           return o;
+  //         }
+  //       }).toList()
+  //     : json.decode(obj as String);
+  //
+  // // Parsing very large numbers can result in MAX_SAFE_INTEGER
+  // // overflow. In that case we return the number as string instead.
+  // if (parsed is num && parsed.toString() != obj) {
+  //   return obj;
+  // }
+  //
+  // return parsed;
 }
