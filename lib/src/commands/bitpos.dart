@@ -5,10 +5,20 @@ class BitPosCommand extends Command<int, int> {
 
   factory BitPosCommand(
     String key,
-    int start, [
+    int bit, [
+    int? start,
     int? end,
     CommandOption<int, int>? opts,
   ]) {
-    return BitPosCommand._(['bitpos', key, start, if (end != null) end], opts);
+    if (bit > 1 || bit < 0) {
+      throw StateError('`bit should be 0 or 1`');
+    }
+    return BitPosCommand._([
+      'bitpos',
+      key,
+      bit,
+      if (start != null) start,
+      if (end != null) end,
+    ], opts);
   }
 }

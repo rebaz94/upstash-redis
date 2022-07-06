@@ -12,7 +12,7 @@ void main() async {
 
   test('when key is not set, returns 0', () async {
     final key = newKey();
-    final res = await BitPosCommand(key, 1, 1).exec(client);
+    final res = await BitPosCommand(key, 0, 1, 1).exec(client);
     expect(res, -1);
   });
 
@@ -20,7 +20,7 @@ void main() async {
     final key = newKey();
     final value = 'Hello World';
     await SetCommand(key, value).exec(client);
-    final res = await BitPosCommand(key, 2, 3).exec(client);
+    final res = await BitPosCommand(key, 0, 2, 3).exec(client);
     expect(res, 24);
   });
 }

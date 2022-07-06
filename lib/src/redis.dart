@@ -93,8 +93,8 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/bitpos
-  Future<int> bitpos(String key, int start, [int? end, CommandOption<int, int>? opts]) {
-    return BitPosCommand(key, start, end, opts).exec(_client);
+  Future<int> bitpos(String key, int bit, [int? start, int? end, CommandOption<int, int>? opts]) {
+    return BitPosCommand(key, bit, start, end, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/dbsize
