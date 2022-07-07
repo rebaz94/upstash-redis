@@ -35,6 +35,7 @@ export 'hvals.dart';
 export 'incr.dart';
 export 'incrby.dart';
 export 'incrbyfloat.dart';
+export 'keys.dart';
 export 'hscan.dart';
 export 'script_load.dart';
 export 'set.dart';
