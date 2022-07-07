@@ -246,6 +246,17 @@ class Redis {
     return HMSetCommand(key, kv, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hscan
+  Future<List<dynamic>> hscan(
+    String key,
+    int cursor, {
+    String? match,
+    int? count,
+    CommandOption<List<dynamic>, List<dynamic>>? opts,
+  }) {
+    return HScanCommand(key, cursor, match: match, count: count, opts: opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/hdel
   Future<int> hdel(String key, String field, [CommandOption<int, int>? opts]) {
     return HDelCommand(key, field, opts).exec(_client);
