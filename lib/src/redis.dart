@@ -344,6 +344,52 @@ class Redis {
     return LPushCommand(key, elements, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/lrange
+  Future<List<TData>> lrange<TData>(String key, int start, int end,
+      [CommandOption<List<Object?>, List<TData>>? opts]) {
+    return LRangeCommand<TData>(key, start, end, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/lrem
+  Future<int> lrem<TData>(String key, int count, TData value, [CommandOption<int, int>? opts]) {
+    return LRemCommand<TData>(key, count, value, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/lset
+  Future<String> lset<TData>(
+    String key,
+    int index,
+    TData value, [
+    CommandOption<String, String>? opts,
+  ]) {
+    return LSetCommand<TData>(key, index, value, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/ltrim
+  Future<String> ltrim(
+    String key,
+    int start,
+    int end, [
+    CommandOption<String, String>? opts,
+  ]) {
+    return LTrimCommand(key, start, end, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/rpop
+  Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
+    return RPopCommand(key, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/rpush
+  Future<int> rpush<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
+    return RPushCommand(key, elements, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/rpushx
+  Future<int> rpushx<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
+    return RPushXCommand(key, elements, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
