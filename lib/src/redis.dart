@@ -278,6 +278,11 @@ class Redis {
     return HSetNXCommand<TData>(key, field, value, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hstrlen
+  Future<int> hstrlen<TData>(String key, String field, [CommandOption<int, int>? opts]) {
+    return HStrLenCommand(key, field, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);

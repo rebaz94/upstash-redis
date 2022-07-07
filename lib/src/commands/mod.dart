@@ -30,6 +30,7 @@ export 'hdel.dart';
 export 'hexists.dart';
 export 'hset.dart';
 export 'hsetnx.dart';
+export 'hstrlen.dart';
 export 'hscan.dart';
 export 'script_load.dart';
 export 'set.dart';
