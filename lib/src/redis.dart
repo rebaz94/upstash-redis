@@ -308,6 +308,42 @@ class Redis {
     return KeysCommand(pattern, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/lindex
+  Future<TData?> lindex<TData>(String key, int index, [CommandOption<Object?, TData?>? opts]) {
+    return LIndexCommand(key, index, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/linsert
+  Future<int> linsert<TData>(
+    String key,
+    IDirection direction,
+    TData pivot,
+    TData value, [
+    CommandOption<int, int>? opts,
+  ]) {
+    return LInsertCommand(key, direction, pivot, value, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/llen
+  Future<int> llen(String key, [CommandOption<int, int>? opts]) {
+    return LLenCommand(key, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/lpop
+  Future<TData?> lpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
+    return LPopCommand(key, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/lpush
+  Future<int> lpush<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
+    return LPushCommand(key, elements, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/lpushx
+  Future<int> lpushx<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
+    return LPushCommand(key, elements, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
