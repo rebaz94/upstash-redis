@@ -293,6 +293,11 @@ class Redis {
     return IncrCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/incrby
+  Future<int> incrby<TData>(String key, int value, [CommandOption<int, int>? opts]) {
+    return IncrByCommand(key, value, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);

@@ -33,6 +33,7 @@ export 'hsetnx.dart';
 export 'hstrlen.dart';
 export 'hvals.dart';
 export 'incr.dart';
+export 'incrby.dart';
 export 'hscan.dart';
 export 'script_load.dart';
 export 'set.dart';
