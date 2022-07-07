@@ -29,6 +29,7 @@ export 'hmget.dart';
 export 'hdel.dart';
 export 'hexists.dart';
 export 'hset.dart';
+export 'hsetnx.dart';
 export 'hscan.dart';
 export 'script_load.dart';
 export 'set.dart';
