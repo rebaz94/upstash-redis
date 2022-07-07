@@ -283,6 +283,11 @@ class Redis {
     return HStrLenCommand(key, field, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hvals
+  Future<List<TData>> hvals<TData>(String key, [CommandOption<List<TData>, List<TData>>? opts]) {
+    return HValsCommand<TData>(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
