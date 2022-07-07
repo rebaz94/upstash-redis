@@ -288,6 +288,11 @@ class Redis {
     return HValsCommand<TData>(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/incr
+  Future<int> incr<TData>(String key, [CommandOption<int, int>? opts]) {
+    return IncrCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
