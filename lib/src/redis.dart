@@ -289,13 +289,18 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/incr
-  Future<int> incr<TData>(String key, [CommandOption<int, int>? opts]) {
+  Future<int> incr(String key, [CommandOption<int, int>? opts]) {
     return IncrCommand(key, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/incrby
-  Future<int> incrby<TData>(String key, int value, [CommandOption<int, int>? opts]) {
+  Future<int> incrby(String key, int value, [CommandOption<int, int>? opts]) {
     return IncrByCommand(key, value, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/incrbyfloat
+  Future<num> incrbyfloat(String key, num value, [CommandOption<num, num>? opts]) {
+    return IncrByFloatCommand(key, value, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/script-load
