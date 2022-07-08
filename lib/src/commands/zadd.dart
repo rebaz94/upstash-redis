@@ -11,7 +11,7 @@ class ScoreMember<TData> {
   final TData member;
 }
 
-class ZAddCommand<TData> extends Command<num?, num?> {
+class ZAddCommand<TData> extends Command<dynamic, num?> {
   ZAddCommand._(super.command, super.opts);
 
   factory ZAddCommand.single(
@@ -22,7 +22,7 @@ class ZAddCommand<TData> extends Command<num?, num?> {
     bool? incr,
     bool? nx,
     bool? xx,
-    CommandOption<num?, num?>? cmdOpts,
+    CommandOption<dynamic, num?>? cmdOpts,
   }) {
     ScoreMember<TData>? scoreMember;
     if (score != null && member != null) {
@@ -46,7 +46,7 @@ class ZAddCommand<TData> extends Command<num?, num?> {
     bool? incr,
     bool? nx,
     bool? xx,
-    CommandOption<num?, num?>? cmdOpts,
+    CommandOption<dynamic, num?>? cmdOpts,
   }) {
     if (nx != null && xx != null) {
       throw StateError('should only provide "nx" or "xx"');
@@ -78,11 +78,12 @@ class ZAddCommand<TData> extends Command<num?, num?> {
     final response = await client.request<dynamic>(body: command);
     final result = checkUpstashResponse<dynamic>(response);
 
+    dynamic value = result;
     if (result is String) {
-      return num?.tryParse(result);
+      value = num?.tryParse(result);
     } else if (result is num) {
-      return result;
+      value = result;
     }
-    return deserialize(result);
+    return deserialize(value);
   }
 }

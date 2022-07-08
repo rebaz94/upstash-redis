@@ -444,7 +444,7 @@ class Redis {
     bool? incr,
     bool? nx,
     bool? xx,
-    CommandOption<num?, num?>? cmdOpts,
+    CommandOption<dynamic, num?>? cmdOpts,
   }) {
     final allScores = [...scores];
     if (score != null && member != null) {
