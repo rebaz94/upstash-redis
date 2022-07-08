@@ -1,6 +1,6 @@
 import 'package:upstash_redis/src/commands/command.dart';
 
-class IncrByFloatCommand extends Command<num, num> {
+class IncrByFloatCommand extends Command<dynamic, num> {
   IncrByFloatCommand._(super.command, super.opts);
 
   factory IncrByFloatCommand(String key, num value, [CommandOption<num, num>? opts]) {
@@ -9,8 +9,8 @@ class IncrByFloatCommand extends Command<num, num> {
 
   @override
   Future<num> exec(Requester client) async {
-    final response = await client.request<String>(body: command);
-    final result = checkUpstashResponse<String>(response);
-    return deserialize(num.parse(result ?? ''));
+    final response = await client.request<dynamic>(body: command);
+    final result = checkUpstashResponse<dynamic>(response);
+    return deserialize(result is num ? result : num.parse('$result'));
   }
 }
