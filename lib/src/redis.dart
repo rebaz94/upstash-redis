@@ -375,6 +375,19 @@ class Redis {
     return LTrimCommand(key, start, end, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/mget
+  Future<List<TData?>> mget<TData>(
+    List<String> keys, [
+    CommandOption<List<String?>, List<TData?>>? opts,
+  ]) {
+    return MGetCommand<TData>(keys, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/mset
+  Future<String> mset<TData>(Map<String, TData> kv, [CommandOption<String, String>? opts]) {
+    return MSetCommand<TData>(kv, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);

@@ -47,6 +47,8 @@ export 'lrange.dart';
 export 'lrem.dart';
 export 'lset.dart';
 export 'ltrim.dart';
+export 'mget.dart';
+export 'mset.dart';
 export 'rpop.dart';
 export 'rpush.dart';
 export 'rpushx.dart';

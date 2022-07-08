@@ -44,7 +44,7 @@ dynamic parseRecursive(dynamic obj) {
       } catch (_) {
         return o;
       }
-    });
+    }).toList();
   } else {
     return json.decode(obj as String);
   }

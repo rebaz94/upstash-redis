@@ -10,11 +10,41 @@ class UpstashResponse<TResult> {
     this.error,
   });
 
+  static final _implicitDecode = {
+    (List<String>).toString(): (result) => List<String>.from(result as List),
+    (List<String?>).toString(): (result) => List<String?>.from(result as List),
+    (List<int>).toString(): (result) => List<int>.from(result as List),
+    (List<int?>).toString(): (result) => List<int?>.from(result as List),
+    (List<double>).toString(): (result) => List<double>.from(result as List),
+    (List<double?>).toString(): (result) => List<double?>.from(result as List),
+    (List<num>).toString(): (result) => List<num>.from(result as List),
+    (List<num?>).toString(): (result) => List<num?>.from(result as List),
+    (List<bool>).toString(): (result) => List<bool>.from(result as List),
+    (List<bool?>).toString(): (result) => List<bool?>.from(result as List),
+  };
+
   factory UpstashResponse.fromJson(Map<String, dynamic> json) {
     final result = json['result'];
+    final hasResult = json.containsKey('result');
+    final type = TResult.toString();
+
+    if (!hasResult) {
+      return UpstashResponse(
+        result: null,
+        undefined: true,
+        error: json['error'] as String?,
+      );
+    }
+
+    dynamic converted = result;
+    final decoderFn = _implicitDecode[type];
+    if (decoderFn != null) {
+      converted = decoderFn(result);
+    }
+
     return UpstashResponse(
-      result: result is TResult ? result : null,
-      undefined: !json.containsKey('result'),
+      result: converted,
+      undefined: false,
       error: json['error'] as String?,
     );
   }
