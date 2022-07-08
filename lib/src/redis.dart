@@ -346,7 +346,7 @@ class Redis {
 
   /// @see https://redis.io/commands/lrange
   Future<List<TData>> lrange<TData>(String key, int start, int end,
-      [CommandOption<List<Object?>, List<TData>>? opts]) {
+      [CommandOption<List<String?>, List<TData>>? opts]) {
     return LRangeCommand<TData>(key, start, end, opts).exec(_client);
   }
 
