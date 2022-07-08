@@ -1,6 +1,6 @@
 import 'package:upstash_redis/src/commands/command.dart';
 
-class HIncrByFloatCommand extends Command<num, num> {
+class HIncrByFloatCommand extends Command<dynamic, num> {
   HIncrByFloatCommand._(super.command, super.opts);
 
   factory HIncrByFloatCommand(
