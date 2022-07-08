@@ -1,6 +1,6 @@
 import 'package:upstash_redis/src/commands/command.dart';
 
-class ZScoreCommand<TData> extends Command<String?, num?> {
+class ZScoreCommand<TData> extends Command<dynamic, num?> {
   ZScoreCommand._(super.command, super.opts);
 
   factory ZScoreCommand(
@@ -16,11 +16,12 @@ class ZScoreCommand<TData> extends Command<String?, num?> {
     final response = await client.request<dynamic>(body: command);
     final result = checkUpstashResponse<dynamic>(response);
 
+    dynamic value = result;
     if (result is String) {
-      return num?.tryParse(result);
+      value = num?.tryParse(result);
     } else if (result is num) {
-      return result;
+      value = result;
     }
-    return deserialize(result);
+    return deserialize(value);
   }
 }
