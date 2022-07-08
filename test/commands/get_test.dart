@@ -29,13 +29,8 @@ void main() async {
       final key = newKey();
       final value = {'v': randomID()};
       await SetCommand(key, value).exec(client);
-      try {
-        final res = await GetCommand<Map<String, String>>([key]).exec(client);
-        expect(res, value);
-      } catch (e, stack) {
-        print(e);
-        print(stack);
-      }
+      final res = await GetCommand<Map<String, String>>([key]).exec(client);
+      expect(res, value);
     });
   });
 }
