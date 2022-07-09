@@ -388,6 +388,11 @@ class Redis {
     return MSetCommand<TData>(kv, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/msetnx
+  Future<int> msetnx<TData>(Map<String, TData> kv, [CommandOption<int, int>? opts]) {
+    return MSetNXCommand<TData>(kv, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
