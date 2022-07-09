@@ -38,7 +38,7 @@ void main() async {
       final res = await MSetNXCommand(kv).exec(client);
       expect(res, 0);
 
-      final res2 = await GetCommand<String>([key2]).exec(client);
+      final res2 = await GetCommand<String>(key2).exec(client);
       expect(res2, null);
     });
   });
