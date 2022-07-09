@@ -2,13 +2,16 @@ import 'dart:convert';
 
 import 'package:upstash_redis/src/converters.dart';
 
-Type _get<T>() => T;
-final _types = [_get<dynamic>().toString(), _get<Object>().toString()];
+final _uncheckedTypes = [_type<dynamic>(), _type<Object>()].map((e) => e.toString()).toList();
+final _int = _type<int>().toString();
+final _num = _type<num>().toString();
+
+Type _type<T>() => T;
 
 TResult parseResponse<TResult>(dynamic result) {
   try {
     final resultType = TResult.toString().replaceAll('?', '');
-    if (!_types.contains(resultType) && result is TResult) {
+    if (!_uncheckedTypes.contains(resultType) && result is TResult) {
       return result;
     }
 
@@ -24,6 +27,10 @@ TResult parseResponse<TResult>(dynamic result) {
       if (converter != null) {
         return converter.call(value) as TResult;
       }
+    } else if (resultType == _int && value is String) {
+      return int.tryParse(value) as TResult;
+    } else if (resultType == _num && value is String) {
+      return num.tryParse(value) as TResult;
     }
 
     return value as TResult;
@@ -35,8 +42,6 @@ TResult parseResponse<TResult>(dynamic result) {
 dynamic parseRecursive(dynamic obj) {
   if (obj is String && num.tryParse(obj) != null) {
     return obj;
-  } else if (obj is bool) {
-    return obj;
   } else if (obj is List) {
     return obj.map((o) {
       try {
@@ -45,6 +50,8 @@ dynamic parseRecursive(dynamic obj) {
         return o;
       }
     }).toList();
+  } else if (obj is bool) {
+    return obj;
   } else {
     return json.decode(obj as String);
   }
@@ -68,9 +75,7 @@ dynamic parseRecursive(dynamic obj) {
   // return parsed;
 }
 
-
-extension MapX<K,V> on Map<K, V> {
-
+extension MapX<K, V> on Map<K, V> {
   Map<K, V> sorted() {
     final keys = this.keys.toList()..sort();
     final sorted = <K, V>{};
@@ -80,5 +85,4 @@ extension MapX<K,V> on Map<K, V> {
     }
     return sorted;
   }
-
 }
