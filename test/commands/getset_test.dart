@@ -19,7 +19,7 @@ void main() async {
     final res = await GetSetCommand<String>(key, newValue).exec(client);
     expect(res, value);
 
-    final res2 = await GetCommand([key]).exec(client);
+    final res2 = await GetCommand(key).exec(client);
     expect(res2, newValue);
   });
 
@@ -29,7 +29,7 @@ void main() async {
     final res = await GetSetCommand<String>(key, newValue).exec(client);
     expect(res, null);
 
-    final res2 = await GetCommand([key]).exec(client);
+    final res2 = await GetCommand(key).exec(client);
     expect(res2, newValue);
   });
 }

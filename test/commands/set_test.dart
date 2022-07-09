@@ -15,7 +15,7 @@ void main() async {
     final value = randomID();
     final res = await SetCommand(key, value).exec(client);
     expect(res, 'OK');
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, value);
   });
 
@@ -25,11 +25,11 @@ void main() async {
 
     final res = await SetCommand(key, value, ex: 1).exec(client);
     expect(res, 'OK');
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, value);
 
     await Future.delayed(const Duration(seconds: 2));
-    final res3 = await GetCommand<String>([key]).exec(client);
+    final res3 = await GetCommand<String>(key).exec(client);
     expect(res3, null);
   });
 
@@ -39,11 +39,11 @@ void main() async {
 
     final res = await SetCommand(key, value, px: 1000).exec(client);
     expect(res, 'OK');
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, value);
 
     await Future.delayed(const Duration(seconds: 2));
-    final res3 = await GetCommand<String>([key]).exec(client);
+    final res3 = await GetCommand<String>(key).exec(client);
     expect(res3, null);
   });
 
@@ -55,7 +55,7 @@ void main() async {
     await SetCommand(key, value).exec(client);
     final res = await SetCommand(key, newValue, nx: true).exec(client);
     expect(res, null);
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, value);
   });
 
@@ -65,7 +65,7 @@ void main() async {
 
     final res = await SetCommand(key, value, nx: true).exec(client);
     expect(res, 'OK');
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, value);
   });
 
@@ -77,7 +77,7 @@ void main() async {
     await SetCommand(key, value).exec(client);
     final res = await SetCommand(key, newValue, xx: true).exec(client);
     expect(res, 'OK');
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, newValue);
   });
 
@@ -87,7 +87,7 @@ void main() async {
 
     final res = await SetCommand(key, value, xx: true).exec(client);
     expect(res, null);
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, null);
   });
 }

@@ -15,13 +15,13 @@ void main() async {
       final key = newKey();
       final value = randomID();
       await SetCommand(key, value).exec(client);
-      final res = await GetCommand<String>([key]).exec(client);
+      final res = await GetCommand<String>(key).exec(client);
       expect(res, value);
     });
 
     test('gets a non-existing value', () async {
       final key = newKey();
-      final res = await GetCommand<String>([key]).exec(client);
+      final res = await GetCommand<String>(key).exec(client);
       expect(res, null);
     });
 
@@ -29,7 +29,7 @@ void main() async {
       final key = newKey();
       final value = {'v': randomID()};
       await SetCommand(key, value).exec(client);
-      final res = await GetCommand<Map<String, String>>([key]).exec(client);
+      final res = await GetCommand<Map<String, String>>(key).exec(client);
       expect(res, value);
     });
   });

@@ -19,7 +19,7 @@ void main() async {
     final res = await ExpireAtCommand(key, 1).exec(client);
     expect(res, 1);
     await Future.delayed(const Duration(seconds: 2));
-    final res2 = await GetCommand<String>([key]).exec(client);
+    final res2 = await GetCommand<String>(key).exec(client);
     expect(res2, null);
   });
 }
