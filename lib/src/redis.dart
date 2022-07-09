@@ -393,6 +393,11 @@ class Redis {
     return MSetNXCommand<TData>(kv, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/persist
+  Future<int> persist(String key, [CommandOption<String, int>? opts]) {
+    return PersistCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);

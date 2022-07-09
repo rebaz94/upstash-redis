@@ -50,6 +50,7 @@ export 'ltrim.dart';
 export 'mget.dart';
 export 'mset.dart';
 export 'msetnx.dart';
+export 'persist.dart';
 export 'rpop.dart';
 export 'rpush.dart';
 export 'rpushx.dart';
