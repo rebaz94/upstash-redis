@@ -4,9 +4,9 @@ class GetCommand<TData> extends Command<dynamic, TData?> {
   GetCommand._(super.command, super.opts);
 
   factory GetCommand(
-    List<String> keys, [
+    String key, [
     CommandOption<dynamic, TData?>? opts,
   ]) {
-    return GetCommand._(['get', ...keys], opts);
+    return GetCommand._(['get', key], opts);
   }
 }

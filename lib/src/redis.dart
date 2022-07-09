@@ -169,7 +169,7 @@ class Redis {
 
   /// @see https://redis.io/commands/get
   Future<TData?> get<TData>(String key, [CommandOption<dynamic, TData>? opts]) {
-    return GetCommand<TData>([key], opts).exec(_client);
+    return GetCommand<TData>(key, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/getbit
