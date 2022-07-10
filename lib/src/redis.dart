@@ -403,6 +403,11 @@ class Redis {
     return PExpireCommand(key, milliseconds, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/pexpireat
+  Future<int> pexpireat(String key, int unix, [CommandOption<dynamic, int>? opts]) {
+    return PExpireAtCommand(key, unix, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);

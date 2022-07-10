@@ -52,6 +52,7 @@ export 'mset.dart';
 export 'msetnx.dart';
 export 'persist.dart';
 export 'pexpire.dart';
+export 'pexpireat.dart';
 export 'rpop.dart';
 export 'rpush.dart';
 export 'rpushx.dart';
