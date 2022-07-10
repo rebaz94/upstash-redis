@@ -64,6 +64,7 @@ export 'rpop.dart';
 export 'rpush.dart';
 export 'rpushx.dart';
 export 'sadd.dart';
+export 'scan.dart';
 export 'script_load.dart';
 export 'set.dart';
 export 'setex.dart';

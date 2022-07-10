@@ -468,6 +468,16 @@ class Redis {
     return SAddCommand(key, members, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/scan
+  Future<List<dynamic>> scan(
+    int cursor, {
+    String? match,
+    int? count,
+    CommandOption<List<dynamic>, List<dynamic>>? opts,
+  }) {
+    return ScanCommand(cursor, match: match, count: count, opts: opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
