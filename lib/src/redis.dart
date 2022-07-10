@@ -398,6 +398,11 @@ class Redis {
     return PersistCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/pexpire
+  Future<int> pexpire(String key, int milliseconds, [CommandOption<dynamic, int>? opts]) {
+    return PExpireCommand(key, milliseconds, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
