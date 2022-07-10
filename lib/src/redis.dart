@@ -463,6 +463,11 @@ class Redis {
     return RPushXCommand(key, elements, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/rpush
+  Future<int> sadd<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
+    return SAddCommand(key, members, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
