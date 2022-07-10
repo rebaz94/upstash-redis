@@ -165,8 +165,13 @@ class UpstashHttpClient implements Requester {
       throw Exception('Exhausted all retries');
     }
 
-    final jsonData = Map<String, dynamic>.from(json.decode(result.body));
-    final bodyResult = UpstashResponse<TResult>.fromJson(jsonData);
+    final UpstashResponse<TResult> bodyResult;
+    try {
+      final jsonData = Map<String, dynamic>.from(json.decode(result.body));
+      bodyResult = UpstashResponse<TResult>.fromJson(jsonData);
+    } catch (e, stack) {
+      throw UpstashDecodingError('decoding failed', e, stack);
+    }
 
     if (result.statusCode < 200 || result.statusCode >= 300) {
       throw UpstashError(bodyResult.error ?? 'unknown error');
