@@ -443,6 +443,11 @@ class Redis {
     return RenameCommand(source, destination, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/renamenx
+  Future<int> renamenx(String source, String destination, [CommandOption<dynamic, int>? opts]) {
+    return RenameNXCommand(source, destination, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);

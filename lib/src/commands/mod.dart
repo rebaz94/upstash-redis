@@ -59,6 +59,7 @@ export 'pttl.dart';
 export 'publish.dart';
 export 'randomkey.dart';
 export 'rename.dart';
+export 'renamenx.dart';
 export 'rpop.dart';
 export 'rpush.dart';
 export 'rpushx.dart';
