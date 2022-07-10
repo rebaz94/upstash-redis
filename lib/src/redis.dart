@@ -408,6 +408,11 @@ class Redis {
     return PExpireAtCommand(key, unix, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/ping
+  Future<String> ping([String? message, CommandOption<String, String>? opts]) {
+    return PingCommand(message, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
