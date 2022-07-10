@@ -16,7 +16,7 @@ void main() async {
     final res = await HScanCommand(key, 0).exec(client);
 
     expect(res.length, 2);
-    expect(res.first, '0');
+    expect(res.first.runtimeType, int);
     expect(res.last.runtimeType, List<String>);
     expect((res.last as List<String>).isNotEmpty, true);
   });
@@ -27,7 +27,7 @@ void main() async {
     final res = await HScanCommand(key, 0, match: 'field').exec(client);
 
     expect(res.length, 2);
-    expect(res.first, '0');
+    expect(res.first.runtimeType, int);
     expect(res.last.runtimeType, List<String>);
     expect((res.last as List<String>).isNotEmpty, true);
   });
@@ -38,7 +38,7 @@ void main() async {
     final res = await HScanCommand(key, 0, count: 1).exec(client);
 
     expect(res.length, 2);
-    expect(res.first, '0');
+    expect(res.first.runtimeType, int);
     expect(res.last.runtimeType, List<String>);
     expect((res.last as List<String>).isNotEmpty, true);
   });
