@@ -28,7 +28,7 @@ class ScanCommand extends Command<List<dynamic>, List<dynamic>> {
 
     dynamic value = result;
     if (result is List && result.length == 2) {
-      final cursor = result.first is num ? result.first : int.parse('${result.first}');
+      final cursor = result.first is int ? result.first : int.parse('${result.first}');
       final values = List<String>.from(result.last);
 
       value = [cursor, values];
