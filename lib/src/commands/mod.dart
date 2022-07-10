@@ -58,6 +58,7 @@ export 'psetex.dart';
 export 'pttl.dart';
 export 'publish.dart';
 export 'randomkey.dart';
+export 'rename.dart';
 export 'rpop.dart';
 export 'rpush.dart';
 export 'rpushx.dart';

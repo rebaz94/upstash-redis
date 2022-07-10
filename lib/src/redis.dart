@@ -438,6 +438,11 @@ class Redis {
     return RandomKeyCommand(opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/rename
+  Future<String> rename(String source, String destination, [CommandOption<String, String>? opts]) {
+    return RenameCommand(source, destination, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
