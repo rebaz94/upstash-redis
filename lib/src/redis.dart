@@ -433,6 +433,11 @@ class Redis {
     return PublishCommand(channel, message, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/randomkey
+  Future<String?> randomkey([CommandOption<String?, String?>? opts]) {
+    return RandomKeyCommand(opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
