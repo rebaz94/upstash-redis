@@ -56,6 +56,7 @@ export 'pexpireat.dart';
 export 'ping.dart';
 export 'psetex.dart';
 export 'pttl.dart';
+export 'publish.dart';
 export 'rpop.dart';
 export 'rpush.dart';
 export 'rpushx.dart';

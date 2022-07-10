@@ -428,6 +428,11 @@ class Redis {
     return PTtlCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/publish
+  Future<int> publish<TData>(String channel, TData message, [CommandOption<int, int>? opts]) {
+    return PublishCommand(channel, message, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
