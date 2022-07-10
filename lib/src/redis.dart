@@ -394,7 +394,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/persist
-  Future<int> persist(String key, [CommandOption<String, int>? opts]) {
+  Future<int> persist(String key, [CommandOption<dynamic, int>? opts]) {
     return PersistCommand(key, opts).exec(_client);
   }
 
