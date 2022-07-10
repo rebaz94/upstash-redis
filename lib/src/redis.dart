@@ -488,6 +488,11 @@ class Redis {
     return ScriptExistsCommand(hashes, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/script-flush
+  Future<String> scriptFlush({bool? sync, bool? async, CommandOption<String, String>? opts}) {
+    return ScriptFlushCommand(sync: sync, async: async, opts: opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
