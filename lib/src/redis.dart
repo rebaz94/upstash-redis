@@ -478,6 +478,11 @@ class Redis {
     return ScanCommand(cursor, match: match, count: count, opts: opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/scard
+  Future<int> scard(String key, [CommandOption<int, int>? opts]) {
+    return SCardCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
     return ScripLoadCommand(script, opts).exec(_client);
