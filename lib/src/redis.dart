@@ -413,6 +413,16 @@ class Redis {
     return PingCommand(message, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/psetex
+  Future<String> psetex<TData>(
+    String key,
+    int ttl,
+    TData value, {
+    CommandOption<String, String>? opts,
+  }) {
+    return PSetEXCommand<TData>(key, ttl, value, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
