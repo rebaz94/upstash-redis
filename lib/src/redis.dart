@@ -423,6 +423,11 @@ class Redis {
     return PSetEXCommand<TData>(key, ttl, value, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/pttl
+  Future<int> pttl(String key, [CommandOption<int, int>? opts]) {
+    return PTtlCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return RPopCommand(key, opts).exec(_client);
@@ -462,6 +467,16 @@ class Redis {
       xx: xx,
       opts: opts,
     ).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/setex
+  Future<String> setex<TData>(
+    String key,
+    int ttl,
+    TData value, [
+    CommandOption<String, String>? opts,
+  ]) {
+    return SetExCommand<TData>(key, ttl, value, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/setbit
