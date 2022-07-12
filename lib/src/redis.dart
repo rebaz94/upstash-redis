@@ -698,6 +698,11 @@ class Redis {
         .exec(_client);
   }
 
+  /// @see https://redis.io/commands/zcard
+  Future<int> zcard(String key, [CommandOption<int, int>? opts]) {
+    return ZCardCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);

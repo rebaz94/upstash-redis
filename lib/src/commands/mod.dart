@@ -94,5 +94,6 @@ export 'ttl.dart';
 export 'type.dart';
 export 'unlink.dart';
 export 'zadd.dart';
+export 'zcard.dart';
 export 'zrem.dart';
 export 'zscore.dart';
