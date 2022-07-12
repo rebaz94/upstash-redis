@@ -86,6 +86,7 @@ export 'srandmember.dart';
 export 'srem.dart';
 export 'sscan.dart';
 export 'strlen.dart';
+export 'sunion.dart';
 export 'zadd.dart';
 export 'zrem.dart';
 export 'zscore.dart';

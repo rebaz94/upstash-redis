@@ -636,6 +636,14 @@ class Redis {
     return StrLenCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/sunion
+  Future<List<TData>> sunion<TData>(
+    List<String> keys, [
+    CommandOption<List<String>, List<TData>>? opts,
+  ]) {
+    return SUnionCommand(keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
