@@ -97,5 +97,6 @@ export 'zadd.dart';
 export 'zcard.dart';
 export 'zcount.dart';
 export 'zincrby.dart';
+export 'zinterstore.dart';
 export 'zrem.dart';
 export 'zscore.dart';

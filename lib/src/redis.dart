@@ -723,6 +723,27 @@ class Redis {
     return ZIncrByCommand<TData>(key, increment, member, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zinterstore
+  Future<num> zinterstore(
+    String destination,
+    int numKeys,
+    List<String> keys, {
+    AggregateType? aggregate,
+    int? weight,
+    List<int>? weights,
+    CommandOption<int, int>? opts,
+  }) {
+    return ZInterStoreCommand(
+      destination,
+      numKeys,
+      keys,
+      aggregate: aggregate,
+      weight: weight,
+      weights: weights,
+      opts: opts,
+    ).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
