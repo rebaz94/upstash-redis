@@ -606,6 +606,15 @@ class Redis {
     return SPopCommand(key, count, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/srandmember
+  Future<TData?> srandmember<TData>(
+    String key, [
+    int? count,
+    CommandOption<dynamic, TData?>? opts,
+  ]) {
+    return SRandMemberCommand(key, count, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
