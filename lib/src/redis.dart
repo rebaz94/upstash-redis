@@ -506,6 +506,11 @@ class Redis {
     return SDiffCommand(keys, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/sdiffstore
+  Future<int> sdiffstore(List<String> keys, [CommandOption<int, int>? opts]) {
+    return SDiffStoreCommand(keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/set
   Future<String?> set<TData>(
     String key,

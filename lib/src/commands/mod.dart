@@ -70,6 +70,7 @@ export 'script_exists.dart';
 export 'script_flush.dart';
 export 'script_load.dart';
 export 'sdiff.dart';
+export 'sdiffstore.dart';
 export 'set.dart';
 export 'setex.dart';
 export 'setbit.dart';
