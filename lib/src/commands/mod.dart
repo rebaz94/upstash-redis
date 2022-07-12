@@ -90,6 +90,7 @@ export 'sunion.dart';
 export 'sunionstore.dart';
 export 'time.dart';
 export 'touch.dart';
+export 'ttl.dart';
 export 'zadd.dart';
 export 'zrem.dart';
 export 'zscore.dart';
