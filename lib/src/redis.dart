@@ -539,12 +539,21 @@ class Redis {
 
   /// @see https://redis.io/commands/setex
   Future<String> setex<TData>(
-      String key,
-      int ttl,
-      TData value, [
-        CommandOption<String, String>? opts,
-      ]) {
+    String key,
+    int ttl,
+    TData value, [
+    CommandOption<String, String>? opts,
+  ]) {
     return SetExCommand<TData>(key, ttl, value, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/setnx
+  Future<int> setnx<TData extends String>(
+    String key,
+    TData value, [
+    CommandOption<int, int>? opts,
+  ]) {
+    return SetNxCommand<TData>(key, value, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/zadd
