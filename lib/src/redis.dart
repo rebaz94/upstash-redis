@@ -532,19 +532,19 @@ class Redis {
     ).exec(_client);
   }
 
-  /// @see https://redis.io/commands/setex
-  Future<String> setex<TData>(
-    String key,
-    int ttl,
-    TData value, [
-    CommandOption<String, String>? opts,
-  ]) {
-    return SetExCommand<TData>(key, ttl, value, opts).exec(_client);
-  }
-
   /// @see https://redis.io/commands/setbit
   Future<int> setbit(String key, int offset, int bit, [CommandOption<int, int>? opts]) {
     return SetBitCommand(key, offset, bit, opts).exec(_client);
+  }
+
+  /// @see https://redis.io/commands/setex
+  Future<String> setex<TData>(
+      String key,
+      int ttl,
+      TData value, [
+        CommandOption<String, String>? opts,
+      ]) {
+    return SetExCommand<TData>(key, ttl, value, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/zadd
