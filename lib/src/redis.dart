@@ -667,6 +667,11 @@ class Redis {
     return TtlCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/type
+  Future<ValueType> type(String key, [CommandOption<String, ValueType>? opts]) {
+    return TypeCommand(key).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {

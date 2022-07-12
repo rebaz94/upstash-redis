@@ -91,6 +91,7 @@ export 'sunionstore.dart';
 export 'time.dart';
 export 'touch.dart';
 export 'ttl.dart';
+export 'type.dart';
 export 'zadd.dart';
 export 'zrem.dart';
 export 'zscore.dart';
