@@ -620,6 +620,17 @@ class Redis {
     return SRemCommand(key, members, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/sscan
+  Future<List<dynamic>> sscan(
+    String key,
+    int cursor, {
+    String? match,
+    int? count,
+    CommandOption<List<dynamic>, List<dynamic>>? opts,
+  }) {
+    return SScanCommand(key, cursor, match: match, count: count, opts: opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
