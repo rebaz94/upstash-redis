@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:upstash_redis/src/commands/sadd.dart';
 import 'package:upstash_redis/src/commands/sinter.dart';
@@ -10,7 +11,6 @@ void main() async {
 
   tearDownAll(() => keygen.cleanup());
 
-  //TODO: retest
   group('sinter', () {
     test('with single set, returns the members of the set', () async {
       final key = newKey();
@@ -19,9 +19,11 @@ void main() async {
 
       await SAddCommand(key, [value1, value2]).exec(client);
       final res = await SInterCommand<Map<String, String>>([key]).exec(client);
+      final allValues = res.map((e) => e.values.toList()).flattened.toList();
+
       expect(res.length, 2);
-      expect(res, containsValue(value1['v']));
-      expect(res, containsValue(value2['v']));
+      expect(allValues, contains(value1['v']));
+      expect(allValues, contains(value2['v']));
     });
 
     test('with multiple set, returns the members of the set', () async {
