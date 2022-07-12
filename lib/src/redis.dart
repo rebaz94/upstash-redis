@@ -649,6 +649,14 @@ class Redis {
     return SUnionStoreCommand(destination, keys, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/time
+  Future<List<int>> time(
+    List<String> keys, [
+    CommandOption<List<String>, List<int>>? opts,
+  ]) {
+    return TimeCommand(opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
