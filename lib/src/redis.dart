@@ -615,6 +615,11 @@ class Redis {
     return SRandMemberCommand(key, count, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/srem
+  Future<int> srem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
+    return SRemCommand(key, members, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
