@@ -96,5 +96,6 @@ export 'unlink.dart';
 export 'zadd.dart';
 export 'zcard.dart';
 export 'zcount.dart';
+export 'zincrby.dart';
 export 'zrem.dart';
 export 'zscore.dart';

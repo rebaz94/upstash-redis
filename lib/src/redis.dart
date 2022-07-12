@@ -713,6 +713,16 @@ class Redis {
     return ZCountCommand(key, min, max, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zincrby
+  Future<num> zincrby<TData>(
+    String key,
+    num increment,
+    TData member, [
+    CommandOption<String, num>? opts,
+  ]) {
+    return ZIncrByCommand<TData>(key, increment, member, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
