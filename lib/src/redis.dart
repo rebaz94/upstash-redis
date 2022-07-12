@@ -561,6 +561,14 @@ class Redis {
     return SetRangeCommand(key, offset, value, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/sinter
+  Future<List<TData>> sinter<TData>(
+    List<String> keys, [
+    CommandOption<List<dynamic>, List<TData>>? opts,
+  ]) {
+    return SInterCommand<TData>(keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
