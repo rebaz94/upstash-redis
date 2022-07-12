@@ -569,6 +569,11 @@ class Redis {
     return SInterCommand<TData>(keys, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/sinterstore
+  Future<int> sinterstore(String destination, List<String> keys, [CommandOption<int, int>? opts]) {
+    return SInterStoreCommand(destination, keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
