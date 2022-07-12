@@ -657,6 +657,11 @@ class Redis {
     return TimeCommand(opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/touch
+  Future<int> touch(List<String> keys, [CommandOption<int, int>? opts]) {
+    return TouchCommand(keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
