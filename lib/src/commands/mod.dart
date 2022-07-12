@@ -92,6 +92,7 @@ export 'time.dart';
 export 'touch.dart';
 export 'ttl.dart';
 export 'type.dart';
+export 'unlink.dart';
 export 'zadd.dart';
 export 'zrem.dart';
 export 'zscore.dart';

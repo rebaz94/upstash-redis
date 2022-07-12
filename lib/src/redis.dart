@@ -672,6 +672,11 @@ class Redis {
     return TypeCommand(key).exec(_client);
   }
 
+  /// @see https://redis.io/commands/unlink
+  Future<int> unlink(List<String> keys, [CommandOption<int, int>? opts]) {
+    return UnlinkCommand(keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
