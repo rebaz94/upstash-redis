@@ -587,6 +587,16 @@ class Redis {
     return SMembersCommand<TData>(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/smove
+  Future<int> smove<TData>(
+    String source,
+    String destination,
+    TData member, [
+    CommandOption<dynamic, int>? opts,
+  ]) {
+    return SMoveCommand(source, destination, member).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
