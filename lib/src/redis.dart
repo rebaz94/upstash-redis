@@ -631,6 +631,11 @@ class Redis {
     return SScanCommand(key, cursor, match: match, count: count, opts: opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/strlen
+  Future<int> strlen(String key, [CommandOption<int, int>? opts]) {
+    return StrLenCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
