@@ -703,6 +703,16 @@ class Redis {
     return ZCardCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zcount
+  Future<int> zcount(
+    String key,
+    Object min,
+    Object max, [
+    CommandOption<int, int>? opts,
+  ]) {
+    return ZCountCommand(key, min, max, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
