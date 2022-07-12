@@ -78,6 +78,7 @@ export 'setnx.dart';
 export 'setrange.dart';
 export 'sinter.dart';
 export 'sinterstore.dart';
+export 'sismember.dart';
 export 'zadd.dart';
 export 'zrem.dart';
 export 'zscore.dart';

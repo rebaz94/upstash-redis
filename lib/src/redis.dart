@@ -574,6 +574,11 @@ class Redis {
     return SInterStoreCommand(destination, keys, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/sismember
+  Future<int> sismember<TData>(String key, TData member, [CommandOption<dynamic, int>? opts]) {
+    return SIsMemberCommand(key, member, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
