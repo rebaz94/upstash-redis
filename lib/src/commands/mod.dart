@@ -75,6 +75,7 @@ export 'set.dart';
 export 'setbit.dart';
 export 'setex.dart';
 export 'setnx.dart';
+export 'setrange.dart';
 export 'zadd.dart';
 export 'zrem.dart';
 export 'zscore.dart';

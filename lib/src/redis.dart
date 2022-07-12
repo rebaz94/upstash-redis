@@ -556,6 +556,11 @@ class Redis {
     return SetNxCommand<TData>(key, value, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/setrange
+  Future<int> setrange(String key, int offset, String value, [CommandOption<int, int>? opts]) {
+    return SetRangeCommand(key, offset, value, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {
