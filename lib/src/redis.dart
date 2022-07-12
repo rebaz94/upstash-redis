@@ -498,6 +498,14 @@ class Redis {
     return ScripLoadCommand(script, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/sdiff
+  Future<List<TData>> sdiff<TData>(
+    List<String> keys, [
+    CommandOption<List<dynamic>, List<TData>>? opts,
+  ]) {
+    return SDiffCommand(keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/set
   Future<String?> set<TData>(
     String key,
