@@ -597,6 +597,15 @@ class Redis {
     return SMoveCommand(source, destination, member).exec(_client);
   }
 
+  /// @see https://redis.io/commands/spop
+  Future<TData?> spop<TData>(
+    String key, [
+    int? count,
+    CommandOption<dynamic, TData?>? opts,
+  ]) {
+    return SPopCommand(key, count, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zadd
   Future<num?> zadd<TData>(
     String key, {

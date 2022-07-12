@@ -81,6 +81,7 @@ export 'sinterstore.dart';
 export 'sismember.dart';
 export 'smembers.dart';
 export 'smove.dart';
+export 'spop.dart';
 export 'zadd.dart';
 export 'zrem.dart';
 export 'zscore.dart';
