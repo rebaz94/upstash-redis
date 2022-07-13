@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:upstash_redis/src/commands/command.dart';
 import 'package:upstash_redis/src/commands/zadd.dart';
-import 'package:upstash_redis/src/commands/zinterstore.dart';
+import 'package:upstash_redis/src/commands/zunionstore.dart';
 import 'package:upstash_redis/src/test_utils.dart';
 
 void main() async {
@@ -11,11 +11,11 @@ void main() async {
 
   tearDownAll(() => keygen.cleanup());
 
-  group('zinterstore command', () {
+  group('zunionstore command', () {
     group('command format', () {
       test('without options, builds the correct command', () async {
-        expect(ZInterStoreCommand('destination', 1, ['key']).command, [
-          'zinterstore',
+        expect(ZUnionStoreCommand('destination', 1, ['key']).command, [
+          'zunionstore',
           'destination',
           '1',
           'key',
@@ -23,8 +23,8 @@ void main() async {
       });
 
       test('with multiple keys, builds the correct command', () async {
-        expect(ZInterStoreCommand('destination', 2, ['key1', 'key2']).command, [
-          'zinterstore',
+        expect(ZUnionStoreCommand('destination', 2, ['key1', 'key2']).command, [
+          'zunionstore',
           'destination',
           '2',
           'key1',
@@ -33,8 +33,8 @@ void main() async {
       });
 
       test('with single weight, builds the correct command', () async {
-        expect(ZInterStoreCommand('destination', 1, ['key1'], weight: 4).command, [
-          'zinterstore',
+        expect(ZUnionStoreCommand('destination', 1, ['key1'], weight: 4).command, [
+          'zunionstore',
           'destination',
           '1',
           'key1',
@@ -44,8 +44,8 @@ void main() async {
       });
 
       test('with multiple weights, builds the correct command', () async {
-        expect(ZInterStoreCommand('destination', 2, ['key1', 'key2'], weights: [2, 3]).command, [
-          'zinterstore',
+        expect(ZUnionStoreCommand('destination', 2, ['key1', 'key2'], weights: [2, 3]).command, [
+          'zunionstore',
           'destination',
           '2',
           'key1',
@@ -58,9 +58,9 @@ void main() async {
 
       test('with aggregate, builds the correct command', () async {
         expect(
-          ZInterStoreCommand('destination', 1, ['key1'], aggregate: AggregateType.sum).command,
+          ZUnionStoreCommand('destination', 1, ['key1'], aggregate: AggregateType.sum).command,
           [
-            'zinterstore',
+            'zunionstore',
             'destination',
             '1',
             'key1',
@@ -70,9 +70,9 @@ void main() async {
         );
 
         expect(
-          ZInterStoreCommand('destination', 1, ['key1'], aggregate: AggregateType.min).command,
+          ZUnionStoreCommand('destination', 1, ['key1'], aggregate: AggregateType.min).command,
           [
-            'zinterstore',
+            'zunionstore',
             'destination',
             '1',
             'key1',
@@ -82,9 +82,9 @@ void main() async {
         );
 
         expect(
-          ZInterStoreCommand('destination', 1, ['key1'], aggregate: AggregateType.max).command,
+          ZUnionStoreCommand('destination', 1, ['key1'], aggregate: AggregateType.max).command,
           [
-            'zinterstore',
+            'zunionstore',
             'destination',
             '1',
             'key1',
@@ -96,7 +96,7 @@ void main() async {
 
       test('complex, builds the correct command', () async {
         expect(
-          ZInterStoreCommand(
+          ZUnionStoreCommand(
             'destination',
             2,
             ['key1', 'key2'],
@@ -104,7 +104,7 @@ void main() async {
             aggregate: AggregateType.max,
           ).command,
           [
-            'zinterstore',
+            'zunionstore',
             'destination',
             '2',
             'key1',
@@ -129,13 +129,10 @@ void main() async {
       final member2 = randomID();
 
       await ZAddCommand(key1, [ScoreMember(score: score1, member: member1)]).exec(client);
-      await ZAddCommand(key2, [
-        ScoreMember(score: score1, member: member1),
-        ScoreMember(score: score2, member: member2),
-      ]).exec(client);
+      await ZAddCommand(key2, [ScoreMember(score: score2, member: member2)]).exec(client);
 
-      final res = await ZInterStoreCommand(destination, 2, [key1, key2]).exec(client);
-      expect(res, 1);
+      final res = await ZUnionStoreCommand(destination, 2, [key1, key2]).exec(client);
+      expect(res, 2);
     });
 
     test('with single weight, returns the number of elements in the new set', () async {
@@ -148,14 +145,11 @@ void main() async {
       final member2 = randomID();
 
       await ZAddCommand(key1, [ScoreMember(score: score1, member: member1)]).exec(client);
-      await ZAddCommand(key2, [
-        ScoreMember(score: score1, member: member1),
-        ScoreMember(score: score2, member: member2),
-      ]).exec(client);
+      await ZAddCommand(key2, [ScoreMember(score: score2, member: member2)]).exec(client);
 
       final res =
-          await ZInterStoreCommand(destination, 2, [key1, key2], weights: [2, 3]).exec(client);
-      expect(res, 1);
+          await ZUnionStoreCommand(destination, 2, [key1, key2], weights: [2, 3]).exec(client);
+      expect(res, 2);
     });
 
     test('with multiple weights, returns the number of elements in the new set', () async {
@@ -168,14 +162,11 @@ void main() async {
       final member2 = randomID();
 
       await ZAddCommand(key1, [ScoreMember(score: score1, member: member1)]).exec(client);
-      await ZAddCommand(key2, [
-        ScoreMember(score: score1, member: member1),
-        ScoreMember(score: score2, member: member2),
-      ]).exec(client);
+      await ZAddCommand(key2, [ScoreMember(score: score2, member: member2)]).exec(client);
 
       final res =
-          await ZInterStoreCommand(destination, 2, [key1, key2], weights: [1, 2]).exec(client);
-      expect(res, 1);
+          await ZUnionStoreCommand(destination, 2, [key1, key2], weights: [1, 2]).exec(client);
+      expect(res, 2);
     });
 
     test('aggregate - sum, returns the number of elements in the new set', () async {
@@ -188,15 +179,12 @@ void main() async {
       final member2 = randomID();
 
       await ZAddCommand(key1, [ScoreMember(score: score1, member: member1)]).exec(client);
-      await ZAddCommand(key2, [
-        ScoreMember(score: score1, member: member1),
-        ScoreMember(score: score2, member: member2),
-      ]).exec(client);
+      await ZAddCommand(key2, [ScoreMember(score: score2, member: member2)]).exec(client);
 
       final res =
-          await ZInterStoreCommand(destination, 2, [key1, key2], aggregate: AggregateType.sum)
+          await ZUnionStoreCommand(destination, 2, [key1, key2], aggregate: AggregateType.sum)
               .exec(client);
-      expect(res, 1);
+      expect(res, 2);
     });
 
     test('aggregate - min, returns the number of elements in the new set', () async {
@@ -209,15 +197,12 @@ void main() async {
       final member2 = randomID();
 
       await ZAddCommand(key1, [ScoreMember(score: score1, member: member1)]).exec(client);
-      await ZAddCommand(key2, [
-        ScoreMember(score: score1, member: member1),
-        ScoreMember(score: score2, member: member2),
-      ]).exec(client);
+      await ZAddCommand(key2, [ScoreMember(score: score2, member: member2)]).exec(client);
 
       final res =
-          await ZInterStoreCommand(destination, 2, [key1, key2], aggregate: AggregateType.min)
+          await ZUnionStoreCommand(destination, 2, [key1, key2], aggregate: AggregateType.min)
               .exec(client);
-      expect(res, 1);
+      expect(res, 2);
     });
 
     test('aggregate - max, returns the number of elements in the new set', () async {
@@ -230,15 +215,12 @@ void main() async {
       final member2 = randomID();
 
       await ZAddCommand(key1, [ScoreMember(score: score1, member: member1)]).exec(client);
-      await ZAddCommand(key2, [
-        ScoreMember(score: score1, member: member1),
-        ScoreMember(score: score2, member: member2),
-      ]).exec(client);
+      await ZAddCommand(key2, [ScoreMember(score: score2, member: member2)]).exec(client);
 
       final res =
-          await ZInterStoreCommand(destination, 2, [key1, key2], aggregate: AggregateType.max)
+          await ZUnionStoreCommand(destination, 2, [key1, key2], aggregate: AggregateType.max)
               .exec(client);
-      expect(res, 1);
+      expect(res, 2);
     });
   });
 }

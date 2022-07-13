@@ -1,9 +1,9 @@
 import 'package:upstash_redis/src/commands/command.dart';
 
-class ZInterStoreCommand extends Command<int, int> {
-  ZInterStoreCommand._(super.command, super.opts);
+class ZUnionStoreCommand extends Command<int, int> {
+  ZUnionStoreCommand._(super.command, super.opts);
 
-  factory ZInterStoreCommand.single(
+  factory ZUnionStoreCommand.single(
     String destination,
     String key, {
     AggregateType? aggregate,
@@ -11,7 +11,7 @@ class ZInterStoreCommand extends Command<int, int> {
     List<int>? weights,
     CommandOption<int, int>? opts,
   }) {
-    return ZInterStoreCommand(
+    return ZUnionStoreCommand(
       destination,
       1,
       [key],
@@ -22,7 +22,7 @@ class ZInterStoreCommand extends Command<int, int> {
     );
   }
 
-  factory ZInterStoreCommand(
+  factory ZUnionStoreCommand(
     String destination,
     int numKeys,
     List<String> keys, {
@@ -35,7 +35,7 @@ class ZInterStoreCommand extends Command<int, int> {
       throw StateError('it should provide only weight or weights');
     }
 
-    final command = ['zinterstore', destination, numKeys, ...keys];
+    final command = ['zunionstore', destination, numKeys, ...keys];
     if (weight != null) {
       command.addAll(['weights', weight]);
     } else if (weights != null) {
@@ -46,6 +46,6 @@ class ZInterStoreCommand extends Command<int, int> {
       command.addAll(['aggregate', aggregate.value]);
     }
 
-    return ZInterStoreCommand._(command, opts);
+    return ZUnionStoreCommand._(command, opts);
   }
 }

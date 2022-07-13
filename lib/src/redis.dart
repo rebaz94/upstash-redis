@@ -844,4 +844,25 @@ class Redis {
   Future<num?> zscore<TData>(String key, TData member, [CommandOption<String, num>? opts]) {
     return ZScoreCommand(key, member, opts).exec(_client);
   }
+
+  /// @see https://redis.io/commands/zunionstore
+  Future<num> zunionstore(
+    String destination,
+    int numKeys,
+    List<String> keys, {
+    AggregateType? aggregate,
+    int? weight,
+    List<int>? weights,
+    CommandOption<int, int>? opts,
+  }) {
+    return ZUnionStoreCommand(
+      destination,
+      numKeys,
+      keys,
+      aggregate: aggregate,
+      weight: weight,
+      weights: weights,
+      opts: opts,
+    ).exec(_client);
+  }
 }

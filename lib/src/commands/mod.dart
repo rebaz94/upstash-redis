@@ -110,3 +110,4 @@ export 'zremrangebyscore.dart';
 export 'zrevrank.dart';
 export 'zscan.dart';
 export 'zscore.dart';
+export 'zunionstore.dart';
