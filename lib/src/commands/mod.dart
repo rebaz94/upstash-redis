@@ -106,4 +106,5 @@ export 'zrank.dart';
 export 'zrem.dart';
 export 'zremrangebylex.dart';
 export 'zremrangebyrank.dart';
+export 'zremrangebyscore.dart';
 export 'zscore.dart';

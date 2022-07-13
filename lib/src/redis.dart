@@ -819,6 +819,11 @@ class Redis {
     return ZRemRangeByRankCommand(key, start, stop, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zremrangebyscore
+  Future<int> zremrangebyscore(String key, int min, int max, [CommandOption<int, int>? opts]) {
+    return ZRemRangeByScoreCommand(key, min, max, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zscore
   Future<num?> zscore<TData>(String key, TData member, [CommandOption<String, num>? opts]) {
     return ZScoreCommand(key, member, opts).exec(_client);
