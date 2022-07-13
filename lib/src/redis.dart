@@ -829,6 +829,17 @@ class Redis {
     return ZRevRankCommand(key, member, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zscan
+  Future<List<dynamic>> zscan(
+    String key,
+    int cursor, {
+    String? match,
+    int? count,
+    CommandOption<List<dynamic>, List<dynamic>>? opts,
+  }) {
+    return ZScanCommand(key, cursor, match: match, count: count, opts: opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zscore
   Future<num?> zscore<TData>(String key, TData member, [CommandOption<String, num>? opts]) {
     return ZScoreCommand(key, member, opts).exec(_client);
