@@ -809,6 +809,11 @@ class Redis {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zremrangebylex
+  Future<int> zremrangebylex(String key, String min, String max, [CommandOption<int, int>? opts]) {
+    return ZRemRangeByLexCommand(key, min, max, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zscore
   Future<num?> zscore<TData>(String key, TData member, [CommandOption<String, num>? opts]) {
     return ZScoreCommand(key, member, opts).exec(_client);

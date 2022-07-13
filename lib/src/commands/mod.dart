@@ -104,4 +104,5 @@ export 'zpopmin.dart';
 export 'zrange.dart';
 export 'zrank.dart';
 export 'zrem.dart';
+export 'zremrangebylex.dart';
 export 'zscore.dart';
