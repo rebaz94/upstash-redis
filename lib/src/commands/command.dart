@@ -56,6 +56,14 @@ abstract class Command<TResult, TData> {
     final result = checkUpstashResponse<TResult>(response);
     return deserialize(result as TResult);
   }
+
+  UpstashResponse<TResult> createUpstashResponseFrom(Map<String, dynamic> json) {
+    return UpstashResponse<TResult>.fromJson(json);
+  }
+
+  TData decodeValueFrom(TResult result) {
+    return deserialize(result);
+  }
 }
 
 TResult? checkUpstashResponse<TResult>(UpstashResponse<TResult> response) {

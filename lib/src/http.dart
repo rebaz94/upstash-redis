@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:math' as math;
+import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
+import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/upstash_error.dart';
 
 class UpstashResponse<TResult> {
@@ -58,6 +60,12 @@ abstract class Requester {
   Future<UpstashResponse<TResult>> request<TResult>({
     List<String>? path,
     Object? body,
+  });
+
+  Future<List<UpstashResponse<dynamic>>> requestPipeline({
+    List<String>? path,
+    Object? body,
+    required List<Command<dynamic, dynamic>> commands,
   });
 }
 
@@ -137,6 +145,49 @@ class UpstashHttpClient implements Requester {
 
   @override
   Future<UpstashResponse<TResult>> request<TResult>({List<String>? path, Object? body}) async {
+    http.Response? result = await _makeRequest(path: path, body: body);
+
+    final UpstashResponse<TResult> bodyResult;
+    try {
+      final jsonData = Map<String, dynamic>.from(json.decode(result.body));
+      bodyResult = UpstashResponse<TResult>.fromJson(jsonData);
+    } catch (e, stack) {
+      throw UpstashDecodingError('decoding failed', e, stack);
+    }
+
+    if (result.statusCode < 200 || result.statusCode >= 300) {
+      throw UpstashError(bodyResult.error ?? 'unknown error');
+    }
+
+    return bodyResult;
+  }
+
+  @override
+  Future<List<UpstashResponse>> requestPipeline({
+    List<String>? path,
+    Object? body,
+    required List<Command<dynamic, dynamic>> commands,
+  }) async {
+    http.Response? result = await _makeRequest(path: path, body: body);
+
+    final List<UpstashResponse<dynamic>> bodyResult;
+    try {
+      bodyResult = (json.decode(result.body) as List)
+          .map((e) => Map<String, dynamic>.from(e as Map))
+          .mapIndexed((i, e) => commands[i].createUpstashResponseFrom(e))
+          .toList();
+    } catch (e, stack) {
+      throw UpstashDecodingError('decoding failed', e, stack);
+    }
+
+    if (result.statusCode < 200 || result.statusCode >= 300) {
+      throw UpstashError('unknown error');
+    }
+
+    return bodyResult;
+  }
+
+  Future<http.Response> _makeRequest({List<String>? path, Object? body}) async {
     final uri = Uri.parse([baseUrl, ...(path ?? [])].join('/'));
     final encodedBody = body != null ? json.encode(body) : null;
 
@@ -165,18 +216,6 @@ class UpstashHttpClient implements Requester {
       throw Exception('Exhausted all retries');
     }
 
-    final UpstashResponse<TResult> bodyResult;
-    try {
-      final jsonData = Map<String, dynamic>.from(json.decode(result.body));
-      bodyResult = UpstashResponse<TResult>.fromJson(jsonData);
-    } catch (e, stack) {
-      throw UpstashDecodingError('decoding failed', e, stack);
-    }
-
-    if (result.statusCode < 200 || result.statusCode >= 300) {
-      throw UpstashError(bodyResult.error ?? 'unknown error');
-    }
-
-    return bodyResult;
+    return result;
   }
 }

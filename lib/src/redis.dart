@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/http.dart';
+import 'package:upstash_redis/src/pipeline.dart';
 
 class RedisOptions {
   const RedisOptions({
@@ -15,6 +16,10 @@ class RedisOptions {
 /// Serverless redis client for upstash.
 class Redis {
   Redis._(this._client);
+
+  factory Redis.byClient(Requester client) {
+    return Redis._(client);
+  }
 
   /// Create a new redis client
   factory Redis({
@@ -65,6 +70,9 @@ class Redis {
   }
 
   final Requester _client;
+
+  /// Create a new pipeline that allows you to send requests in bulk.
+  Pipeline pipeline() => Pipeline(_client);
 
   Future<TData> run<TResult, TData>(Command<TResult, TData> command) {
     return command.exec(_client);
