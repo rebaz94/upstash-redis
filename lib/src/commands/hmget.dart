@@ -20,7 +20,7 @@ Map<String, TData>? _deserialize<TData>(List<String> fields, List<String?> resul
   return obj;
 }
 
-class HMGetCommand<TData> extends Command<List<Object?>, Map<String, TData?>?> {
+class HMGetCommand<TData> extends Command<List<dynamic>, Map<String, TData?>?> {
   HMGetCommand._(
     super.command,
     super.opts,
@@ -105,7 +105,7 @@ class HMGetCommand<TData> extends Command<List<Object?>, Map<String, TData?>?> {
   factory HMGetCommand(
     String key,
     List<String> fields, [
-    CommandOption<List<Object?>, Map<String, TData?>?>? opts,
+    CommandOption<List<dynamic>, Map<String, TData?>?>? opts,
   ]) {
     return HMGetCommand._(
       [

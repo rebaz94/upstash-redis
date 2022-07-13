@@ -19,7 +19,7 @@ Map<String, TData?>? _deserialize<TData>(List<String> result) {
   return obj;
 }
 
-class HGetAllCommand<TData> extends Command<Object?, Map<String, TData?>?> {
+class HGetAllCommand<TData> extends Command<dynamic, Map<String, TData?>?> {
   HGetAllCommand._(
     super.command,
     super.opts,
@@ -99,7 +99,7 @@ class HGetAllCommand<TData> extends Command<Object?, Map<String, TData?>?> {
   ///   }
   /// }
   /// ```
-  factory HGetAllCommand(String key, [CommandOption<Object?, Map<String, TData?>>? opts]) {
+  factory HGetAllCommand(String key, [CommandOption<dynamic, Map<String, TData?>>? opts]) {
     return HGetAllCommand._(
       ['hgetall', key],
       opts,
