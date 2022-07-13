@@ -51,7 +51,8 @@ void main() async {
     test('zset, returns the correct type', () async {
       final key = newKey();
       final member = randomID();
-      await ZAddCommand(key, [ScoreMember(score: 0, member: member)]).exec(client);
+      await ZAddCommand(key, [ScoreMember(score: 0, member: member)])
+          .exec(client);
       final res = await TypeCommand(key).exec(client);
       expect(res, ValueType.zset);
     });

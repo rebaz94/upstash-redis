@@ -17,7 +17,8 @@ void main() async {
       final value2 = randomID();
       await LPushCommand(key, [value1, value2]).exec(client);
 
-      final res = await LInsertCommand(key, IDirection.before, value1, value2).exec(client);
+      final res = await LInsertCommand(key, IDirection.before, value1, value2)
+          .exec(client);
       expect(res, 3);
     });
   });

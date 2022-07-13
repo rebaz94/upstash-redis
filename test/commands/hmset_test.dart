@@ -22,5 +22,4 @@ void main() async {
     final res2 = await HMGetCommand<String>(key, kv.keys.toList()).exec(client);
     expect(res2, kv);
   });
-
 }

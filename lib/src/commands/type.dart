@@ -21,7 +21,10 @@ class TypeCommand extends Command<String, ValueType> {
     return TypeCommand._(
       ['type', key],
       opts,
-      (result) => ValueType.values.firstWhereOrNull((e) => e.name == result) ?? ValueType.none,
+      (result) {
+        return ValueType.values.firstWhereOrNull((e) => e.name == result) ??
+            ValueType.none;
+      },
     );
   }
 }

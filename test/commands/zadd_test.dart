@@ -13,7 +13,8 @@ void main() async {
 
   group('command format', () {
     test('without options, build the correct command', () async {
-      final command = ZAddCommand.single('key', score: 0, member: 'member').command;
+      final command =
+          ZAddCommand.single('key', score: 0, member: 'member').command;
 
       expect(command, ['zadd', 'key', '0', 'member']);
     });
@@ -105,7 +106,8 @@ void main() async {
     final key = newKey();
     final member = randomID();
     final score = math.Random().nextInt(100);
-    final res = await ZAddCommand.single(key, score: score, member: member).exec(client);
+    final res = await ZAddCommand.single(key, score: score, member: member)
+        .exec(client);
 
     expect(res, 1);
   });

@@ -18,7 +18,7 @@ void main() async {
       await SetCommand(key, value, ex: 2).exec(client);
       final res = await PersistCommand(key).exec(client);
       expect(res, 1);
-      
+
       await Future.delayed(const Duration(seconds: 2));
       final res2 = await GetCommand<String>(key).exec(client);
       expect(res2, value);

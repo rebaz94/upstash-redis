@@ -18,7 +18,9 @@ class ZRangeCommand<TData> extends Command<List<dynamic>, List<TData>> {
     CommandOption<List<String?>, List<TData>>? opts,
   }) {
     if (min is String) {
-      if (!_symbols.contains(min) && !min.startsWith('(') && !min.startsWith('[')) {
+      if (!_symbols.contains(min) &&
+          !min.startsWith('(') &&
+          !min.startsWith('[')) {
         throw StateError('invalid min parameter, expected to be formatted like '
             '`(String` | `[String` | `(Number` | `-` | `+` | `-inf` | `+inf`');
       }
@@ -27,7 +29,9 @@ class ZRangeCommand<TData> extends Command<List<dynamic>, List<TData>> {
     }
 
     if (max is String) {
-      if (!_symbols.contains(max) && !max.startsWith('(') && !max.startsWith('[')) {
+      if (!_symbols.contains(max) &&
+          !max.startsWith('(') &&
+          !max.startsWith('[')) {
         throw StateError('invalid max parameter, expected to be formatted like '
             '`(String` | `[String` | `(Number` | `-` | `+` | `-inf` | `+inf`');
       }

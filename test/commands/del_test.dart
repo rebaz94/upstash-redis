@@ -23,7 +23,8 @@ void main() async {
     expect(res, 1);
   });
 
-  test('with multiple keys, when one does not exist, deletes all keys', () async {
+  test('with multiple keys, when one does not exist, deletes all keys',
+      () async {
     final key1 = newKey();
     final key2 = newKey();
     await SetCommand(key1, 'value').exec(client);

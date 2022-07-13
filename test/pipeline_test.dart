@@ -83,7 +83,8 @@ void main() {
         .evalsha(scriptHash, [], ['Hello'])
         .exists([newKey()])
         .expire(newKey(), 5)
-        .expireat(newKey(), (DateTime.now().millisecondsSinceEpoch ~/ 1000) + 60)
+        .expireat(
+            newKey(), (DateTime.now().millisecondsSinceEpoch ~/ 1000) + 60)
         .flushall()
         .flushdb()
         .get(newKey())

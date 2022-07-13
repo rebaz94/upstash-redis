@@ -17,7 +17,8 @@ void main() async {
       final res = await LPushXCommand(key, [randomID()]).exec(client);
       expect(res, 2);
 
-      final res2 = await LPushXCommand(key, [randomID(), randomID()]).exec(client);
+      final res2 =
+          await LPushXCommand(key, [randomID(), randomID()]).exec(client);
       expect(res2, 4);
     });
 

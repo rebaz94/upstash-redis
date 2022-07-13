@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:upstash_redis/src/converters.dart';
 
-final _uncheckedTypes = [_type<dynamic>(), _type<Object>()].map((e) => e.toString()).toList();
+final _uncheckedTypes = [
+  _type<dynamic>(),
+  _type<Object>(),
+].map((e) => e.toString()).toList();
+
 final _int = _type<int>().toString();
 final _num = _type<num>().toString();
 

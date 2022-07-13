@@ -22,5 +22,4 @@ void main() async {
     final res = await HKeysCommand(key).exec(client);
     expect(res..sort(), kv.keys.sorted());
   });
-
 }

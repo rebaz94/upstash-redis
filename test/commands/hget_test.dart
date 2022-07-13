@@ -43,7 +43,8 @@ void main() async {
       final value = {'v': randomID()};
       await HSetCommand(key, {field: value}).exec(client);
 
-      final res = await HGetCommand<Map<String, String>>(key, field).exec(client);
+      final res =
+          await HGetCommand<Map<String, String>>(key, field).exec(client);
       expect(res, value);
     });
   });

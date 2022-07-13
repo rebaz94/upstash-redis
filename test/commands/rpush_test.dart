@@ -15,7 +15,8 @@ void main() async {
       final res = await RPushCommand(key, [randomID()]).exec(client);
       expect(res, 1);
 
-      final res2 = await RPushCommand(key, [randomID(), randomID()]).exec(client);
+      final res2 =
+          await RPushCommand(key, [randomID(), randomID()]).exec(client);
       expect(res2, 3);
     });
   });

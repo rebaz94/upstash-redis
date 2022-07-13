@@ -15,7 +15,8 @@ void main() async {
       final key = newKey();
       final score = 1;
       final member = randomID();
-      await ZAddCommand(key, [ScoreMember(score: score, member: member)]).exec(client);
+      await ZAddCommand(key, [ScoreMember(score: score, member: member)])
+          .exec(client);
       final res = await ZIncrByCommand(key, 2, member).exec(client);
       expect(res, 3);
     });

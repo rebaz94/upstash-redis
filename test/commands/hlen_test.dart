@@ -23,5 +23,4 @@ void main() async {
     final res = await HLenCommand(key).exec(client);
     expect(res, 2);
   });
-
 }

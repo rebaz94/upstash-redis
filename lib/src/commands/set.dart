@@ -1,7 +1,8 @@
 import 'package:upstash_redis/src/commands/command.dart';
 import 'package:upstash_redis/src/commands/mod.dart';
 
-class SetCommand<TData, TResult extends String> extends Command<TResult?, String?> {
+class SetCommand<TData, TResult extends String>
+    extends Command<TResult?, String?> {
   SetCommand._(super.command, super.opts);
 
   factory SetCommand(

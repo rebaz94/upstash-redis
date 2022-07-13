@@ -9,6 +9,9 @@ class ZRemRangeByRankCommand extends Command<int, int> {
     int stop, [
     CommandOption<int, int>? opts,
   ]) {
-    return ZRemRangeByRankCommand._(['zremrangebyrank', key, start, stop], opts);
+    return ZRemRangeByRankCommand._(
+      ['zremrangebyrank', key, start, stop],
+      opts,
+    );
   }
 }

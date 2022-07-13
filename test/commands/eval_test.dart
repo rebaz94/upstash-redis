@@ -20,8 +20,8 @@ void main() async {
     final key = newKey();
     final value = randomID();
     await SetCommand(key, value).exec(client);
-    final res = await EvalCommand('return redis.call("GET", KEYS[1])', [key]).exec(client);
+    final res = await EvalCommand('return redis.call("GET", KEYS[1])', [key])
+        .exec(client);
     expect(res, value);
   });
-
 }

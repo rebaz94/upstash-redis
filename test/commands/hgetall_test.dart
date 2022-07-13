@@ -67,7 +67,8 @@ void main() async {
 
     // this custom deserialize used to prevent converting string number to string and
     // convert true|false to bool, number to string,
-    final res3 = await HGetAllCommand<Object>(key, _getCustomDeserialize()).exec(client);
+    final res3 =
+        await HGetAllCommand<Object>(key, _getCustomDeserialize()).exec(client);
     expect(res3, <String, dynamic>{
       field1: false,
       field2: 12345,

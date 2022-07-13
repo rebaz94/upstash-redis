@@ -3,7 +3,11 @@ import 'package:upstash_redis/src/commands/command.dart';
 class IncrByFloatCommand extends Command<dynamic, num> {
   IncrByFloatCommand._(super.command, super.opts);
 
-  factory IncrByFloatCommand(String key, num value, [CommandOption<num, num>? opts]) {
+  factory IncrByFloatCommand(
+    String key,
+    num value, [
+    CommandOption<num, num>? opts,
+  ]) {
     return IncrByFloatCommand._(['incrbyfloat', key, value], opts);
   }
 

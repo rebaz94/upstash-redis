@@ -32,5 +32,4 @@ void main() async {
     final res = await ExistsCommand([key1, key2, key3]).exec(client);
     expect(res, 2);
   });
-
 }

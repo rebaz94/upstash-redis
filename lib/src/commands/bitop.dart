@@ -21,7 +21,10 @@ class BitOpCommand extends Command<int, int> {
         '`not` operation is only takes an input only, but it takes ${sourceKeys.length}',
       );
     }
-    return BitOpCommand._(['bitop', op.name, destinationKey, ...sourceKeys], opts);
+    return BitOpCommand._(
+      ['bitop', op.name, destinationKey, ...sourceKeys],
+      opts,
+    );
   }
 
   factory BitOpCommand.and(
@@ -30,7 +33,10 @@ class BitOpCommand extends Command<int, int> {
     CommandOption<int, int>? opts,
   ]) {
     assert(sourceKeys.isNotEmpty, 'sourceKeys must have at least one key');
-    return BitOpCommand._(['bitop', 'and', destinationKey, ...sourceKeys], opts);
+    return BitOpCommand._(
+      ['bitop', 'and', destinationKey, ...sourceKeys],
+      opts,
+    );
   }
 
   factory BitOpCommand.or(
@@ -48,7 +54,10 @@ class BitOpCommand extends Command<int, int> {
     CommandOption<int, int>? opts,
   ]) {
     assert(sourceKeys.isNotEmpty, 'sourceKeys must have at least one key');
-    return BitOpCommand._(['bitop', 'xor', destinationKey, ...sourceKeys], opts);
+    return BitOpCommand._(
+      ['bitop', 'xor', destinationKey, ...sourceKeys],
+      opts,
+    );
   }
 
   factory BitOpCommand.not(

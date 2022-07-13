@@ -144,7 +144,10 @@ class UpstashHttpClient implements Requester {
   final Retry retry;
 
   @override
-  Future<UpstashResponse<TResult>> request<TResult>({List<String>? path, Object? body}) async {
+  Future<UpstashResponse<TResult>> request<TResult>({
+    List<String>? path,
+    Object? body,
+  }) async {
     http.Response? result = await _makeRequest(path: path, body: body);
 
     final UpstashResponse<TResult> bodyResult;

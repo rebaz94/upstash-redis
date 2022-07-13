@@ -11,7 +11,8 @@ void main() async {
   tearDownAll(() => keygen.cleanup());
 
   group('zlexcount test', () {
-    test('returns the number of elements in the specified score range', () async {
+    test('returns the number of elements in the specified score range',
+        () async {
       final key = newKey();
       await ZAddCommand(
         key,

@@ -9,6 +9,9 @@ class EvalshaCommand<TArgs, TData> extends Command<dynamic, TData> {
     List<TArgs> args = const [],
     CommandOption<dynamic, TData>? opts,
   ]) {
-    return EvalshaCommand._(['evalsha', sha, keys.length, ...keys, ...args], opts);
+    return EvalshaCommand._(
+      ['evalsha', sha, keys.length, ...keys, ...args],
+      opts,
+    );
   }
 }

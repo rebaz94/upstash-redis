@@ -1,7 +1,10 @@
 import 'package:upstash_redis/src/commands/command.dart';
 import 'package:upstash_redis/src/utils.dart';
 
-Map<String, TData>? _deserialize<TData>(List<String> fields, List<String?> result) {
+Map<String, TData>? _deserialize<TData>(
+  List<String> fields,
+  List<String?> result,
+) {
   if (result.isEmpty || result.every((field) => field == null)) {
     return null;
   }

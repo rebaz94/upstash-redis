@@ -23,12 +23,14 @@ void main() async {
     final value1 = '123';
     final value2 = '456';
     final value3 = 'rebaz';
-    final res =
-        await HMSetCommand(key, {field1: value1, field2: value2, field3: value3}).exec(client);
+    final res = await HMSetCommand(
+        key, {field1: value1, field2: value2, field3: value3}).exec(client);
     expect(res, 'OK');
 
-    final res2 = await HMGetCommand(key, [field1, field2, field3, 'notExist']).exec(client);
-    expect(res2, {field1: '123', field2: '456', field3: 'rebaz', 'notExist': null});
+    final res2 = await HMGetCommand(key, [field1, field2, field3, 'notExist'])
+        .exec(client);
+    expect(res2,
+        {field1: '123', field2: '456', field3: 'rebaz', 'notExist': null});
   });
 
   test('when the hash does not exist, returns null', () async {
@@ -111,7 +113,8 @@ void main() async {
   });
 }
 
-CommandOption<List<Object?>, Map<String, Object?>?> _getCustomDeserialize(List<String> fields) {
+CommandOption<List<Object?>, Map<String, Object?>?> _getCustomDeserialize(
+    List<String> fields) {
   return CommandOption(
     deserialize: (resultObj) {
       final result = resultObj;

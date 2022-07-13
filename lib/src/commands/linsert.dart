@@ -15,6 +15,9 @@ class LInsertCommand<TData> extends Command<int, int> {
     TData value, [
     CommandOption<int, int>? opts,
   ]) {
-    return LInsertCommand._(['linsert', key, direction.name, pivot, value], opts);
+    return LInsertCommand._(
+      ['linsert', key, direction.name, pivot, value],
+      opts,
+    );
   }
 }

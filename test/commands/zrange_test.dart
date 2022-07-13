@@ -46,7 +46,8 @@ void main() async {
         ],
       ).exec(client);
 
-      final res = await ZRangeCommand<String>(key, 1, 3, withScores: true).exec(client);
+      final res =
+          await ZRangeCommand<String>(key, 1, 3, withScores: true).exec(client);
       expect(res.length, 2);
       expect(res[0], member2);
       expect(res[1], '$score2');
@@ -70,18 +71,24 @@ void main() async {
         ],
       ).exec(client);
 
-      final res = await ZRangeCommand<String>(key, score1, score2, byScore: true).exec(client);
+      final res =
+          await ZRangeCommand<String>(key, score1, score2, byScore: true)
+              .exec(client);
       expect(res.length, 2);
       expect(res[0], member1);
       expect(res[1], member2);
 
-      final res2 = await ZRangeCommand<String>(key, score1, score3, byScore: true).exec(client);
+      final res2 =
+          await ZRangeCommand<String>(key, score1, score3, byScore: true)
+              .exec(client);
       expect(res2.length, 3);
       expect(res2[0], member1);
       expect(res2[1], member2);
       expect(res2[2], member3);
 
-      final res3 = await ZRangeCommand<String>(key, '-inf', '+inf', byScore: true).exec(client);
+      final res3 =
+          await ZRangeCommand<String>(key, '-inf', '+inf', byScore: true)
+              .exec(client);
       expect(res3, res2);
     });
 
@@ -97,17 +104,20 @@ void main() async {
       ).exec(client);
 
       // everything in between a and c, excluding "a" and including "c"
-      final res = await ZRangeCommand<String>(key, '(a', '[c', byLex: true).exec(client);
+      final res = await ZRangeCommand<String>(key, '(a', '[c', byLex: true)
+          .exec(client);
       expect(res.length, 2);
       expect(res[0], 'b');
       expect(res[1], 'c');
 
       //everything after "a", excluding a
-      final res2 = await ZRangeCommand<String>(key, '(a', '+', byLex: true).exec(client);
+      final res2 =
+          await ZRangeCommand<String>(key, '(a', '+', byLex: true).exec(client);
       expect(res2, res);
 
       // everything in between a and "bb", including "a" and excluding "bb"
-      final res3 = await ZRangeCommand<String>(key, '[a', '(bb', byLex: true).exec(client);
+      final res3 = await ZRangeCommand<String>(key, '[a', '(bb', byLex: true)
+          .exec(client);
       expect(res.length, 2);
       expect(res3[0], 'a');
       expect(res3[1], 'b');
@@ -127,7 +137,8 @@ void main() async {
         ],
       ).exec(client);
 
-      final res = await ZRangeCommand<String>(key, 0, 7, rev: true).exec(client);
+      final res =
+          await ZRangeCommand<String>(key, 0, 7, rev: true).exec(client);
       expect(res.length, 2);
       expect(res[0], member2);
       expect(res[1], member1);
@@ -136,10 +147,12 @@ void main() async {
     test('limit, returns only the first 2', () async {
       final key = newKey();
       for (int i = 0; i < 10; i++) {
-        await ZAddCommand(key, [ScoreMember(score: i, member: randomID())]).exec(client);
+        await ZAddCommand(key, [ScoreMember(score: i, member: randomID())])
+            .exec(client);
       }
 
-      final res = await ZRangeCommand<String>(key, 0, 7, offset: 0, count: 2).exec(client);
+      final res = await ZRangeCommand<String>(key, 0, 7, offset: 0, count: 2)
+          .exec(client);
       expect(res.length, 2);
     });
   });

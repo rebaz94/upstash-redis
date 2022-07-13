@@ -13,7 +13,8 @@ void main() async {
   group('zcount test', () {
     test('returns the cardinality', () async {
       final key = newKey();
-      await ZAddCommand(key, [ScoreMember(score: 1, member: 'member1')]).exec(client);
+      await ZAddCommand(key, [ScoreMember(score: 1, member: 'member1')])
+          .exec(client);
       final res = await ZCountCommand(key, 0, 2).exec(client);
       expect(res, 1);
     });

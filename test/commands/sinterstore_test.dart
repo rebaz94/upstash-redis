@@ -20,7 +20,8 @@ void main() async {
 
       await SAddCommand(key1, [member1]).exec(client);
       await SAddCommand(key2, [member2]).exec(client);
-      final res = await SInterStoreCommand(destination, [key1, key2]).exec(client);
+      final res =
+          await SInterStoreCommand(destination, [key1, key2]).exec(client);
       expect(res, 0);
     });
   });

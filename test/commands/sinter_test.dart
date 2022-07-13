@@ -35,7 +35,8 @@ void main() async {
 
       await SAddCommand(key1, [value1, value2]).exec(client);
       await SAddCommand(key2, [value2, value3]).exec(client);
-      final res = await SInterCommand<Map<String, String>>([key1, key2]).exec(client);
+      final res =
+          await SInterCommand<Map<String, String>>([key1, key2]).exec(client);
       expect(res, [value2]);
     });
   });
