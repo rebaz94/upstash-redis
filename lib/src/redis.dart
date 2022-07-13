@@ -72,6 +72,24 @@ class Redis {
     return command.exec(_client);
   }
 
+  Future<List<dynamic>> runs(
+    List<Command> commands, {
+    bool eagerError = false,
+    bool sequentialExecution = false,
+  }) async {
+    if (sequentialExecution) {
+      final result = [];
+      for (final c in commands) {
+        result.add(await c.exec(_client));
+      }
+      return result;
+    }
+    return Future.wait(
+      commands.map((c) => c.exec(_client)),
+      eagerError: eagerError,
+    );
+  }
+
   /// @see https://redis.io/commands/append
   Future<int> append(String key, String value, [CommandOption<int, int>? opts]) {
     return AppendCommand(key, value).exec(_client);
