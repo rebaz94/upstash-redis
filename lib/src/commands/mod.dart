@@ -102,5 +102,6 @@ export 'zlexcount.dart';
 export 'zpopmax.dart';
 export 'zpopmin.dart';
 export 'zrange.dart';
+export 'zrank.dart';
 export 'zrem.dart';
 export 'zscore.dart';

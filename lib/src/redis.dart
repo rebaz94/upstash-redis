@@ -799,6 +799,11 @@ class Redis {
     ).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zrank
+  Future<int?> zrank<TData>(String key, TData member, [CommandOption<int?, int?>? opts]) {
+    return ZRankCommand<TData>(key, member, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
