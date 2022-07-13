@@ -14,7 +14,7 @@ class RedisOptions {
 
 /// Serverless redis client for upstash.
 class Redis {
-  Redis._(this._client, this.opts);
+  Redis._(this._client);
 
   /// Create a new redis client
   factory Redis({
@@ -38,7 +38,6 @@ class Redis {
           retry: retryConfig,
         ),
       ),
-      CommandOption(automaticDeserialization: opts.automaticDeserialization),
     );
   }
 
@@ -66,7 +65,6 @@ class Redis {
   }
 
   final Requester _client;
-  final CommandOption<dynamic, dynamic>? opts;
 
   Future<TData> run<TResult, TData>(Command<TResult, TData> command) {
     return command.exec(_client);
