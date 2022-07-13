@@ -29,11 +29,11 @@ void main() async {
       expect(res, [member1, '$score1']);
     });
 
-    test('with count, returns the n min members', () async {
+    test('with count, returns the popped elements', () async {
       final key = newKey();
       final score1 = 1;
       final score2 = 2;
-      final score3 = 2;
+      final score3 = 3;
       final member1 = randomID();
       final member2 = randomID();
       final member3 = randomID();
