@@ -772,6 +772,33 @@ class Redis {
     return ZPopMinCommand<TData>(key, count: count, opts: opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zrange
+  Future<List<TData>> zrange<TData>(
+    String key,
+    Object min,
+    Object max, {
+    bool? withScores,
+    bool? rev,
+    bool? byScore,
+    bool? byLex,
+    int? offset,
+    int? count,
+    CommandOption<List<String?>, List<TData>>? opts,
+  }) {
+    return ZRangeCommand<TData>(
+      key,
+      min,
+      max,
+      withScores: withScores,
+      rev: rev,
+      byScore: byScore,
+      byLex: byLex,
+      offset: offset,
+      count: count,
+      opts: opts,
+    ).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
