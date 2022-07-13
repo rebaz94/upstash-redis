@@ -1,12 +1,12 @@
 import 'package:upstash_redis/src/commands/command.dart';
 
-class ScripLoadCommand<TData> extends Command<String, String> {
-  ScripLoadCommand._(super.command, super.opts);
+class ScriptLoadCommand<TData> extends Command<String, String> {
+  ScriptLoadCommand._(super.command, super.opts);
 
-  factory ScripLoadCommand(
+  factory ScriptLoadCommand(
     String script, [
     CommandOption<String, String>? opts,
   ]) {
-    return ScripLoadCommand._(['script', 'load', script], opts);
+    return ScriptLoadCommand._(['script', 'load', script], opts);
   }
 }

@@ -13,7 +13,7 @@ void main() async {
     group('with a single script', () {
       test('when the script exists, returns 1', () async {
         final script = 'return "${randomID()}"';
-        final hash = await ScripLoadCommand(script).exec(client);
+        final hash = await ScriptLoadCommand(script).exec(client);
         final res = await ScriptExistsCommand([hash]).exec(client);
         expect(res, [1]);
       });
@@ -28,8 +28,8 @@ void main() async {
       test('returns the found scripts', () async {
         final script1 = 'return "${randomID()}"';
         final script2 = 'return "${randomID()}"';
-        final hash1 = await ScripLoadCommand(script1).exec(client);
-        final hash2 = await ScripLoadCommand(script2).exec(client);
+        final hash1 = await ScriptLoadCommand(script1).exec(client);
+        final hash2 = await ScriptLoadCommand(script2).exec(client);
         final res = await ScriptExistsCommand([hash1, hash2]).exec(client);
         expect(res, [1, 1]);
       });

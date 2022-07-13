@@ -11,7 +11,7 @@ void main() async {
 
   test('without keys, returns something', () async {
     final value = randomID();
-    final sha1 = await ScripLoadCommand('return {ARGV[1], "$value"}').exec(client);
+    final sha1 = await ScriptLoadCommand('return {ARGV[1], "$value"}').exec(client);
     final res = await EvalshaCommand(sha1, [], [value]).exec(client);
     expect(res, [value, value]);
   });

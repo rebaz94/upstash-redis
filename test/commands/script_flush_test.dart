@@ -13,7 +13,7 @@ void main() async {
   group('scriptFlush test', () {
     test('sync, flushes all scripts', () async {
       final script = 'return "${randomID()}"';
-      final sha1 = await ScripLoadCommand(script).exec(client);
+      final sha1 = await ScriptLoadCommand(script).exec(client);
       expect(await ScriptExistsCommand([sha1]).exec(client), [1]);
 
       final res = await ScriptFlushCommand(sync: true).exec(client);
@@ -23,7 +23,7 @@ void main() async {
 
     test('async, flushes all scripts', () async {
       final script = 'return "${randomID()}"';
-      final sha1 = await ScripLoadCommand(script).exec(client);
+      final sha1 = await ScriptLoadCommand(script).exec(client);
       expect(await ScriptExistsCommand([sha1]).exec(client), [1]);
 
       final res = await ScriptFlushCommand(async: true).exec(client);

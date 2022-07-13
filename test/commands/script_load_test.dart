@@ -10,7 +10,7 @@ void main() async {
 
   test('returns the hash', () async {
     final script = 'return ARGV[1]';
-    final res = await ScripLoadCommand(script).exec(client);
+    final res = await ScriptLoadCommand(script).exec(client);
     expect(res, '098e0f0d1448c0a81dafe820f66d460eb09263da');
   });
 }
