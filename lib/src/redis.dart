@@ -92,7 +92,7 @@ class Redis {
 
   /// @see https://redis.io/commands/append
   Future<int> append(String key, String value, [CommandOption<int, int>? opts]) {
-    return AppendCommand(key, value).exec(_client);
+    return AppendCommand(key, value, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/bitcount
