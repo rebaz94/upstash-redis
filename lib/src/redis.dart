@@ -744,6 +744,16 @@ class Redis {
     ).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zlexcount
+  Future<int> zlexcount(
+    String key,
+    String min,
+    String max, [
+    CommandOption<int, int>? opts,
+  ]) {
+    return ZLexCountCommand(key, min, max, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
