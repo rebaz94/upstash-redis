@@ -100,5 +100,6 @@ export 'zincrby.dart';
 export 'zinterstore.dart';
 export 'zlexcount.dart';
 export 'zpopmax.dart';
+export 'zpopmin.dart';
 export 'zrem.dart';
 export 'zscore.dart';

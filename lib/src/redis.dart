@@ -763,6 +763,15 @@ class Redis {
     return ZPopMaxCommand<TData>(key, count: count, opts: opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zpopmin
+  Future<List<TData>> zpopmin<TData>(
+    String key, {
+    int? count,
+    CommandOption<List<String>, List<TData>>? opts,
+  }) {
+    return ZPopMinCommand<TData>(key, count: count, opts: opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zrem
   Future<int> zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return ZRemCommand<TData>(key, members, opts).exec(_client);
