@@ -1,4 +1,3 @@
-import 'package:upstash_redis/src/commands/zadd.dart';
 import 'package:upstash_redis/upstash_redis.dart';
 
 Future<void> main() async {
