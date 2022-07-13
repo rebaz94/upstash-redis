@@ -159,7 +159,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/exists
-  Future<int> exists<TData>(List<String> keys, [CommandOption<int, int>? opts]) {
+  Future<int> exists(List<String> keys, [CommandOption<int, int>? opts]) {
     return ExistsCommand(keys).exec(_client);
   }
 
@@ -204,15 +204,14 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hget
-  Future<TData?> hget<TData>(String key, String field, [CommandOption<Object?, TData?>? opts]) {
-    return HGetCommand(key, field, opts).exec(_client);
+  Future<TData?> hget<TData>(String key, String field, [CommandOption<dynamic, TData?>? opts]) {
+    return HGetCommand<TData>(key, field, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/hgetall
   Future<Map<String, TData?>?> hgetall<TData>(
-    String key,
-    String field, [
-    CommandOption<Object?, Map<String, TData?>>? opts,
+    String key, [
+    CommandOption<dynamic, Map<String, TData?>>? opts,
   ]) {
     return HGetAllCommand<TData>(key, opts).exec(_client);
   }
@@ -253,13 +252,13 @@ class Redis {
     List<String> fields, [
     CommandOption<List<String>, Map<String, TData?>>? opts,
   ]) {
-    return HMGetCommand(key, fields, opts).exec(_client);
+    return HMGetCommand<TData>(key, fields, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/hmset
   Future<String> hmset<TData>(String key, Map<String, TData> kv,
       [CommandOption<String, String>? opts]) {
-    return HMSetCommand(key, kv, opts).exec(_client);
+    return HMSetCommand<TData>(key, kv, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/hscan
@@ -295,7 +294,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hstrlen
-  Future<int> hstrlen<TData>(String key, String field, [CommandOption<int, int>? opts]) {
+  Future<int> hstrlen(String key, String field, [CommandOption<int, int>? opts]) {
     return HStrLenCommand(key, field, opts).exec(_client);
   }
 
@@ -326,7 +325,7 @@ class Redis {
 
   /// @see https://redis.io/commands/lindex
   Future<TData?> lindex<TData>(String key, int index, [CommandOption<Object?, TData?>? opts]) {
-    return LIndexCommand(key, index, opts).exec(_client);
+    return LIndexCommand<TData>(key, index, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/linsert
@@ -337,7 +336,7 @@ class Redis {
     TData value, [
     CommandOption<int, int>? opts,
   ]) {
-    return LInsertCommand(key, direction, pivot, value, opts).exec(_client);
+    return LInsertCommand<TData>(key, direction, pivot, value, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/llen
@@ -347,17 +346,17 @@ class Redis {
 
   /// @see https://redis.io/commands/lpop
   Future<TData?> lpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
-    return LPopCommand(key, opts).exec(_client);
+    return LPopCommand<TData>(key, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/lpush
   Future<int> lpush<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
-    return LPushCommand(key, elements, opts).exec(_client);
+    return LPushCommand<TData>(key, elements, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/lpushx
   Future<int> lpushx<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
-    return LPushCommand(key, elements, opts).exec(_client);
+    return LPushCommand<TData>(key, elements, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/lrange
@@ -446,7 +445,7 @@ class Redis {
 
   /// @see https://redis.io/commands/publish
   Future<int> publish<TData>(String channel, TData message, [CommandOption<int, int>? opts]) {
-    return PublishCommand(channel, message, opts).exec(_client);
+    return PublishCommand<TData>(channel, message, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/randomkey
@@ -466,22 +465,22 @@ class Redis {
 
   /// @see https://redis.io/commands/rpop
   Future<TData?> rpop<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
-    return RPopCommand(key, opts).exec(_client);
+    return RPopCommand<TData>(key, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/rpush
   Future<int> rpush<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
-    return RPushCommand(key, elements, opts).exec(_client);
+    return RPushCommand<TData>(key, elements, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/rpushx
   Future<int> rpushx<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
-    return RPushXCommand(key, elements, opts).exec(_client);
+    return RPushXCommand<TData>(key, elements, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/sadd
   Future<int> sadd<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
-    return SAddCommand(key, members, opts).exec(_client);
+    return SAddCommand<TData>(key, members, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/scan
@@ -511,7 +510,7 @@ class Redis {
 
   /// @see https://redis.io/commands/script-load
   Future<String> scriptLoad(String script, [CommandOption<String, String>? opts]) {
-    return ScripLoadCommand(script, opts).exec(_client);
+    return ScriptLoadCommand(script, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/sdiff
@@ -519,7 +518,7 @@ class Redis {
     List<String> keys, [
     CommandOption<List<dynamic>, List<TData>>? opts,
   ]) {
-    return SDiffCommand(keys, opts).exec(_client);
+    return SDiffCommand<TData>(keys, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/sdiffstore
@@ -592,7 +591,7 @@ class Redis {
 
   /// @see https://redis.io/commands/sismember
   Future<int> sismember<TData>(String key, TData member, [CommandOption<dynamic, int>? opts]) {
-    return SIsMemberCommand(key, member, opts).exec(_client);
+    return SIsMemberCommand<TData>(key, member, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/sinter
@@ -610,7 +609,7 @@ class Redis {
     TData member, [
     CommandOption<dynamic, int>? opts,
   ]) {
-    return SMoveCommand(source, destination, member).exec(_client);
+    return SMoveCommand<TData>(source, destination, member).exec(_client);
   }
 
   /// @see https://redis.io/commands/spop
@@ -619,7 +618,7 @@ class Redis {
     int? count,
     CommandOption<dynamic, TData?>? opts,
   ]) {
-    return SPopCommand(key, count, opts).exec(_client);
+    return SPopCommand<TData>(key, count, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/srandmember
@@ -628,12 +627,12 @@ class Redis {
     int? count,
     CommandOption<dynamic, TData?>? opts,
   ]) {
-    return SRandMemberCommand(key, count, opts).exec(_client);
+    return SRandMemberCommand<TData>(key, count, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/srem
   Future<int> srem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
-    return SRemCommand(key, members, opts).exec(_client);
+    return SRemCommand<TData>(key, members, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/sscan
@@ -657,7 +656,7 @@ class Redis {
     List<String> keys, [
     CommandOption<List<String>, List<TData>>? opts,
   ]) {
-    return SUnionCommand(keys, opts).exec(_client);
+    return SUnionCommand<TData>(keys, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/sunionstore
@@ -666,10 +665,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/time
-  Future<List<int>> time(
-    List<String> keys, [
-    CommandOption<List<String>, List<int>>? opts,
-  ]) {
+  Future<List<int>> time([CommandOption<List<String>, List<int>>? opts]) {
     return TimeCommand(opts).exec(_client);
   }
 
@@ -710,8 +706,15 @@ class Redis {
       allScores.insert(0, ScoreMember(score: score, member: member));
     }
 
-    return ZAddCommand(key, allScores, ch: ch, incr: incr, nx: nx, xx: xx, cmdOpts: cmdOpts)
-        .exec(_client);
+    return ZAddCommand<TData>(
+      key,
+      allScores,
+      ch: ch,
+      incr: incr,
+      nx: nx,
+      xx: xx,
+      cmdOpts: cmdOpts,
+    ).exec(_client);
   }
 
   /// @see https://redis.io/commands/zcard
@@ -842,7 +845,7 @@ class Redis {
 
   /// @see https://redis.io/commands/zrevrank
   Future<int?> zrevrank<TData>(String key, TData member, [CommandOption<int?, int?>? opts]) {
-    return ZRevRankCommand(key, member, opts).exec(_client);
+    return ZRevRankCommand<TData>(key, member, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/zscan
@@ -858,7 +861,7 @@ class Redis {
 
   /// @see https://redis.io/commands/zscore
   Future<num?> zscore<TData>(String key, TData member, [CommandOption<String, num>? opts]) {
-    return ZScoreCommand(key, member, opts).exec(_client);
+    return ZScoreCommand<TData>(key, member, opts).exec(_client);
   }
 
   /// @see https://redis.io/commands/zunionstore
