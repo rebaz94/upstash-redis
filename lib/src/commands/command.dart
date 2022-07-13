@@ -47,7 +47,7 @@ abstract class Command<TResult, TData> {
             : _castedDeserializer,
         command = command.map(serialize).toList();
 
-  final List<dynamic> command;
+  final List<String> command;
   final Serialize serialize;
   final Deserialize<TResult, TData> deserialize;
 
