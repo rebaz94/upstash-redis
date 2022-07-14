@@ -3,6 +3,7 @@ import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/pipeline.dart';
 import 'package:upstash_redis/src/redis.dart';
 import 'package:upstash_redis/src/test_utils.dart';
+import 'package:upstash_redis/src/upstash_error.dart';
 
 void main() {
   final client = newHttpClient();
@@ -57,9 +58,24 @@ void main() {
     expectLater(Pipeline(client).exec(), throwsStateError);
   });
 
-  test('when one command throws an error, throws', () async {
-    final p = Pipeline(client).set('key', 'value').hget('key', 'field');
-    expectLater(p.exec(), throwsException);
+  group('when one command throws', () {
+    test('throws', () async {
+      final p = Pipeline(client).set('key', 'value').hget('key', 'field');
+      expectLater(p.exec(), throwsException);
+    });
+
+    test('if throwsIfHasAnyCommandError is false, returns result and error',
+        () async {
+      final p = Pipeline(client)
+          .hincrby('myHash', 'count', 1)
+          .set('key2', 'value')
+          .hget('key2', 'field');
+      final res = await p.exec(throwsIfHasAnyCommandError: false);
+      expect(res.length, 3);
+      expect(res[0], 1);
+      expect(res[1], 'OK');
+      expect(res[2], isA<UpstashError>());
+    });
   });
 
   test('use all the things, works', () async {

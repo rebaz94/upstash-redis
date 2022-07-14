@@ -46,7 +46,15 @@ class Pipeline {
   final Requester _client;
   final List<Command<dynamic, dynamic>> _commands;
 
-  Future<List<dynamic>> exec() async {
+  /// Send the pipeline request to upstash.
+  ///
+  /// Returns an array with the results of all pipelined commands.
+  ///
+  /// if [throwsIfHasAnyCommandError] is false, failed commands error will be
+  /// added to the result instead of throwing the error
+  ///
+  /// see [execWithModel] if you want to create a model from the list of the command result
+  Future<List<dynamic>> exec({bool throwsIfHasAnyCommandError = true}) async {
     if (_commands.isEmpty) {
       throw StateError('Pipeline is empty');
     }
@@ -56,16 +64,22 @@ class Pipeline {
       body: _commands.map((e) => e.command).toList(),
       commands: _commands,
     );
+
     final result = [];
     int i = 0;
     for (final cmdResult in responses) {
       if (cmdResult.error != null) {
-        throw UpstashError(
+        final error = UpstashError(
           'Command ${i + 1} [ ${_commands[i].command[0]} ] failed: ${cmdResult.error}',
         );
+        if (throwsIfHasAnyCommandError) {
+          throw error;
+        } else {
+          result.add(error);
+        }
+      } else {
+        result.add(_commands[i].decodeValueFrom(cmdResult.result));
       }
-
-      result.add(_commands[i].decodeValueFrom(cmdResult.result));
       i++;
     }
 
