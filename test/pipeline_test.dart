@@ -78,6 +78,18 @@ void main() {
     });
   });
 
+  test('convert result to model works', () async {
+    final p = Pipeline(client)
+        .set('name', 'rebaz')
+        .set('age', 27)
+        .get('name')
+        .get<int>('age');
+    final res = await p.execWithModel(MyModel.fromResult,
+        throwsIfHasAnyCommandError: false);
+    expect(res.name, 'rebaz');
+    expect(res.age, 27);
+  });
+
   test('use all the things, works', () async {
     final p = Pipeline(client);
     final persistentKey = newKey();
@@ -206,4 +218,26 @@ void main() {
     expect(res.length, 114);
     expect(res[32], 123);
   });
+}
+
+class MyModel {
+  const MyModel({
+    required this.name,
+    required this.age,
+  });
+
+  factory MyModel.fromResult(List<dynamic> result) {
+    return MyModel(
+      name: result[2] as String,
+      age: result[3] as int,
+    );
+  }
+
+  final String name;
+  final int age;
+
+  @override
+  String toString() {
+    return 'MyModel{name: $name, age: $age}';
+  }
 }

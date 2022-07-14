@@ -86,6 +86,22 @@ class Pipeline {
     return result;
   }
 
+  /// Send the pipeline request to upstash.
+  ///
+  /// Returns a [T] result model, created using [create] callback.
+  ///
+  /// if [throwsIfHasAnyCommandError] is false, failed commands error will be
+  /// added to the result instead of throwing the error
+  Future<T> execWithModel<T>(
+    T Function(List<dynamic> result) create, {
+    bool throwsIfHasAnyCommandError = true,
+  }) async {
+    final result = await exec(
+      throwsIfHasAnyCommandError: throwsIfHasAnyCommandError,
+    );
+    return create(result);
+  }
+
   /// Pushes a command into the pipeline and returns a chainable instance of the pipeline
   Pipeline _chain<T>(Command<dynamic, T> command) {
     _commands.add(command);
