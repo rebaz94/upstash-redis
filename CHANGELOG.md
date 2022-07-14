@@ -1,3 +1,7 @@
+## 1.0.2+1
+
+- Fix homepage url
+
 ## 1.0.2
 
 - Allow returning result without throwing if it has any command error
