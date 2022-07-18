@@ -39,9 +39,9 @@ void main() async {
     test('with maxLen, returns 2', () async {
       final key = newKey();
       await RPushCommand(key, ['a', 'b', 'c', 1, 2, 3, 'c', 'c']).exec(client);
-      final res = await LPosCommand<List<int>>(key, 'c', count: 2, maxLen: 4).exec(client);
+      final res = await LPosCommand<List<int>>(key, 'c', count: 2, maxLen: 4)
+          .exec(client);
       expect(res, [2]);
     });
-
   });
 }
