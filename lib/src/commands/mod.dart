@@ -41,6 +41,7 @@ export 'lindex.dart';
 export 'linsert.dart';
 export 'llen.dart';
 export 'lpop.dart';
+export 'lpos.dart';
 export 'lpush.dart';
 export 'lpushx.dart';
 export 'lrange.dart';

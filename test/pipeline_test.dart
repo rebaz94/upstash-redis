@@ -143,6 +143,7 @@ void main() {
         .linsert(newKey(), IDirection.before, 'pivot', 'value')
         .llen(newKey())
         .lpop(newKey())
+        .lpos(newKey(), 'value')
         .lpush(persistentKey, ['element'])
         .lpushx(newKey(), ['element1', 'element2'])
         .lrange(newKey(), 0, 1)
@@ -215,8 +216,7 @@ void main() {
         .zunionstore(newKey(), 1, [newKey()]);
 
     final res = await p.exec();
-    expect(res.length, 114);
-    expect(res[32], 123);
+    expect(res.length, 115);
   });
 }
 

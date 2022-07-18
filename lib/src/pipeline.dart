@@ -114,8 +114,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/bitcount
-  Pipeline bitcount(String key,
-      {int? start, int? end, CommandOption<int, int>? opts}) {
+  Pipeline bitcount(String key, {int? start, int? end, CommandOption<int, int>? opts}) {
     return _chain(BitCountCommand(key, start: start, end: end, opts: opts));
   }
 
@@ -130,8 +129,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/bitpos
-  Pipeline bitpos(String key, int bit,
-      [int? start, int? end, CommandOption<int, int>? opts]) {
+  Pipeline bitpos(String key, int bit, [int? start, int? end, CommandOption<int, int>? opts]) {
     return _chain(BitPosCommand(key, bit, start, end, opts));
   }
 
@@ -216,26 +214,22 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/getrange
-  Pipeline getrange(String key, int start, int end,
-      [CommandOption<String, String>? opts]) {
+  Pipeline getrange(String key, int start, int end, [CommandOption<String, String>? opts]) {
     return _chain(GetRangeCommand(key, start, end, opts));
   }
 
   /// @see https://redis.io/commands/getset
-  Pipeline getset<TData>(String key, TData value,
-      [CommandOption<dynamic, TData>? opts]) {
+  Pipeline getset<TData>(String key, TData value, [CommandOption<dynamic, TData>? opts]) {
     return _chain(GetSetCommand<TData>(key, value, opts));
   }
 
   /// @see https://redis.io/commands/hget
-  Pipeline hget<TData>(String key, String field,
-      [CommandOption<dynamic, TData?>? opts]) {
+  Pipeline hget<TData>(String key, String field, [CommandOption<dynamic, TData?>? opts]) {
     return _chain(HGetCommand<TData>(key, field, opts));
   }
 
   /// @see https://redis.io/commands/hgetall
-  Pipeline hgetall<TData>(String key,
-      [CommandOption<dynamic, Map<String, TData?>>? opts]) {
+  Pipeline hgetall<TData>(String key, [CommandOption<dynamic, Map<String, TData?>>? opts]) {
     return _chain(HGetAllCommand<TData>(key, opts));
   }
 
@@ -260,8 +254,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/hkeys
-  Pipeline hkeys(String key,
-      [CommandOption<List<String>, List<String>>? opts]) {
+  Pipeline hkeys(String key, [CommandOption<List<String>, List<String>>? opts]) {
     return _chain(HKeysCommand(key, opts));
   }
 
@@ -280,8 +273,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/hmset
-  Pipeline hmset<TData>(String key, Map<String, TData> kv,
-      [CommandOption<String, String>? opts]) {
+  Pipeline hmset<TData>(String key, Map<String, TData> kv, [CommandOption<String, String>? opts]) {
     return _chain(HMSetCommand<TData>(key, kv, opts));
   }
 
@@ -313,14 +305,12 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/hset
-  Pipeline hset<TData>(String key, Map<String, TData> kv,
-      [CommandOption<int, int>? opts]) {
+  Pipeline hset<TData>(String key, Map<String, TData> kv, [CommandOption<int, int>? opts]) {
     return _chain(HSetCommand<TData>(key, kv, opts));
   }
 
   /// @see https://redis.io/commands/hsetnx
-  Pipeline hsetnx<TData>(String key, String field, TData value,
-      [CommandOption<int, int>? opts]) {
+  Pipeline hsetnx<TData>(String key, String field, TData value, [CommandOption<int, int>? opts]) {
     return _chain(HSetNXCommand<TData>(key, field, value, opts));
   }
 
@@ -330,8 +320,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/hvals
-  Pipeline hvals<TData>(String key,
-      [CommandOption<List<TData>, List<TData>>? opts]) {
+  Pipeline hvals<TData>(String key, [CommandOption<List<TData>, List<TData>>? opts]) {
     return _chain(HValsCommand<TData>(key, opts));
   }
 
@@ -351,14 +340,12 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/keys
-  Pipeline keys(String pattern,
-      [CommandOption<List<String>, List<String>>? opts]) {
+  Pipeline keys(String pattern, [CommandOption<List<String>, List<String>>? opts]) {
     return _chain(KeysCommand(pattern, opts));
   }
 
   /// @see https://redis.io/commands/lindex
-  Pipeline lindex<TData>(String key, int index,
-      [CommandOption<Object?, TData?>? opts]) {
+  Pipeline lindex<TData>(String key, int index, [CommandOption<Object?, TData?>? opts]) {
     return _chain(LIndexCommand<TData>(key, index, opts));
   }
 
@@ -383,15 +370,32 @@ class Pipeline {
     return _chain(LPopCommand<TData>(key, opts));
   }
 
+  /// @see https://redis.io/commands/lpos
+  Pipeline lpos<TData>(
+    String key,
+    dynamic element, {
+    int? rank,
+    int? count,
+    int? maxLen,
+    CommandOption<TData, TData>? opts,
+  }) {
+    return _chain(LPosCommand<TData>(
+      key,
+      element,
+      rank: rank,
+      count: count,
+      maxLen: maxLen,
+      opts: opts,
+    ));
+  }
+
   /// @see https://redis.io/commands/lpush
-  Pipeline lpush<TData>(String key, List<TData> elements,
-      [CommandOption<int, int>? opts]) {
+  Pipeline lpush<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
     return _chain(LPushCommand<TData>(key, elements, opts));
   }
 
   /// @see https://redis.io/commands/lpushx
-  Pipeline lpushx<TData>(String key, List<TData> elements,
-      [CommandOption<int, int>? opts]) {
+  Pipeline lpushx<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
     return _chain(LPushCommand<TData>(key, elements, opts));
   }
 
@@ -406,8 +410,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/lrem
-  Pipeline lrem<TData>(String key, int count, TData value,
-      [CommandOption<int, int>? opts]) {
+  Pipeline lrem<TData>(String key, int count, TData value, [CommandOption<int, int>? opts]) {
     return _chain(LRemCommand<TData>(key, count, value, opts));
   }
 
@@ -440,14 +443,12 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/mset
-  Pipeline mset<TData>(Map<String, TData> kv,
-      [CommandOption<String, String>? opts]) {
+  Pipeline mset<TData>(Map<String, TData> kv, [CommandOption<String, String>? opts]) {
     return _chain(MSetCommand<TData>(kv, opts));
   }
 
   /// @see https://redis.io/commands/msetnx
-  Pipeline msetnx<TData>(Map<String, TData> kv,
-      [CommandOption<int, int>? opts]) {
+  Pipeline msetnx<TData>(Map<String, TData> kv, [CommandOption<int, int>? opts]) {
     return _chain(MSetNXCommand<TData>(kv, opts));
   }
 
@@ -457,14 +458,12 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/pexpire
-  Pipeline pexpire(String key, int milliseconds,
-      [CommandOption<dynamic, int>? opts]) {
+  Pipeline pexpire(String key, int milliseconds, [CommandOption<dynamic, int>? opts]) {
     return _chain(PExpireCommand(key, milliseconds, opts));
   }
 
   /// @see https://redis.io/commands/pexpireat
-  Pipeline pexpireat(String key, int unix,
-      [CommandOption<dynamic, int>? opts]) {
+  Pipeline pexpireat(String key, int unix, [CommandOption<dynamic, int>? opts]) {
     return _chain(PExpireAtCommand(key, unix, opts));
   }
 
@@ -489,8 +488,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/publish
-  Pipeline publish<TData>(String channel, TData message,
-      [CommandOption<int, int>? opts]) {
+  Pipeline publish<TData>(String channel, TData message, [CommandOption<int, int>? opts]) {
     return _chain(PublishCommand<TData>(channel, message, opts));
   }
 
@@ -500,14 +498,12 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/rename
-  Pipeline rename(String source, String destination,
-      [CommandOption<String, String>? opts]) {
+  Pipeline rename(String source, String destination, [CommandOption<String, String>? opts]) {
     return _chain(RenameCommand(source, destination, opts));
   }
 
   /// @see https://redis.io/commands/renamenx
-  Pipeline renamenx(String source, String destination,
-      [CommandOption<dynamic, int>? opts]) {
+  Pipeline renamenx(String source, String destination, [CommandOption<dynamic, int>? opts]) {
     return _chain(RenameNXCommand(source, destination, opts));
   }
 
@@ -517,20 +513,17 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/rpush
-  Pipeline rpush<TData>(String key, List<TData> elements,
-      [CommandOption<int, int>? opts]) {
+  Pipeline rpush<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
     return _chain(RPushCommand<TData>(key, elements, opts));
   }
 
   /// @see https://redis.io/commands/rpushx
-  Pipeline rpushx<TData>(String key, List<TData> elements,
-      [CommandOption<int, int>? opts]) {
+  Pipeline rpushx<TData>(String key, List<TData> elements, [CommandOption<int, int>? opts]) {
     return _chain(RPushXCommand<TData>(key, elements, opts));
   }
 
   /// @see https://redis.io/commands/sadd
-  Pipeline sadd<TData>(String key, List<TData> members,
-      [CommandOption<int, int>? opts]) {
+  Pipeline sadd<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return _chain(SAddCommand<TData>(key, members, opts));
   }
 
@@ -550,14 +543,12 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/script-exists
-  Pipeline scriptExists(List<String> hashes,
-      [CommandOption<List<int>, List<int>>? opts]) {
+  Pipeline scriptExists(List<String> hashes, [CommandOption<List<int>, List<int>>? opts]) {
     return _chain(ScriptExistsCommand(hashes, opts));
   }
 
   /// @see https://redis.io/commands/script-flush
-  Pipeline scriptFlush(
-      {bool? sync, bool? async, CommandOption<String, String>? opts}) {
+  Pipeline scriptFlush({bool? sync, bool? async, CommandOption<String, String>? opts}) {
     return _chain(ScriptFlushCommand(sync: sync, async: async, opts: opts));
   }
 
@@ -601,8 +592,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/setbit
-  Pipeline setbit(String key, int offset, int bit,
-      [CommandOption<int, int>? opts]) {
+  Pipeline setbit(String key, int offset, int bit, [CommandOption<int, int>? opts]) {
     return _chain(SetBitCommand(key, offset, bit, opts));
   }
 
@@ -626,8 +616,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/setrange
-  Pipeline setrange(String key, int offset, String value,
-      [CommandOption<int, int>? opts]) {
+  Pipeline setrange(String key, int offset, String value, [CommandOption<int, int>? opts]) {
     return _chain(SetRangeCommand(key, offset, value, opts));
   }
 
@@ -640,14 +629,12 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/sinterstore
-  Pipeline sinterstore(String destination, List<String> keys,
-      [CommandOption<int, int>? opts]) {
+  Pipeline sinterstore(String destination, List<String> keys, [CommandOption<int, int>? opts]) {
     return _chain(SInterStoreCommand(destination, keys, opts));
   }
 
   /// @see https://redis.io/commands/sismember
-  Pipeline sismember<TData>(String key, TData member,
-      [CommandOption<dynamic, int>? opts]) {
+  Pipeline sismember<TData>(String key, TData member, [CommandOption<dynamic, int>? opts]) {
     return _chain(SIsMemberCommand<TData>(key, member, opts));
   }
 
@@ -688,8 +675,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/srem
-  Pipeline srem<TData>(String key, List<TData> members,
-      [CommandOption<int, int>? opts]) {
+  Pipeline srem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return _chain(SRemCommand<TData>(key, members, opts));
   }
 
@@ -701,8 +687,7 @@ class Pipeline {
     int? count,
     CommandOption<List<dynamic>, List<dynamic>>? opts,
   }) {
-    return _chain(
-        SScanCommand(key, cursor, match: match, count: count, opts: opts));
+    return _chain(SScanCommand(key, cursor, match: match, count: count, opts: opts));
   }
 
   /// @see https://redis.io/commands/strlen
@@ -719,8 +704,7 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/sunionstore
-  Pipeline sunionstore(String destination, List<String> keys,
-      [CommandOption<int, int>? opts]) {
+  Pipeline sunionstore(String destination, List<String> keys, [CommandOption<int, int>? opts]) {
     return _chain(SUnionStoreCommand(destination, keys, opts));
   }
 
@@ -879,38 +863,32 @@ class Pipeline {
   }
 
   /// @see https://redis.io/commands/zrank
-  Pipeline zrank<TData>(String key, TData member,
-      [CommandOption<int?, int?>? opts]) {
+  Pipeline zrank<TData>(String key, TData member, [CommandOption<int?, int?>? opts]) {
     return _chain(ZRankCommand<TData>(key, member, opts));
   }
 
   /// @see https://redis.io/commands/zrem
-  Pipeline zrem<TData>(String key, List<TData> members,
-      [CommandOption<int, int>? opts]) {
+  Pipeline zrem<TData>(String key, List<TData> members, [CommandOption<int, int>? opts]) {
     return _chain(ZRemCommand<TData>(key, members, opts));
   }
 
   /// @see https://redis.io/commands/zremrangebylex
-  Pipeline zremrangebylex(String key, String min, String max,
-      [CommandOption<int, int>? opts]) {
+  Pipeline zremrangebylex(String key, String min, String max, [CommandOption<int, int>? opts]) {
     return _chain(ZRemRangeByLexCommand(key, min, max, opts));
   }
 
   /// @see https://redis.io/commands/zremrangebyrank
-  Pipeline zremrangebyrank(String key, int start, int stop,
-      [CommandOption<int, int>? opts]) {
+  Pipeline zremrangebyrank(String key, int start, int stop, [CommandOption<int, int>? opts]) {
     return _chain(ZRemRangeByRankCommand(key, start, stop, opts));
   }
 
   /// @see https://redis.io/commands/zremrangebyscore
-  Pipeline zremrangebyscore(String key, int min, int max,
-      [CommandOption<int, int>? opts]) {
+  Pipeline zremrangebyscore(String key, int min, int max, [CommandOption<int, int>? opts]) {
     return _chain(ZRemRangeByScoreCommand(key, min, max, opts));
   }
 
   /// @see https://redis.io/commands/zrevrank
-  Pipeline zrevrank<TData>(String key, TData member,
-      [CommandOption<int?, int?>? opts]) {
+  Pipeline zrevrank<TData>(String key, TData member, [CommandOption<int?, int?>? opts]) {
     return _chain(ZRevRankCommand<TData>(key, member, opts));
   }
 
@@ -922,13 +900,11 @@ class Pipeline {
     int? count,
     CommandOption<List<dynamic>, List<dynamic>>? opts,
   }) {
-    return _chain(
-        ZScanCommand(key, cursor, match: match, count: count, opts: opts));
+    return _chain(ZScanCommand(key, cursor, match: match, count: count, opts: opts));
   }
 
   /// @see https://redis.io/commands/zscore
-  Pipeline zscore<TData>(String key, TData member,
-      [CommandOption<String, num>? opts]) {
+  Pipeline zscore<TData>(String key, TData member, [CommandOption<String, num>? opts]) {
     return _chain(ZScoreCommand<TData>(key, member, opts));
   }
 

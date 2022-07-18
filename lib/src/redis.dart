@@ -28,16 +28,12 @@ class Redis {
     RetryConfig? retryConfig,
     RedisOptions opts = const RedisOptions(),
   }) {
-    if (url.startsWith(' ') ||
-        url.endsWith(' ') ||
-        url.contains(RegExp(r'[\r\n]'))) {
+    if (url.startsWith(' ') || url.endsWith(' ') || url.contains(RegExp(r'[\r\n]'))) {
       print(
         'The redis url contains whitespace or newline, which can cause errors!',
       );
     }
-    if (token.startsWith(' ') ||
-        token.endsWith(' ') ||
-        token.contains(RegExp(r'[\r\n]'))) {
+    if (token.startsWith(' ') || token.endsWith(' ') || token.contains(RegExp(r'[\r\n]'))) {
       print(
         'The redis token contains whitespace or newline, which can cause errors!',
       );
@@ -257,8 +253,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hget
-  Future<TData?> hget<TData>(String key, String field,
-      [CommandOption<dynamic, TData?>? opts]) {
+  Future<TData?> hget<TData>(String key, String field, [CommandOption<dynamic, TData?>? opts]) {
     return HGetCommand<TData>(key, field, opts).exec(_client);
   }
 
@@ -316,8 +311,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hmset
-  Future<String> hmset<TData>(String key, Map<String, TData> kv,
-      [CommandOption<String, String>? opts]) {
+  Future<String> hmset<TData>(String key, Map<String, TData> kv, [CommandOption<String, String>? opts]) {
     return HMSetCommand<TData>(key, kv, opts).exec(_client);
   }
 
@@ -362,8 +356,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hsetnx
-  Future<int> hsetnx<TData>(String key, String field, TData value,
-      [CommandOption<int, int>? opts]) {
+  Future<int> hsetnx<TData>(String key, String field, TData value, [CommandOption<int, int>? opts]) {
     return HSetNXCommand<TData>(key, field, value, opts).exec(_client);
   }
 
@@ -450,6 +443,25 @@ class Redis {
     return LPopCommand<TData>(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/lpos
+  Future<TData> lpos<TData>(
+    String key,
+    dynamic element, {
+    int? rank,
+    int? count,
+    int? maxLen,
+    CommandOption<TData, TData>? opts,
+  }) {
+    return LPosCommand<TData>(
+      key,
+      element,
+      rank: rank,
+      count: count,
+      maxLen: maxLen,
+      opts: opts,
+    ).exec(_client);
+  }
+
   /// @see https://redis.io/commands/lpush
   Future<int> lpush<TData>(
     String key,
@@ -469,8 +481,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/lrange
-  Future<List<TData>> lrange<TData>(String key, int start, int end,
-      [CommandOption<List<String?>, List<TData>>? opts]) {
+  Future<List<TData>> lrange<TData>(String key, int start, int end, [CommandOption<List<String?>, List<TData>>? opts]) {
     return LRangeCommand<TData>(key, start, end, opts).exec(_client);
   }
 
