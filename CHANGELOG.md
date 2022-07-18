@@ -1,9 +1,6 @@
 ## 1.0.3
 
 - Add lpos command
-
-## 1.0.2+2
-
 - Fix failed linsert test
 
 ## 1.0.2+1
