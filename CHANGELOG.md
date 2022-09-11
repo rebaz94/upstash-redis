@@ -1,3 +1,8 @@
+## 1.0.4
+
+- Add more test for bitpos command
+- Fix lint warning
+
 ## 1.0.3
 
 - Add lpos command

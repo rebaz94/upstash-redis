@@ -80,7 +80,7 @@ class ZAddCommand<TData> extends Command<dynamic, num?> {
 
     dynamic value = result;
     if (result is String) {
-      value = num?.tryParse(result);
+      value = num.tryParse(result);
     } else if (result is num) {
       value = result;
     }
