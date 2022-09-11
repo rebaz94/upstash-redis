@@ -1,3 +1,7 @@
+## 1.0.5
+
+- Add support for web
+
 ## 1.0.4
 
 - Add more test for bitpos command
