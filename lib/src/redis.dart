@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/http.dart';
 import 'package:upstash_redis/src/pipeline.dart';
+import 'package:upstash_redis/src/platform/platform.dart';
 
 class RedisOptions {
   const RedisOptions({
@@ -28,16 +27,12 @@ class Redis {
     RetryConfig? retryConfig,
     RedisOptions opts = const RedisOptions(),
   }) {
-    if (url.startsWith(' ') ||
-        url.endsWith(' ') ||
-        url.contains(RegExp(r'[\r\n]'))) {
+    if (url.startsWith(' ') || url.endsWith(' ') || url.contains(RegExp(r'[\r\n]'))) {
       print(
         'The redis url contains whitespace or newline, which can cause errors!',
       );
     }
-    if (token.startsWith(' ') ||
-        token.endsWith(' ') ||
-        token.contains(RegExp(r'[\r\n]'))) {
+    if (token.startsWith(' ') || token.endsWith(' ') || token.contains(RegExp(r'[\r\n]'))) {
       print(
         'The redis token contains whitespace or newline, which can cause errors!',
       );
@@ -58,8 +53,9 @@ class Redis {
     RetryConfig? retryConfig,
     RedisOptions opts = const RedisOptions(),
   }) {
-    final url = Platform.environment['UPSTASH_REDIS_REST_URL'] ?? '';
-    final token = Platform.environment['UPSTASH_REDIS_REST_TOKEN'] ?? '';
+    final platform = PlatformEnv();
+    final url = platform['UPSTASH_REDIS_REST_URL'] ?? '';
+    final token = platform['UPSTASH_REDIS_REST_TOKEN'] ?? '';
 
     if (url.isEmpty) {
       throw Exception(
@@ -257,8 +253,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hget
-  Future<TData?> hget<TData>(String key, String field,
-      [CommandOption<dynamic, TData?>? opts]) {
+  Future<TData?> hget<TData>(String key, String field, [CommandOption<dynamic, TData?>? opts]) {
     return HGetCommand<TData>(key, field, opts).exec(_client);
   }
 
@@ -316,8 +311,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hmset
-  Future<String> hmset<TData>(String key, Map<String, TData> kv,
-      [CommandOption<String, String>? opts]) {
+  Future<String> hmset<TData>(String key, Map<String, TData> kv, [CommandOption<String, String>? opts]) {
     return HMSetCommand<TData>(key, kv, opts).exec(_client);
   }
 
@@ -362,8 +356,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hsetnx
-  Future<int> hsetnx<TData>(String key, String field, TData value,
-      [CommandOption<int, int>? opts]) {
+  Future<int> hsetnx<TData>(String key, String field, TData value, [CommandOption<int, int>? opts]) {
     return HSetNXCommand<TData>(key, field, value, opts).exec(_client);
   }
 
