@@ -8,6 +8,7 @@ class ScanCommand extends Command<List<dynamic>, List<dynamic>> {
     int cursor, {
     String? match,
     int? count,
+    String? type,
     CommandOption<List<dynamic>, List<dynamic>>? opts,
   }) {
     return ScanCommand._(
@@ -16,6 +17,7 @@ class ScanCommand extends Command<List<dynamic>, List<dynamic>> {
         cursor,
         if (match != null) ...['match', match],
         if (count != null) ...['count', count],
+        if (type != null && type.isNotEmpty) ...['type', type],
       ],
       opts,
     );
