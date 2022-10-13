@@ -5,6 +5,22 @@ import 'package:http/http.dart' as http;
 import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/upstash_error.dart';
 
+extension on String {
+  String slice([int start = 0, int? end]) {
+    final subject = this;
+
+    int realEnd;
+    int realStart = start < 0 ? subject.length + start : start;
+    if (end is! int) {
+      realEnd = subject.length;
+    } else {
+      realEnd = end < 0 ? subject.length + end : end;
+    }
+
+    return subject.substring(realStart, realEnd);
+  }
+}
+
 class UpstashResponse<TResult> {
   const UpstashResponse({
     this.result,
@@ -49,6 +65,77 @@ class UpstashResponse<TResult> {
       undefined: false,
       error: json['error'] as String?,
     );
+  }
+
+  factory UpstashResponse.fromJsonWithBase64(Map<String, dynamic> json) {
+    Object? result = json['result'];
+    final hasResult = json.containsKey('result');
+    final type = TResult.toString();
+
+    if (!hasResult) {
+      return UpstashResponse(
+        result: null,
+        undefined: true,
+        error: json['error'] as String?,
+      );
+    }
+
+    result =
+        result is List ? result.map((e) => decode(e)).toList() : decode(result);
+
+    final decoderFn = _implicitDecode[type];
+    dynamic converted = result;
+    if (decoderFn != null) {
+      converted = decoderFn(result);
+    }
+
+    return UpstashResponse(
+      result: converted,
+      undefined: false,
+      error: json['error'] as String?,
+    );
+  }
+
+  static customBase64Decode(String b64) {
+    String dec = '';
+    try {
+      dec = String.fromCharCodes(base64Decode(base64.normalize(b64)))
+          .split('')
+          .map((s) =>
+              '%${('00${s.codeUnits.map((c) => c.toRadixString(16)).join()}').slice(-2)}')
+          .join();
+    } catch (e) {
+      print('Unable to decode base64 [$base64]: ${e.toString()}');
+      return dec;
+    }
+
+    try {
+      return Uri.decodeComponent(dec);
+    } catch (e) {
+      print('Unable to decode URI [$dec]: ${e.toString()}');
+      return dec;
+    }
+  }
+
+  static Object? decode(Object? result) {
+    if (result == null) {
+      return result;
+    } else if (result is num) {
+      result = result;
+    } else if (result is String) {
+      result = result == 'OK' ? 'OK' : customBase64Decode(result);
+    } else if (result is List) {
+      result = result.map((value) {
+        if (value is String) {
+          return customBase64Decode(value);
+        } else if (value is List) {
+          return value.map((v) => customBase64Decode(v)).toList();
+        } else {
+          return value;
+        }
+      }).toList();
+    }
+    return result;
   }
 
   final TResult? result;
@@ -118,28 +205,36 @@ class HttpClientConfig {
     required this.baseUrl,
     this.options,
     this.retry,
+    this.isBase64Response = false,
   });
 
   final Map<String, String>? headers;
   final String baseUrl;
   final Options? options;
   final RetryConfig? retry;
+  final bool isBase64Response;
 }
 
 class UpstashHttpClient implements Requester {
   UpstashHttpClient(HttpClientConfig config)
       : baseUrl = config.baseUrl.replaceAll(RegExp(r'/$'), ''),
-        headers = {"Content-Type": "application/json", ...?config.headers},
+        headers = {
+          'Content-Type': 'application/json',
+          if (config.isBase64Response) 'Upstash-Encoding': 'base64',
+          ...?config.headers,
+        },
         options = Options(backend: config.options?.backend),
         retry = config.retry == null
             ? Retry(attempts: 5)
             : Retry(
                 attempts: config.retry!.retries,
                 backoff: config.retry!.backoff,
-              );
+              ),
+        isBase64Response = config.isBase64Response;
 
   final String baseUrl;
   final Map<String, String> headers;
+  final bool isBase64Response;
   final Options? options;
   final Retry retry;
 
@@ -153,7 +248,9 @@ class UpstashHttpClient implements Requester {
     final UpstashResponse<TResult> bodyResult;
     try {
       final jsonData = Map<String, dynamic>.from(json.decode(result.body));
-      bodyResult = UpstashResponse<TResult>.fromJson(jsonData);
+      bodyResult = isBase64Response
+          ? UpstashResponse<TResult>.fromJsonWithBase64(jsonData)
+          : UpstashResponse<TResult>.fromJson(jsonData);
     } catch (e, stack) {
       throw UpstashDecodingError('decoding failed', e, stack);
     }
@@ -177,7 +274,8 @@ class UpstashHttpClient implements Requester {
     try {
       bodyResult = (json.decode(result.body) as List)
           .map((e) => Map<String, dynamic>.from(e as Map))
-          .mapIndexed((i, e) => commands[i].createUpstashResponseFrom(e))
+          .mapIndexed((i, e) =>
+              commands[i].createUpstashResponseFrom(e, isBase64Response))
           .toList();
     } catch (e, stack) {
       throw UpstashDecodingError('decoding failed', e, stack);

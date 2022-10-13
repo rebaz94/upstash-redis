@@ -59,8 +59,11 @@ abstract class Command<TResult, TData> {
 
   UpstashResponse<TResult> createUpstashResponseFrom(
     Map<String, dynamic> json,
+    bool isBase64Response,
   ) {
-    return UpstashResponse<TResult>.fromJson(json);
+    return isBase64Response
+        ? UpstashResponse<TResult>.fromJsonWithBase64(json)
+        : UpstashResponse<TResult>.fromJson(json);
   }
 
   TData decodeValueFrom(TResult result) {

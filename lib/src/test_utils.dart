@@ -13,6 +13,8 @@ String randomID() {
 UpstashHttpClient newHttpClient() {
   final url = Platform.environment['UPSTASH_REDIS_REST_URL'];
   final token = Platform.environment['UPSTASH_REDIS_REST_TOKEN'];
+  final useBase64Response =
+      Platform.environment['TEST_BASE64_RESPONSE'] == 'true';
 
   if (url == null) {
     throw StateError('Could not find url');
@@ -28,6 +30,7 @@ UpstashHttpClient newHttpClient() {
       headers: {
         'authorization': 'Bearer $token',
       },
+      isBase64Response: useBase64Response,
     ),
   );
 }
