@@ -662,6 +662,7 @@ class Redis {
     int cursor, {
     String? match,
     int? count,
+    String? type,
     CommandOption<List<dynamic>, List<dynamic>>? opts,
   }) {
     return ScanCommand(
@@ -669,6 +670,7 @@ class Redis {
       match: match,
       count: count,
       opts: opts,
+      type: type,
     ).exec(_client);
   }
 
