@@ -10,7 +10,7 @@ String randomID() {
   return _random.nextInt(10000000).toString();
 }
 
-UpstashHttpClient newHttpClient() {
+UpstashHttpClient newHttpClient({bool useBase64 = false}) {
   final url = Platform.environment['UPSTASH_REDIS_REST_URL'];
   final token = Platform.environment['UPSTASH_REDIS_REST_TOKEN'];
   final useBase64Response =
@@ -30,7 +30,7 @@ UpstashHttpClient newHttpClient() {
       headers: {
         'authorization': 'Bearer $token',
       },
-      isBase64Response: useBase64Response,
+      isBase64Response: useBase64 || useBase64Response,
     ),
   );
 }
