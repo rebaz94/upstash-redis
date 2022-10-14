@@ -561,7 +561,8 @@ class Pipeline {
     String? type,
     CommandOption<List<dynamic>, List<dynamic>>? opts,
   }) {
-    return _chain(ScanCommand(cursor, match: match, count: count, opts: opts, type: type));
+    return _chain(ScanCommand(cursor,
+        match: match, count: count, opts: opts, type: type));
   }
 
   /// @see https://redis.io/commands/scard

@@ -28,7 +28,7 @@ void main() async {
       cursor = res.first;
       found.addAll(res.last);
     } while (cursor != 0);
-    
+
     expect(found, contains(key));
   });
 
@@ -72,13 +72,14 @@ void main() async {
 
   test('with type, returns cursor and keys', () async {
     await FlushDbCommand().exec(client);
-    final key1= newKey();
-    final key2= newKey();
+    final key1 = newKey();
+    final key2 = newKey();
     final value = randomID();
     await SetCommand(key1, value).exec(client);
 
     // Add a non-string type
-    await ZAddCommand(key2, [ScoreMember(score: 1, member: 'abc')]).exec(client);
+    await ZAddCommand(key2, [ScoreMember(score: 1, member: 'abc')])
+        .exec(client);
 
     int cursor = 0;
     final found = <String>[];
