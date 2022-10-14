@@ -1,3 +1,12 @@
+## 1.2.0+3
+
+- Add multi-exec transaction
+
+## 1.1.0+2
+
+- Add option to receive response as base64
+- Add more tests
+
 ## 1.0.5+1
 
 - Reformat code
