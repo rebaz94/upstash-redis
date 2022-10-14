@@ -17,7 +17,7 @@ import 'commands/mod.dart';
 /// **Examples:**
 ///
 /// ```dart
-///  final p = redis.pipeline();
+///  final p = redis.pipeline(); // or redis.multi()
 ///  p.set("key","value");
 ///  p.get("key");
 ///  final res = await p.exec();
@@ -39,11 +39,14 @@ import 'commands/mod.dart';
 ///
 /// ```
 class Pipeline {
-  Pipeline(Requester client)
-      : _client = client,
+  Pipeline({
+    required Requester client,
+    this.multiExec = false,
+  })  : _client = client,
         _commands = [];
 
   final Requester _client;
+  final bool multiExec;
   final List<Command<dynamic, dynamic>> _commands;
 
   /// Send the pipeline request to upstash.
@@ -60,7 +63,7 @@ class Pipeline {
     }
 
     final responses = await _client.requestPipeline(
-      path: ['pipeline'],
+      path: multiExec ? ['multi-exec'] : ['pipeline'],
       body: _commands.map((e) => e.command).toList(),
       commands: _commands,
     );

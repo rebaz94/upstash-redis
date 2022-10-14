@@ -26,7 +26,7 @@ void main() {
   });
 
   test('with single command, works with multiple commands', () async {
-    final p = Pipeline(client);
+    final p = Pipeline(client: client);
     p.set(newKey(), randomID());
     final res = await p.exec();
     expect(res.length, 1);
@@ -36,7 +36,8 @@ void main() {
   test('when chaining in a for loop, works', () async {
     final key = newKey();
     final value = 1;
-    final res = await Pipeline(client).set(key, value).get<int>(key).exec();
+    final res =
+        await Pipeline(client: client).set(key, value).get<int>(key).exec();
     expect(res.length, 2);
     expect(res[0], 'OK');
     expect(res[1], value);
@@ -44,7 +45,7 @@ void main() {
 
   test('when chaining inline, works', () async {
     final key = newKey();
-    final p = Pipeline(client);
+    final p = Pipeline(client: client);
     for (int i = 0; i < 10; i++) {
       p.set(key, randomID());
     }
@@ -55,18 +56,19 @@ void main() {
   });
 
   test('when no commands were added, throws', () async {
-    expectLater(Pipeline(client).exec(), throwsStateError);
+    expectLater(Pipeline(client: client).exec(), throwsStateError);
   });
 
   group('when one command throws', () {
     test('throws', () async {
-      final p = Pipeline(client).set('key', 'value').hget('key', 'field');
+      final p =
+          Pipeline(client: client).set('key', 'value').hget('key', 'field');
       expectLater(p.exec(), throwsException);
     });
 
     test('if throwsIfHasAnyCommandError is false, returns result and error',
         () async {
-      final p = Pipeline(client)
+      final p = Pipeline(client: client)
           .hincrby('myHash', 'count', 1)
           .set('key2', 'value')
           .hget('key2', 'field');
@@ -78,8 +80,22 @@ void main() {
     });
   });
 
+  test('transaction, works', () async {
+    final key = newKey();
+    final value = randomID();
+    final tx = Pipeline(client: client, multiExec: true);
+    tx.set(key, value);
+    tx.get<String>(key);
+    tx.del([key]);
+
+    final result = await tx.exec();
+    expect(result.first, 'OK');
+    expect(result[1], value);
+    expect(result.last, 1);
+  });
+
   test('convert result to model works', () async {
-    final p = Pipeline(client)
+    final p = Pipeline(client: client)
         .set('name', 'rebaz')
         .set('age', 27)
         .get('name')
@@ -91,7 +107,7 @@ void main() {
   });
 
   test('use all the things, works', () async {
-    final p = Pipeline(client);
+    final p = Pipeline(client: client);
     final persistentKey = newKey();
     final persistentKey2 = newKey();
 

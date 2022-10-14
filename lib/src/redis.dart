@@ -84,7 +84,16 @@ class Redis {
   final Requester _client;
 
   /// Create a new pipeline that allows you to send requests in bulk.
-  Pipeline pipeline() => Pipeline(_client);
+  Pipeline pipeline() => Pipeline(client: _client);
+
+  /// Create a new transaction to allow executing multiple steps atomically.
+  ///
+  /// All the commands in a transaction are serialized and executed sequentially. A request sent by
+  /// another client will never be served in the middle of the execution of a Redis Transaction. This
+  /// guarantees that the commands are executed as a single isolated operation.
+  ///
+  /// @see Pipeline
+  multi() => Pipeline(client: _client, multiExec: true);
 
   Future<TData> run<TResult, TData>(Command<TResult, TData> command) {
     return command.exec(_client);
