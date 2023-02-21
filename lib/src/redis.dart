@@ -1186,4 +1186,6 @@ class Redis {
       opts: opts,
     ).exec(_client);
   }
+
+  void close() => _client.request();
 }

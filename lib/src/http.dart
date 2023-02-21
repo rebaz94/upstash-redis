@@ -154,6 +154,8 @@ abstract class Requester {
     Object? body,
     required List<Command<dynamic, dynamic>> commands,
   });
+
+  void close();
 }
 
 class RetryConfig {
@@ -206,6 +208,8 @@ class HttpClientConfig {
     this.options,
     this.retry,
     this.isBase64Response = false,
+    this.agent,
+    this.reuseHttpClient = true,
   });
 
   final Map<String, String>? headers;
@@ -213,6 +217,8 @@ class HttpClientConfig {
   final Options? options;
   final RetryConfig? retry;
   final bool isBase64Response;
+  final Object? agent;
+  final bool reuseHttpClient;
 }
 
 class UpstashHttpClient implements Requester {
@@ -224,19 +230,24 @@ class UpstashHttpClient implements Requester {
           ...?config.headers,
         },
         options = Options(backend: config.options?.backend),
+        agent = config.agent,
         retry = config.retry == null
             ? Retry(attempts: 5)
             : Retry(
                 attempts: config.retry!.retries,
                 backoff: config.retry!.backoff,
               ),
-        isBase64Response = config.isBase64Response;
+        isBase64Response = config.isBase64Response,
+        reuseHttpClient = config.reuseHttpClient;
 
   final String baseUrl;
   final Map<String, String> headers;
   final bool isBase64Response;
   final Options? options;
+  final Object? agent;
   final Retry retry;
+  final bool reuseHttpClient;
+  http.Client? _httpClient;
 
   @override
   Future<UpstashResponse<TResult>> request<TResult>({
@@ -297,10 +308,12 @@ class UpstashHttpClient implements Requester {
 
     for (int i = 0; i <= retry.attempts; i++) {
       try {
-        result = await http.post(
-          uri,
-          headers: headers,
-          body: encodedBody,
+        result = await _withClient(
+          (client) => client.post(
+            uri,
+            headers: headers,
+            body: encodedBody,
+          ),
         );
         break;
       } catch (e) {
@@ -318,5 +331,23 @@ class UpstashHttpClient implements Requester {
     }
 
     return result;
+  }
+
+  Future<T> _withClient<T>(Future<T> Function(http.Client) fn) async {
+    if (reuseHttpClient) {
+      return fn(_httpClient ??= http.Client());
+    }
+
+    final client = http.Client();
+    try {
+      return await fn(client);
+    } finally {
+      client.close();
+    }
+  }
+
+  @override
+  void close() {
+    _httpClient?.close();
   }
 }
