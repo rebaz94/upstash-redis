@@ -2,6 +2,7 @@ import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/http.dart';
 import 'package:upstash_redis/src/platform/platform.dart';
 import 'package:upstash_redis/src/pipeline.dart';
+import 'package:upstash_redis/src/script.dart';
 
 class RedisOptions {
   const RedisOptions({
@@ -82,6 +83,24 @@ class Redis {
   }
 
   final Requester _client;
+
+  /// Creates a new script.
+  ///
+  /// Scripts offer the ability to optimistically try to execute a script without having to send the
+  /// entire script to the server. If the script is loaded on the server, it tries again by sending
+  /// the entire script. Afterwards, the script is cached on the server.
+  ///
+  /// @example
+  /// ```dart
+  /// final redis = Redis();
+  /// final scriptSource = "return ARGV[1];";
+  /// final scriptSha1 = sha1.convert(utf8.encode(scriptSource)).toString(); // generate using crypto package
+  /// final script = redis.createScript<string>(scriptSource, scriptSha1);
+  /// final arg1 = await script.eval([], ["Hello World"]);
+  /// assert(arg1 == "Hello World");
+  /// ```
+  Script createScript<T>(String script, String sha1) =>
+      Script<T>(this, script, sha1);
 
   /// Create a new pipeline that allows you to send requests in bulk.
   Pipeline pipeline() => Pipeline(client: _client);

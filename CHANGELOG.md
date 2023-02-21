@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Add script abstraction
+
 ## 1.3.0
 
 - Update dependency
