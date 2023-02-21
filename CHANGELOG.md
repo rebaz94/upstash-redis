@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Update dependency
+
 ## 1.2.0+3
 
 - Add multi-exec transaction
