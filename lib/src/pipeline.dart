@@ -857,6 +857,16 @@ class Pipeline {
     return _chain(ZLexCountCommand(key, min, max, opts));
   }
 
+  /// @see https://redis.io/commands/zmscore
+  Pipeline zmscore<TData>(
+    String key,
+    List<TData> members,
+    String max, [
+    CommandOption<List<String?>, List<num?>>? opts,
+  ]) {
+    return _chain(ZMScoreCommand<TData>(key, members, opts));
+  }
+
   /// @see https://redis.io/commands/zpopmax
   Pipeline zpopmax<TData>(
     String key, {

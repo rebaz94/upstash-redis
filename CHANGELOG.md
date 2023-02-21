@@ -1,6 +1,7 @@
 ## 1.3.1
 
 - Add script abstraction
+- Add zmscore command
 
 ## 1.3.0
 

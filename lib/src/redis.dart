@@ -1028,6 +1028,16 @@ class Redis {
     return ZLexCountCommand(key, min, max, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zmscore
+  Future<List<num?>> zmscore<TData>(
+    String key,
+    List<TData> members,
+    String max, [
+    CommandOption<List<String?>, List<num?>>? opts,
+  ]) {
+    return ZMScoreCommand<TData>(key, members, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zpopmax
   Future<List<TData>> zpopmax<TData>(
     String key, {
