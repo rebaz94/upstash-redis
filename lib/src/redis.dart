@@ -872,6 +872,15 @@ class Redis {
     return SIsMemberCommand<TData>(key, member, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/smismember
+  Future<List<int>> smismember<TMembers>(
+    String key,
+    List<TMembers> members, [
+    CommandOption<List<String>, List<int>>? opts,
+  ]) {
+    return SMIsMemberCommand<TMembers>(key, members, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/sinter
   Future<List<TData>> smembers<TData>(
     String key, [

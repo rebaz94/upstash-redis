@@ -84,6 +84,7 @@ export 'sinter.dart';
 export 'sinterstore.dart';
 export 'sismember.dart';
 export 'smembers.dart';
+export 'smismember.dart';
 export 'smove.dart';
 export 'spop.dart';
 export 'srandmember.dart';

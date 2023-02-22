@@ -711,6 +711,15 @@ class Pipeline {
     return _chain(SIsMemberCommand<TData>(key, member, opts));
   }
 
+  /// @see https://redis.io/commands/smismember
+  Pipeline smismember<TMembers>(
+    String key,
+    List<TMembers> members, [
+    CommandOption<List<String>, List<int>>? opts,
+  ]) {
+    return _chain(SMIsMemberCommand<TMembers>(key, members, opts));
+  }
+
   /// @see https://redis.io/commands/sinter
   Pipeline smembers<TData>(
     String key, [
