@@ -218,6 +218,11 @@ class Pipeline {
     return _chain(GetBitCommand(key, offset, opts));
   }
 
+  /// @see https://redis.io/commands/getdel
+  Pipeline getdel<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
+    return _chain(GetDelCommand(key, opts));
+  }
+
   /// @see https://redis.io/commands/getrange
   Pipeline getrange(String key, int start, int end,
       [CommandOption<String, String>? opts]) {

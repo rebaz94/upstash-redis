@@ -133,6 +133,7 @@ void main() {
         .flushdb()
         .get(newKey())
         .getbit(newKey(), 0)
+        .getdel(newKey())
         .getrange(newKey(), 0, 1)
         .getset(newKey(), 'hello')
         .hdel(newKey(), 'field')
@@ -232,7 +233,7 @@ void main() {
         .zunionstore(newKey(), 1, [newKey()]);
 
     final res = await p.exec();
-    expect(res.length, 115);
+    expect(res.length, 116);
   });
 }
 

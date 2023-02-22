@@ -17,6 +17,7 @@ export 'flushall.dart';
 export 'flushdb.dart';
 export 'get.dart';
 export 'getbit.dart';
+export 'getdel.dart';
 export 'getrange.dart';
 export 'getset.dart';
 export 'hdel.dart';

@@ -265,6 +265,12 @@ class Redis {
     return GetBitCommand(key, offset, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/getdel
+  Future<TData?> getdel<TData>(String key,
+      [CommandOption<Object?, TData?>? opts]) {
+    return GetDelCommand(key, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/getrange
   Future<String> getrange(
     String key,
