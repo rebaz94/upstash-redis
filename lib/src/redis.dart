@@ -28,16 +28,12 @@ class Redis {
     RetryConfig? retryConfig,
     RedisOptions opts = const RedisOptions(),
   }) {
-    if (url.startsWith(' ') ||
-        url.endsWith(' ') ||
-        url.contains(RegExp(r'[\r\n]'))) {
+    if (url.startsWith(' ') || url.endsWith(' ') || url.contains(RegExp(r'[\r\n]'))) {
       print(
         'The redis url contains whitespace or newline, which can cause errors!',
       );
     }
-    if (token.startsWith(' ') ||
-        token.endsWith(' ') ||
-        token.contains(RegExp(r'[\r\n]'))) {
+    if (token.startsWith(' ') || token.endsWith(' ') || token.contains(RegExp(r'[\r\n]'))) {
       print(
         'The redis token contains whitespace or newline, which can cause errors!',
       );
@@ -99,8 +95,7 @@ class Redis {
   /// final arg1 = await script.eval([], ["Hello World"]);
   /// assert(arg1 == "Hello World");
   /// ```
-  Script createScript<T>(String script, String sha1) =>
-      Script<T>(this, script, sha1);
+  Script createScript<T>(String script, String sha1) => Script<T>(this, script, sha1);
 
   /// Create a new pipeline that allows you to send requests in bulk.
   Pipeline pipeline() => Pipeline(client: _client);
@@ -266,8 +261,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/getdel
-  Future<TData?> getdel<TData>(String key,
-      [CommandOption<Object?, TData?>? opts]) {
+  Future<TData?> getdel<TData>(String key, [CommandOption<Object?, TData?>? opts]) {
     return GetDelCommand(key, opts).exec(_client);
   }
 
@@ -291,8 +285,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hget
-  Future<TData?> hget<TData>(String key, String field,
-      [CommandOption<dynamic, TData?>? opts]) {
+  Future<TData?> hget<TData>(String key, String field, [CommandOption<dynamic, TData?>? opts]) {
     return HGetCommand<TData>(key, field, opts).exec(_client);
   }
 
@@ -350,8 +343,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hmset
-  Future<String> hmset<TData>(String key, Map<String, TData> kv,
-      [CommandOption<String, String>? opts]) {
+  Future<String> hmset<TData>(String key, Map<String, TData> kv, [CommandOption<String, String>? opts]) {
     return HMSetCommand<TData>(key, kv, opts).exec(_client);
   }
 
@@ -411,8 +403,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/hsetnx
-  Future<int> hsetnx<TData>(String key, String field, TData value,
-      [CommandOption<int, int>? opts]) {
+  Future<int> hsetnx<TData>(String key, String field, TData value, [CommandOption<int, int>? opts]) {
     return HSetNXCommand<TData>(key, field, value, opts).exec(_client);
   }
 
@@ -491,6 +482,22 @@ class Redis {
     return LLenCommand(key, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/lmove
+  Future<TData> lmove<TData>(
+    String source,
+    String destination, {
+    required LMoveDir whereFrom,
+    required LMoveDir whereTo,
+    CommandOption<TData, TData>? opts,
+  }) {
+    return LMoveCommand<TData>(
+      source,
+      destination,
+      whereFrom: whereFrom,
+      whereTo: whereTo,
+    ).exec(_client);
+  }
+
   /// @see https://redis.io/commands/lpop
   Future<TData?> lpop<TData>(
     String key, [
@@ -537,8 +544,7 @@ class Redis {
   }
 
   /// @see https://redis.io/commands/lrange
-  Future<List<TData>> lrange<TData>(String key, int start, int end,
-      [CommandOption<List<String?>, List<TData>>? opts]) {
+  Future<List<TData>> lrange<TData>(String key, int start, int end, [CommandOption<List<String?>, List<TData>>? opts]) {
     return LRangeCommand<TData>(key, start, end, opts).exec(_client);
   }
 

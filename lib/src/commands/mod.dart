@@ -42,6 +42,7 @@ export 'keys.dart';
 export 'lindex.dart';
 export 'linsert.dart';
 export 'llen.dart';
+export 'lmove.dart';
 export 'lpop.dart';
 export 'lpos.dart';
 export 'lpush.dart';

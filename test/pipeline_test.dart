@@ -159,6 +159,7 @@ void main() {
         .lindex(newKey(), 0)
         .linsert(newKey(), IDirection.before, 'pivot', 'value')
         .llen(newKey())
+        .lmove(newKey(), newKey(), whereFrom: LMoveDir.left, whereTo: LMoveDir.right)
         .lpop(newKey())
         .lpos(newKey(), 'value')
         .lpush(persistentKey, ['element'])
@@ -236,7 +237,7 @@ void main() {
         .zunionstore(newKey(), 1, [newKey()]);
 
     final res = await p.exec();
-    expect(res.length, 119);
+    expect(res.length, 120);
   });
 }
 
