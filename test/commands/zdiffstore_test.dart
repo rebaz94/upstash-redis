@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
 import 'package:upstash_redis/src/commands/zadd.dart';
-import 'package:upstash_redis/src/commands/zcount.dart';
 import 'package:upstash_redis/src/commands/zdiffstore.dart';
 import 'package:upstash_redis/src/commands/zrange.dart';
 import 'package:upstash_redis/src/test_utils.dart';

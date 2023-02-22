@@ -6,6 +6,7 @@ import 'package:upstash_redis/src/commands/mod.dart';
 import 'package:upstash_redis/src/upstash_error.dart';
 
 extension on String {
+  // ignore: unused_element
   String slice([int start = 0, int? end]) {
     final subject = this;
 
