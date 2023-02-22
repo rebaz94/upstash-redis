@@ -100,6 +100,7 @@ export 'unlink.dart';
 export 'zadd.dart';
 export 'zcard.dart';
 export 'zcount.dart';
+export 'zdiffstore.dart';
 export 'zincrby.dart';
 export 'zinterstore.dart';
 export 'zlexcount.dart';

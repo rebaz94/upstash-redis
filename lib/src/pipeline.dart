@@ -852,6 +852,16 @@ class Pipeline {
     return _chain(ZCountCommand(key, min, max, opts));
   }
 
+  /// @see https://redis.io/commands/zdiffstore
+  Pipeline zdiffstore(
+    String destination,
+    num numKeys,
+    List<String> keys, [
+    CommandOption<int, int>? opts,
+  ]) {
+    return _chain(ZDiffStoreCommand(destination, numKeys, keys, opts));
+  }
+
   /// @see https://redis.io/commands/zincrby
   Pipeline zincrby<TData>(
     String key,

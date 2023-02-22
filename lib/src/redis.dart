@@ -1024,6 +1024,16 @@ class Redis {
     return ZCountCommand(key, min, max, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/zdiffstore
+  Future<num> zdiffstore(
+    String destination,
+    num numKeys,
+    List<String> keys, [
+    CommandOption<int, int>? opts,
+  ]) {
+    return ZDiffStoreCommand(destination, numKeys, keys, opts).exec(_client);
+  }
+
   /// @see https://redis.io/commands/zincrby
   Future<num> zincrby<TData>(
     String key,

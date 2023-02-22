@@ -1,7 +1,7 @@
 ## 1.3.1
 
 - Add script abstraction
-- Add zmscore, getdel, hrandfield, lmove command
+- Add zmscore, getdel, hrandfield, lmove, zdiffstore command
 
 ## 1.3.0
 
