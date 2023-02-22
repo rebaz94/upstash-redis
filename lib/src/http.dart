@@ -97,23 +97,28 @@ class UpstashResponse<TResult> {
   }
 
   static customBase64Decode(String b64) {
-    String dec = '';
+    // String dec = '';
+    // try {
+    //   dec = String.fromCharCodes(base64Decode(base64.normalize(b64)))
+    //       .split('')
+    //       .map((s) => '%${('00${s.codeUnits.map((c) => c.toRadixString(16)).join()}').slice(-2)}')
+    //       .join();
+    // } catch (e) {
+    //   print('Unable to decode base64 [$base64]: ${e.toString()}');
+    //   return dec;
+    // }
+    //
+    // try {
+    //   return Uri.decodeComponent(dec);
+    // } catch (e) {
+    //   print('Unable to decode URI [$dec]: ${e.toString()}');
+    //   return dec;
+    // }
     try {
-      dec = String.fromCharCodes(base64Decode(base64.normalize(b64)))
-          .split('')
-          .map((s) =>
-              '%${('00${s.codeUnits.map((c) => c.toRadixString(16)).join()}').slice(-2)}')
-          .join();
+      final bytes = base64.decode(b64);
+      return utf8.decode(bytes);
     } catch (e) {
-      print('Unable to decode base64 [$base64]: ${e.toString()}');
-      return dec;
-    }
-
-    try {
-      return Uri.decodeComponent(dec);
-    } catch (e) {
-      print('Unable to decode URI [$dec]: ${e.toString()}');
-      return dec;
+      return b64;
     }
   }
 
@@ -215,7 +220,30 @@ class HttpClientConfig {
   final Map<String, String>? headers;
   final String baseUrl;
   final Options? options;
+
+  /// Configure the retry behaviour in case of network errors
   final RetryConfig? retry;
+
+  /// Due to the nature of dynamic and custom data, it is possible to write data to redis that is not
+  /// valid json and will therefore cause errors when deserializing. This used to happen very
+  /// frequently with non-utf8 data, such as emojis.
+  ///
+  /// By default we will therefore encode the data as base64 on the server, before sending it to the
+  /// client. The client will then decode the base64 data and parse it as utf8.
+  ///
+  /// For very large entries, this can add a few milliseconds, so if you are sure that your data is
+  /// valid utf8, you can disable this behaviour by setting this option to false.
+  ///
+  /// Here's what the response body looks like:
+  ///
+  /// ```json
+  /// {
+  ///  result?: "base64-encoded",
+  ///  error?: string
+  /// }
+  /// ```
+  ///
+  /// @default "base64"
   final bool isBase64Response;
   final Object? agent;
   final bool reuseHttpClient;

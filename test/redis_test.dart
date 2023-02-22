@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:test/test.dart';
 import 'package:upstash_redis/src/test_utils.dart';
 import 'package:upstash_redis/upstash_redis.dart';
@@ -6,6 +9,8 @@ void main() {
   final client = newHttpClient(useBase64: true);
   final keygen = Keygen();
   final newKey = keygen.newKey;
+
+  tearDown(() => keygen.cleanup());
 
   group('when storing base64 data', () {
     test('general', () async {
@@ -53,14 +58,50 @@ void main() {
     expect(res, [member]);
   });
 
-  group('bad data', () {
+  group('special data', () {
+    test('with %', () async {
+      final redis = Redis.byClient(client);
+      final key = newKey();
+      final value = '%%12';
+      await redis.set(key, value);
+      final res = await redis.get<String>(key);
+
+      expect(res!, value);
+    });
+
+    test('empty string', () async {
+      final redis = Redis.byClient(client);
+      final key = newKey();
+      final value = '';
+      await redis.set(key, value);
+      final res = await redis.get<String>(key);
+
+      expect(res!, value);
+    });
+
+    test('not found key', () async {
+      final redis = Redis.byClient(client);
+      final res = await redis.get<String>(newKey());
+
+      expect(res, null);
+    });
+
     test('with encodeURIComponent', () async {
       final redis = Redis.byClient(client);
       final key = newKey();
       final value = "😀";
       await redis.set(key, Uri.encodeComponent(value));
       final res = await redis.get<String>(key);
-      expect(Uri.decodeComponent(res ?? ''), value);
+      expect(Uri.decodeComponent(res!), value);
+    });
+
+    test('without encodeURIComponent', () async {
+      final redis = Redis.byClient(client);
+      final key = newKey();
+      final value = "😀";
+      await redis.set(key, value);
+      final res = await redis.get<String>(key);
+      expect(res!, value);
     });
 
     test('emojis', () async {
@@ -69,6 +110,30 @@ void main() {
       final value = "😀";
       await redis.set(key, value);
       final res = await redis.get<String>(key);
+      expect(res, value);
+    });
+  });
+
+  group('disable base64 encoding', () {
+    final client = newHttpClient(useBase64: false);
+
+    test('emojis', () async {
+      final redis = Redis.byClient(client);
+      final key = newKey();
+      final value = "😀";
+      await redis.set(key, value);
+      final res = await redis.get<String>(key);
+      expect(res, value);
+    });
+
+    test("random bytes", () async {
+      final redis = Redis.byClient(client);
+      final key = newKey();
+      final value = base64.encode(List<int>.generate(
+          pow(2, 8).toInt(), (_) => Random.secure().nextInt(256)));
+      await redis.set(key, value);
+      final res = await redis.get(key);
+
       expect(res, value);
     });
   });
