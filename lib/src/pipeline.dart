@@ -326,6 +326,21 @@ class Pipeline {
     return _chain(HSetCommand<TData>(key, kv, opts));
   }
 
+  /// @see https://redis.io/commands/hrandfield
+  Pipeline hrandfield<TData>(
+    String key, {
+    num? count,
+    bool? withValues,
+    CommandOption<dynamic, TData>? opts,
+  }) {
+    return _chain(HRandFieldCommand(
+      key,
+      count: count,
+      withValues: withValues,
+      opts: opts,
+    ));
+  }
+
   /// @see https://redis.io/commands/hsetnx
   Pipeline hsetnx<TData>(String key, String field, TData value,
       [CommandOption<int, int>? opts]) {

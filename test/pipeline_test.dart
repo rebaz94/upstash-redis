@@ -167,6 +167,9 @@ void main() {
         .lrem(newKey(), 1, 'value')
         .lset(persistentKey, 0, 'value')
         .ltrim(newKey(), 0, 1)
+        .hrandfield(newKey())
+        .hrandfield(newKey(), count: 2)
+        .hrandfield(newKey(), count: 3, withValues: true)
         .mget<String>([newKey(), newKey()])
         .mset({'key1': 'value', 'key2': 'value'})
         .msetnx({'key3': 'value', 'key4': 'value'})
@@ -233,7 +236,7 @@ void main() {
         .zunionstore(newKey(), 1, [newKey()]);
 
     final res = await p.exec();
-    expect(res.length, 116);
+    expect(res.length, 119);
   });
 }
 

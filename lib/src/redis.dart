@@ -395,6 +395,21 @@ class Redis {
     return HSetCommand<TData>(key, kv, opts).exec(_client);
   }
 
+  /// @see https://redis.io/commands/hrandfield
+  Future<TData?> hrandfield<TData>(
+    String key, {
+    num? count,
+    bool? withValues,
+    CommandOption<dynamic, TData>? opts,
+  }) {
+    return HRandFieldCommand(
+      key,
+      count: count,
+      withValues: withValues,
+      opts: opts,
+    ).exec(_client);
+  }
+
   /// @see https://redis.io/commands/hsetnx
   Future<int> hsetnx<TData>(String key, String field, TData value,
       [CommandOption<int, int>? opts]) {

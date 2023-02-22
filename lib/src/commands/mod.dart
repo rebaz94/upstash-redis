@@ -29,6 +29,7 @@ export 'hincrbyfloat.dart';
 export 'hkeys.dart';
 export 'hmget.dart';
 export 'hmset.dart';
+export 'hrandfield.dart';
 export 'hscan.dart';
 export 'hset.dart';
 export 'hsetnx.dart';
