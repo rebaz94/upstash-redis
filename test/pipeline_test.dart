@@ -159,7 +159,8 @@ void main() {
         .lindex(newKey(), 0)
         .linsert(newKey(), IDirection.before, 'pivot', 'value')
         .llen(newKey())
-        .lmove(newKey(), newKey(), whereFrom: LMoveDir.left, whereTo: LMoveDir.right)
+        .lmove(newKey(), newKey(),
+            whereFrom: LMoveDir.left, whereTo: LMoveDir.right)
         .lpop(newKey())
         .lpos(newKey(), 'value')
         .lpush(persistentKey, ['element'])
