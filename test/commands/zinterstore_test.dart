@@ -17,7 +17,7 @@ void main() async {
         expect(ZInterStoreCommand('destination', 1, ['key']).command, [
           'zinterstore',
           'destination',
-          '1',
+          1,
           'key',
         ]);
       });
@@ -26,7 +26,7 @@ void main() async {
         expect(ZInterStoreCommand('destination', 2, ['key1', 'key2']).command, [
           'zinterstore',
           'destination',
-          '2',
+          2,
           'key1',
           'key2',
         ]);
@@ -37,10 +37,10 @@ void main() async {
             ZInterStoreCommand('destination', 1, ['key1'], weight: 4).command, [
           'zinterstore',
           'destination',
-          '1',
+          1,
           'key1',
           'weights',
-          '4',
+          4,
         ]);
       });
 
@@ -51,12 +51,12 @@ void main() async {
             [
               'zinterstore',
               'destination',
-              '2',
+              2,
               'key1',
               'key2',
               'weights',
-              '2',
-              '3',
+              2,
+              3,
             ]);
       });
 
@@ -68,7 +68,7 @@ void main() async {
           [
             'zinterstore',
             'destination',
-            '1',
+            1,
             'key1',
             'aggregate',
             'sum',
@@ -82,7 +82,7 @@ void main() async {
           [
             'zinterstore',
             'destination',
-            '1',
+            1,
             'key1',
             'aggregate',
             'min',
@@ -96,7 +96,7 @@ void main() async {
           [
             'zinterstore',
             'destination',
-            '1',
+            1,
             'key1',
             'aggregate',
             'max',
@@ -116,12 +116,12 @@ void main() async {
           [
             'zinterstore',
             'destination',
-            '2',
+            2,
             'key1',
             'key2',
             'weights',
-            '4',
-            '2',
+            4,
+            2,
             'aggregate',
             'max',
           ],

@@ -111,6 +111,10 @@ class Pipeline {
     return this;
   }
 
+  late final RedisJsonPipeline _json = RedisJsonPipeline(_chain);
+
+  RedisJsonPipeline get json => _json;
+
   /// @see https://redis.io/commands/append
   Pipeline append(String key, String value, [CommandOption<int, int>? opts]) {
     return _chain(AppendCommand(key, value));

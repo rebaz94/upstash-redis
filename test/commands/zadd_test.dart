@@ -16,7 +16,7 @@ void main() async {
       final command =
           ZAddCommand.single('key', score: 0, member: 'member').command;
 
-      expect(command, ['zadd', 'key', '0', 'member']);
+      expect(command, ['zadd', 'key', 0, 'member']);
     });
 
     test('with nx, build the correct command', () async {
@@ -27,7 +27,7 @@ void main() async {
         nx: true,
       ).command;
 
-      expect(command, ['zadd', 'key', 'nx', '0', 'member']);
+      expect(command, ['zadd', 'key', 'nx', 0, 'member']);
     });
 
     test('with xx, build the correct command', () async {
@@ -38,7 +38,7 @@ void main() async {
         xx: true,
       ).command;
 
-      expect(command, ['zadd', 'key', 'xx', '0', 'member']);
+      expect(command, ['zadd', 'key', 'xx', 0, 'member']);
     });
 
     test('with ch, build the correct command', () async {
@@ -49,7 +49,7 @@ void main() async {
         ch: true,
       ).command;
 
-      expect(command, ['zadd', 'key', 'ch', '0', 'member']);
+      expect(command, ['zadd', 'key', 'ch', 0, 'member']);
     });
 
     test('with incr, build the correct command', () async {
@@ -60,7 +60,7 @@ void main() async {
         incr: true,
       ).command;
 
-      expect(command, ['zadd', 'key', 'incr', '0', 'member']);
+      expect(command, ['zadd', 'key', 'incr', 0, 'member']);
     });
 
     test('with nx and ch, build the correct command', () async {
@@ -72,7 +72,7 @@ void main() async {
         ch: true,
       ).command;
 
-      expect(command, ['zadd', 'key', 'nx', 'ch', '0', 'member']);
+      expect(command, ['zadd', 'key', 'nx', 'ch', 0, 'member']);
     });
 
     test('with nx,ch and incr, build the correct command', () async {
@@ -85,7 +85,7 @@ void main() async {
         incr: true,
       ).command;
 
-      expect(command, ['zadd', 'key', 'nx', 'ch', 'incr', '0', 'member']);
+      expect(command, ['zadd', 'key', 'nx', 'ch', 'incr', 0, 'member']);
     });
 
     test('with nx and multiple members', () async {
@@ -98,7 +98,7 @@ void main() async {
         nx: true,
       ).command;
 
-      expect(command, ['zadd', 'key', 'nx', '0', 'member', '1', 'member1']);
+      expect(command, ['zadd', 'key', 'nx', 0, 'member', 1, 'member1']);
     });
   });
 

@@ -9,10 +9,16 @@ final mapConversions = {
   // raw
   (Map<String, String>).toString(): (Map value) =>
       Map<String, String>.from(value),
+  (Map<String, String?>).toString(): (Map value) =>
+      Map<String, String>.from(value),
   (Map<String, int>).toString(): (Map value) => Map<String, int>.from(value),
+  (Map<String, int?>).toString(): (Map value) => Map<String, int>.from(value),
   (Map<String, double>).toString(): (Map value) =>
       Map<String, double>.from(value),
+  (Map<String, double?>).toString(): (Map value) =>
+      Map<String, double>.from(value),
   (Map<String, bool>).toString(): (Map value) => Map<String, bool>.from(value),
+  (Map<String, bool?>).toString(): (Map value) => Map<String, bool>.from(value),
   (Map<String, dynamic>).toString(): (Map value) =>
       Map<String, dynamic>.from(value),
   // list raw value
@@ -147,12 +153,20 @@ final listConversions = {
   // -------------------- LIST CONVERSION -----------------------
   // raw
   (List<String>).toString(): (List value) => List<String>.from(value),
+  (List<String?>).toString(): (List value) => List<String?>.from(value),
   (List<int>).toString(): (List value) => List<int>.from(value),
+  (List<int?>).toString(): (List value) => List<int?>.from(value),
   (List<double>).toString(): (List value) => List<double>.from(value),
+  (List<double?>).toString(): (List value) => List<double?>.from(value),
   (List<bool>).toString(): (List value) => List<bool>.from(value),
+  (List<bool?>).toString(): (List value) => List<bool?>.from(value),
   (List<dynamic>).toString(): (List value) => List<dynamic>.from(value),
   // list with map: raw value
   (List<Map<String, String>>).toString(): (List value) {
+    return List<Map<String, String>>.from(
+        value.map((e) => Map<String, String>.from(e as Map)));
+  },
+  (List<Map<String, String>?>).toString(): (List value) {
     return List<Map<String, String>>.from(
         value.map((e) => Map<String, String>.from(e as Map)));
   },
@@ -160,7 +174,15 @@ final listConversions = {
     return List<Map<String, int>>.from(
         value.map((e) => Map<String, int>.from(e as Map)));
   },
+  (List<Map<String, int>?>).toString(): (List value) {
+    return List<Map<String, int>>.from(
+        value.map((e) => Map<String, int>.from(e as Map)));
+  },
   (List<Map<String, double>>).toString(): (List value) {
+    return List<Map<String, double>>.from(
+        value.map((e) => Map<String, double>.from(e as Map)));
+  },
+  (List<Map<String, double>?>).toString(): (List value) {
     return List<Map<String, double>>.from(
         value.map((e) => Map<String, double>.from(e as Map)));
   },
@@ -168,7 +190,15 @@ final listConversions = {
     return List<Map<String, bool>>.from(
         value.map((e) => Map<String, bool>.from(e as Map)));
   },
+  (List<Map<String, bool>?>).toString(): (List value) {
+    return List<Map<String, bool>>.from(
+        value.map((e) => Map<String, bool>.from(e as Map)));
+  },
   (List<Map<String, dynamic>>).toString(): (List value) {
+    return List<Map<String, dynamic>>.from(
+        value.map((e) => Map<String, dynamic>.from(e as Map)));
+  },
+  (List<Map<String, dynamic>?>).toString(): (List value) {
     return List<Map<String, dynamic>>.from(
         value.map((e) => Map<String, dynamic>.from(e as Map)));
   },

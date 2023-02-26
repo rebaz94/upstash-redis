@@ -24,7 +24,7 @@ void main() async {
       final key = newKey();
       await RPushCommand(key, ['a', 'b', 'c', 1, 2, 3, 'c', 'c']).exec(client);
       final cmd = LPosCommand<int>(key, 'c', rank: 2);
-      expect(cmd.command, ['lpos', key, 'c', 'rank', '2']);
+      expect(cmd.command, ['lpos', key, 'c', 'rank', 2]);
       final res = await cmd.exec(client);
       expect(res, 6);
     });

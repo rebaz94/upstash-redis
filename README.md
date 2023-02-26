@@ -67,6 +67,14 @@ void main() async {
   await redis.sadd('animals', ['cat']);
   final value5 = await redis.spop<String>('animals', 1);
   print(value5);
+  
+  // json
+  print(await redis.json.set('json', $, {'counter': 1, 'hello': '', 'name': 're'}));
+  print(await redis.json.numincrby('json', r'$.counter', 1));
+  print(await redis.json.set('json', r'$.hello', '"world"'));
+  print(await redis.json.strappend('json', r'$.name', '"baz"'));
+  print(await redis.json.strlen('json', r'$.name'));
+  print(await redis.json.get('json', [r'$.name']));
 }
 ```
 

@@ -1,5 +1,8 @@
 import 'package:test/test.dart';
-import 'package:upstash_redis/src/commands/mod.dart';
+import 'package:upstash_redis/src/commands/bitop.dart';
+import 'package:upstash_redis/src/commands/linsert.dart';
+import 'package:upstash_redis/src/commands/lmove.dart';
+import 'package:upstash_redis/src/commands/script_load.dart';
 import 'package:upstash_redis/src/pipeline.dart';
 import 'package:upstash_redis/src/redis.dart';
 import 'package:upstash_redis/src/test_utils.dart';
@@ -235,10 +238,12 @@ void main() {
         .zrevrank(newKey(), 'member')
         .zscan(newKey(), 0)
         .zscore(newKey(), 'member')
-        .zunionstore(newKey(), 1, [newKey()]);
+        .zunionstore(newKey(), 1, [newKey()])
+        .json
+        .set(newKey(), $, {'hello': 'world'});
 
     final res = await p.exec();
-    expect(res.length, 120);
+    expect(res.length, 121);
   });
 }
 

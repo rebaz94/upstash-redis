@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:collection/collection.dart';
 import 'package:upstash_redis/src/commands/del.dart';
 import 'package:upstash_redis/src/http.dart';
 
+const $ = r'$';
 final _random = math.Random();
 
 String randomID() {
@@ -49,4 +51,15 @@ class Keygen {
       await DelCommand(keys).exec(newHttpClient());
     }
   }
+}
+
+extension IterableNullableSortedExt<E> on List<num?> {
+  void sortedNullable() => sortByCompare(
+        (e) => e,
+        (a, b) {
+          if (b == null) return -1;
+          if (a == null) return 0;
+          return a.compareTo(b);
+        },
+      );
 }

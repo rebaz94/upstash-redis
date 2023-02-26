@@ -112,7 +112,7 @@ class Redis {
   /// guarantees that the commands are executed as a single isolated operation.
   ///
   /// @see Pipeline
-  multi() => Pipeline(client: _client, multiExec: true);
+  Pipeline multi() => Pipeline(client: _client, multiExec: true);
 
   Future<TData> run<TResult, TData>(Command<TResult, TData> command) {
     return command.exec(_client);
@@ -135,6 +135,10 @@ class Redis {
       eagerError: eagerError,
     );
   }
+
+  late final RedisJson _json = RedisJson(_client);
+
+  RedisJson get json => _json;
 
   /// @see https://redis.io/commands/append
   Future<int> append(

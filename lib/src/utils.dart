@@ -14,7 +14,9 @@ Type _type<T>() => T;
 
 TResult parseResponse<TResult>(dynamic result) {
   try {
-    final resultType = TResult.toString().replaceAll('?', '');
+    final resultTypeNullable = TResult.toString();
+    var resultType = resultTypeNullable.replaceAll(RegExp(r'\?$'), '');
+    var resultTypeWithoutNull = resultTypeNullable.replaceAll('?', '');
     if (!_uncheckedTypes.contains(resultType) && result is TResult) {
       return result;
     }
@@ -22,12 +24,14 @@ TResult parseResponse<TResult>(dynamic result) {
     final value = parseRecursive(result);
 
     if (value is Map) {
-      final converter = mapConversions[resultType];
+      final converter =
+          mapConversions[resultType] ?? mapConversions[resultTypeWithoutNull];
       if (converter != null) {
         return converter.call(value) as TResult;
       }
     } else if (value is List) {
-      final converter = listConversions[resultType];
+      final converter =
+          listConversions[resultType] ?? listConversions[resultTypeWithoutNull];
       if (converter != null) {
         return converter.call(value) as TResult;
       }
