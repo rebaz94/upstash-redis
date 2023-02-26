@@ -1243,5 +1243,5 @@ class Redis {
     ).exec(_client);
   }
 
-  void close() => _client.request();
+  void close() => _client.close();
 }
