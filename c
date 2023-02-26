@@ -1,2 +1,2 @@
-upstash: next
+upstash: after
 351d1078d535b0f2b45b03fa70bdcad832e9b0b0
