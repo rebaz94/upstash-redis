@@ -1,16 +1,16 @@
 name: upstash_redis
 description: upstash/redis is an HTTP/REST based Redis client for dart, built on top of Upstash REST API.
-version: 1.4.0
+version: 3.0.0
 homepage: https://github.com/rebaz94/upstash-redis
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  http: ^0.13.5
-  collection: ^1.17.1
+  http: ^1.1.0
+  collection: ^1.18.0
 
 dev_dependencies:
-  lints: ^2.0.1
-  test: ^1.23.1
-  crypto: ^3.0.2
+  lints: ^2.1.1
+  test: ^1.24.7
+  crypto: ^3.0.3

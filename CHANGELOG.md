@@ -1,3 +1,7 @@
+## 2.0.0
+
+- Update dependency
+
 ## 1.4.0
 
 - Add Redis Json commands
